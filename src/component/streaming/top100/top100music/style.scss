@@ -1,209 +1,209 @@
-@use "../../../../styled/utils" as *;
+@use '../../../../styled/utils' as *;
 #top100-music {
-  width: vw(1410);
-  margin: auto;
-  h2 {
-    @include font-34px-600();
-    margin-bottom: vw(50);
-  }
-  .top100-music-top {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: vw(25);
-    .top100-music-btn {
-      button {
-        font-family: "Pretendard", sans-serif;
-        @include font-16px-400();
-        color: $grey555;
-        border: vw(1) solid $grey555;
-        border-radius: vw(50);
-        padding: 7px 20px;
-        margin-right: vw(10);
-      }
-    }
-    .top100-music-sort {
-      display: none;
-      position: relative;
-      width: vw(106);
-      min-width: 96px;
-      white-space: nowrap;
-      .sort-down {
-        cursor: pointer;
-        @include font-16px-500();
-        color: $m_color1;
-        width: 100%;
-        min-width: 96px;
-        border: vw(1) solid $m_color1;
-        border-radius: vw(50);
-        padding: 7px 20px;
-        box-sizing: border-box;
-        text-align: left;
-        background: url("/images/streaming/bg_down.png") no-repeat;
-        background-position: right 12px center;
-        background-size: vw(24) auto;
-        background-origin: content-box;
-        padding-right: vw(0);
-      }
-      .sorting-list {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        min-width: 96px;
-        background-color: $fff;
-        border: vw(1) solid $m_color1;
-        border-radius: 18px;
-        padding: 1px 10px 1px 20px;
-        box-sizing: border-box;
-        list-style: none;
-        display: none;
-        max-height: 200px;
-        overflow: hidden;
-        z-index: 5;
-
-        &.on {
-          display: block;
-        }
-        li {
-          cursor: pointer;
-          @include font-16px-400();
-          color: $m_color1;
-          line-height: 2;
-          background: none;
-          &.sorting-title {
-            @include font-16px-500();
-            color: $m_color1;
-            line-height: 2;
-            background: url("/images/streaming/bg_up.png") no-repeat;
-            background-position: right vw(3) center;
-            background-size: vw(24) auto;
-            background-origin: content-box;
-          }
-
-          &.on {
-            font-weight: 600;
-          }
-        }
-      }
-    }
-  }
-  table {
     width: vw(1410);
-    col {
-      &.col-rank {
-        width: 3%;
-      }
-      &.col-album {
-        width: 6%;
-      }
-      &.col-title {
-        width: 28%;
-      }
-      &.col-artist {
-        width: 16%;
-      }
-      &.col-time {
-        width: 16%;
-      }
-      &.col-release {
-        width: auto;
-      }
-      &.col-play {
-        width: 4%;
-      }
-      &.col-like {
-        width: 4%;
-      }
-      &.col-fav {
-        width: 4%;
-      }
+    margin: auto;
+    h2 {
+        @include font-34px-600();
+        margin-bottom: vw(50);
     }
-    thead {
-      border-bottom: 1px solid #d9d9d9;
-      tr {
-        &:hover {
-          background: none;
+    .top100-music-top {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: vw(25);
+        .top100-music-btn {
+            button {
+                font-family: 'Pretendard', sans-serif;
+                @include font-16px-400();
+                color: $grey555;
+                border: vw(1) solid $grey555;
+                border-radius: vw(50);
+                padding: 7px 20px;
+                margin-right: vw(10);
+            }
         }
-        th {
-          padding: 12px 0;
-          @include font-14px-400();
-          color: $grey777;
-          text-align: left;
+        .top100-music-sort {
+            display: none;
+            position: relative;
+            width: vw(106);
+            min-width: 96px;
+            white-space: nowrap;
+            .sort-down {
+                cursor: pointer;
+                @include font-16px-500();
+                color: $m_color1;
+                width: 100%;
+                min-width: 96px;
+                border: vw(1) solid $m_color1;
+                border-radius: vw(50);
+                padding: 7px 20px;
+                box-sizing: border-box;
+                text-align: left;
+                background: url('/images/streaming/bg_down.png') no-repeat;
+                background-position: right 12px center;
+                background-size: vw(24) auto;
+                background-origin: content-box;
+                padding-right: vw(0);
+            }
+            .sorting-list {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                min-width: 96px;
+                background-color: $fff;
+                border: vw(1) solid $m_color1;
+                border-radius: 18px;
+                padding: 1px 10px 1px 20px;
+                box-sizing: border-box;
+                list-style: none;
+                display: none;
+                max-height: 200px;
+                overflow: hidden;
+                z-index: 5;
+
+                &.on {
+                    display: block;
+                }
+                li {
+                    cursor: pointer;
+                    @include font-16px-400();
+                    color: $m_color1;
+                    line-height: 2;
+                    background: none;
+                    &.sorting-title {
+                        @include font-16px-500();
+                        color: $m_color1;
+                        line-height: 2;
+                        background: url('/images/streaming/bg_up.png') no-repeat;
+                        background-position: right vw(3) center;
+                        background-size: vw(24) auto;
+                        background-origin: content-box;
+                    }
+
+                    &.on {
+                        font-weight: 600;
+                    }
+                }
+            }
         }
-        .th-icon {
-          text-align: center;
-        }
-      }
     }
-    tr {
-      border-bottom: 1px solid #d9d9d9;
-      &:hover {
-        background: rgba(220, 220, 220, 0.4);
-      }
-      &.selected {
-        background-color: rgba(220, 220, 220, 0.4);
-      }
-      td {
-        padding: vw(14) 0;
-        vertical-align: middle;
-      }
-      .col-rank-td {
-        font-family: "Bricolage Grotesque";
-        font-weight: 800;
-      }
-      .col-album-td {
-        img {
-          width: vw(60);
-          border-radius: vw(10);
-          display: block;
+    table {
+        width: vw(1410);
+        col {
+            &.col-rank {
+                width: 2.5%;
+            }
+            &.col-album {
+                width: 6%;
+            }
+            &.col-title {
+                width: 28%;
+            }
+            &.col-artist {
+                width: 20%;
+            }
+            &.col-time {
+                width: 14%;
+            }
+            &.col-release {
+                width: auto;
+            }
+            &.col-play {
+                width: 4%;
+            }
+            &.col-like {
+                width: 4%;
+            }
+            &.col-fav {
+                width: 4%;
+            }
         }
-      }
-      .col-title-td {
-        strong {
-          padding-right: vw(40px);
-          box-sizing: border-box;
-          display: -webkit-box;
-          -webkit-line-clamp: 1; /* 2줄까지만 표시 */
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          text-overflow: ellipsis;
+        thead {
+            border-bottom: 1px solid #d9d9d9;
+            tr {
+                &:hover {
+                    background: none;
+                }
+                th {
+                    padding: 12px 0;
+                    @include font-14px-400();
+                    color: $grey777;
+                    text-align: left;
+                }
+                .th-icon {
+                    text-align: center;
+                }
+            }
         }
-        p {
-          @include font-14px-400();
-          color: $grey777;
-          line-height: 1.8;
-          padding-right: vw(60px);
-          box-sizing: border-box;
-          display: -webkit-box;
-          -webkit-line-clamp: 1; /* 2줄까지만 표시 */
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          text-overflow: ellipsis;
+        tr {
+            border-bottom: 1px solid #d9d9d9;
+            &:hover {
+                background: rgba(220, 220, 220, 0.4);
+            }
+            &.selected {
+                background-color: rgba(220, 220, 220, 0.4);
+            }
+            td {
+                padding: vw(14) 0;
+                vertical-align: middle;
+            }
+            .col-rank-td {
+                font-family: 'Bricolage Grotesque';
+                font-weight: 800;
+            }
+            .col-album-td {
+                img {
+                    width: vw(60);
+                    border-radius: vw(10);
+                    display: block;
+                }
+            }
+            .col-title-td {
+                strong {
+                    padding-right: vw(40px);
+                    box-sizing: border-box;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 1; /* 2줄까지만 표시 */
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+                p {
+                    @include font-14px-400();
+                    color: $grey777;
+                    line-height: 1.8;
+                    padding-right: vw(60px);
+                    box-sizing: border-box;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 1; /* 2줄까지만 표시 */
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+            .col-artist-td {
+                p {
+                    align-items: center;
+                    word-break: keep-all;
+                    padding-right: vw(60px);
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2; /* 2줄까지만 표시 */
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+            .col-play-td,
+            .col-like-td,
+            .col-fav-td {
+                text-align: center;
+            }
+            .icon {
+                img {
+                    width: vw(24);
+                    cursor: pointer;
+                }
+            }
         }
-      }
-      .col-artist-td {
-        p {
-          align-items: center;
-          word-break: keep-all;
-          padding-right: vw(40px);
-          display: -webkit-box;
-          -webkit-line-clamp: 2; /* 2줄까지만 표시 */
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-      }
-      .col-play-td,
-      .col-like-td,
-      .col-fav-td {
-        text-align: center;
-      }
-      .icon {
-        img {
-          width: vw(24);
-          cursor: pointer;
-        }
-      }
     }
-  }
 }

@@ -14,7 +14,7 @@ const LatestMusicWrap = () => {
     const videos = [
         {
             id: 'CgCVZdcKcqY',
-            artist: '‘JUMP’',
+            artist: 'JUMP',
             title: 'BLACKPINK',
             date: '2025. 9. 2',
         },
