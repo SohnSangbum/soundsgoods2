@@ -12,7 +12,9 @@
   .playlist_header {
     width: vw(900);
     display: flex;
-    justify-content: right;
+    margin: 0 auto;
+    justify-content: space-between;
+    margin-top: vw(10);
     button {
       border-radius: vw(10);
       backdrop-filter: blur(25px);
@@ -27,5 +29,14 @@
     justify-content: center;
   }
   .likemusic {
+    width: vw(920);
+    height: vw(150);
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    ul {
+      margin-top: vw(20);
+      margin-left: vw(10);
+    }
   }
 }

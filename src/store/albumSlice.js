@@ -1,14 +1,18 @@
 import { create } from "zustand";
 
-// 로컬스토리지에서 초기값 불러오기
 const getLocalPlaylists = () =>
   JSON.parse(localStorage.getItem("playlists")) || [];
+
 const getLocalSelected = () =>
   JSON.parse(localStorage.getItem("selectedPlaylist")) || null;
+
+const getLocalSelectedItem = () =>
+  JSON.parse(localStorage.getItem("selectedItem")) || null;
 
 export const usePlaylistStore = create((set, get) => ({
   playlists: getLocalPlaylists(),
   selectedPlaylist: getLocalSelected(),
+  selectedItem: getLocalSelectedItem(),
 
   addPlaylist: (name) => {
     if (!name.trim()) return;
@@ -26,10 +30,12 @@ export const usePlaylistStore = create((set, get) => ({
     set({ playlists: newPlaylists });
     if (get().selectedPlaylist?.id === id) get().deselectPlaylist();
   },
+
   selectPlaylist: (playlist) => {
     localStorage.setItem("selectedPlaylist", JSON.stringify(playlist));
     set({ selectedPlaylist: playlist });
   },
+
   deselectPlaylist: () => {
     localStorage.removeItem("selectedPlaylist");
     set({ selectedPlaylist: null });
@@ -38,6 +44,20 @@ export const usePlaylistStore = create((set, get) => ({
   clearAll: () => {
     localStorage.removeItem("playlists");
     localStorage.removeItem("selectedPlaylist");
-    set({ playlists: [], selectedPlaylist: null });
+    localStorage.removeItem("selectedItem");
+    set({ playlists: [], selectedPlaylist: null, selectedItem: null });
+  },
+
+  selectItem: (item) => {
+    localStorage.setItem("selectedItem", JSON.stringify(item));
+    set({ selectedItem: item });
+  },
+
+  addSongToPlaylist: (playlistId, song) => {
+    const playlists = get().playlists.map((p) =>
+      p.id === playlistId ? { ...p, songs: [...p.songs, song] } : p
+    );
+    localStorage.setItem("playlists", JSON.stringify(playlists));
+    set({ playlists });
   },
 }));

@@ -17,6 +17,12 @@ const Mymusic_left_playlist_item = ({ playlist, onClick, onDelete }) => {
       <div className="playlistimg">
         <img src={profileImg} alt="" onClick={onClick} />
         <h2>{playlist.name}</h2>
+        <button
+          className="delete_btn"
+          onClick={() => fileInputRef.current.click()}
+        >
+          표지변경
+        </button>
         <button className="delete_btn" onClick={onDelete}>
           삭제
         </button>

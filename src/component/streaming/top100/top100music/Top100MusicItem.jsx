@@ -5,13 +5,15 @@ import Likemodal from "../../../likemodal/Likemodal";
 import { usePlaylistStore } from "../../../../store/albumSlice";
 import useUserStore from "../../../../store/userSlice";
 
-const Top100MusicItem = ({ item, rank, isSelected }) => {
+const Top100MusicItem = ({ item, rank, isSelected, playlists }) => {
   const [minute, setMinute] = useState(0);
   const [liked, setLiked] = useState(false);
   const [favorited, setFavorited] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  const playlists = usePlaylistStore((state) => state.playlists);
+  const selectItem = usePlaylistStore((state) => state.selectItem);
+  const addSongToPlaylist = usePlaylistStore(
+    (state) => state.addSongToPlaylist
+  );
   const addPlaylist = usePlaylistStore((state) => state.addPlaylist);
   const selectPlaylist = usePlaylistStore((state) => state.selectPlaylist);
   const isLoggedIn = useUserStore((state) => state.isLoggedIn);
@@ -77,7 +79,11 @@ const Top100MusicItem = ({ item, rank, isSelected }) => {
           <td colSpan={9}>
             <Likemodal
               playlists={isLoggedIn ? playlists : []} // 로그인 여부 체크
-              onSelect={(pl) => selectPlaylist(pl)} // 선택 시 store 업데이트
+              onSelect={(pl) => {
+                selectPlaylist(pl); // 선택된 플레이리스트 저장
+                addSongToPlaylist(pl.id, item); // ⭐ 누른 곡 저장
+                setDropdownOpen(false); // 모달 닫기
+              }} // 선택 시 store 업데이트
               onAddPlaylist={(name) => addPlaylist(name)} // 새 플레이리스트 추가
               onConfirm={() => setDropdownOpen(false)} // 모달 닫기
             />
