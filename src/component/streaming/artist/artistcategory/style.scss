@@ -81,11 +81,48 @@
             cursor: pointer;
             flex-shrink: 0;
             margin-bottom: vw(40);
-            img {
-                width: vw(260);
-                height: vw(260);
-                margin-bottom: vw(20);
-                object-fit: contain;
+            p {
+                position: relative;
+                img {
+                    width: 100%;
+                    height: vw(260);
+                    object-fit: contain;
+                    transition: 0.3s ease;
+                    display: block;
+                    margin-bottom: vw(20);
+                }
+                &:hover {
+                    img {
+                        filter: brightness(60%);
+                    }
+                }
+                &::after {
+                    content: '+';
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    font-size: vw(60);
+                    color: $fff;
+                    opacity: 0;
+                    transform: translate(-50%, -50%);
+                    transform-origin: center center;
+                    transition: opacity 0.3s ease;
+                }
+                &:hover::after {
+                    opacity: 1;
+                    animation: spin 0.3s ease-in-out forwards;
+                }
+            }
+            @keyframes spin {
+                0% {
+                    opacity: 0;
+                    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+                }
+
+                100% {
+                    opacity: 1;
+                    transform: translate(-50%, -50%) rotate(360deg) scale(1);
+                }
             }
             h3 {
                 @include font-24px-600();
@@ -130,10 +167,15 @@
         .artist-category-list {
             .artist-category-item {
                 width: vw(100, 393);
-                img {
-                    width: vw(100, 393);
-                    height: vw(100, 393);
-                    margin-bottom: vw(10, 393);
+                p {
+                    img {
+                        width: vw(100, 393);
+                        height: vw(100, 393);
+                        margin-bottom: vw(10, 393);
+                    }
+                    &::after {
+                        font-size: vw(30, 393);
+                    }
                 }
                 h3 {
                     @include font-14px-600();

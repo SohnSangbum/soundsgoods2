@@ -23,7 +23,7 @@ const ArtistCategory = () => {
     return (
         <section id="artist-category">
             <div className="artist-category-top">
-                <h2>아티스트별</h2>
+                <h2>이 달의 아티스트</h2>
                 <div className="artist-sort">
                     {!sortOpen && (
                         <div className="sort-down" onClick={toggleSort}>

@@ -21,6 +21,7 @@
         display: flex;
         justify-content: space-between;
         .artist-i-goods-item {
+            cursor: pointer;
             width: vw(260);
             margin-bottom: vw(40);
             .artist-i-goods-img {
@@ -30,27 +31,43 @@
                     width: vw(260);
                     height: vw(260);
                     border-radius: vw(20);
+                    object-fit: contain;
                 }
-                p {
+                .wish-box {
                     position: absolute;
                     top: vw(10);
                     right: vw(10);
+                    gap: vw(8);
                     cursor: pointer;
-                    background-color: rgba($fc, 0.6);
-                    border-radius: vw(500);
-                    padding: vw(4) vw(10);
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    img {
-                        width: vw(20);
-                        height: vw(20);
+                    background-color: rgba($fc, 0.6);
+                    border-radius: vw(500);
+                    padding: vw(4) vw(10) vw(5);
+                    .icon {
+                        img {
+                            width: vw(20);
+                            height: vw(20);
+                            @include display_center();
+                        }
+                    }
+                    .count {
+                        display: none;
+                        @include font-16px-400();
+                        vertical-align: middle;
+                    }
+                    &:hover {
+                        .count {
+                            display: block;
+                            color: $fff;
+                        }
                     }
                 }
             }
             .artist-i-goods-text {
                 cursor: pointer;
-                line-height: 1.5;
+                line-height: 1.6;
                 h3 {
                     @include font-18px-600();
                     white-space: nowrap;
@@ -89,27 +106,43 @@
                     box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.25);
                     @include display_center();
                     margin-bottom: vw(8, 393);
+                    overflow: hidden;
                     img {
-                        width: vw(110, 393);
-                        height: vw(110, 393);
+                        width: vw(143, 393);
+                        height: vw(143, 393);
                         border-radius: 0;
                     }
-                    p {
+                    .wish-box {
                         position: absolute;
                         top: auto;
                         left: auto;
                         bottom: vw(6, 393);
                         right: vw(6, 393);
                         background-color: transparent;
-                        opacity: 1;
-                        border-radius: 0;
                         padding: 0;
-                        width: vw(20, 393);
-                        height: vw(20, 393);
-                        display: block;
-                        img {
-                            width: vw(20, 393);
-                            height: vw(20, 393);
+                        .icon {
+                            img {
+                                width: vw(17, 393);
+                                height: vw(16, 393);
+                            }
+                        }
+                        .count {
+                            margin-left: vw(4, 393);
+                            @include m-font-12px-400();
+                        }
+                        &:hover,
+                        &:active {
+                            background-color: rgba($fc, 0.6);
+                            padding: vw(2, 393) vw(8, 393) vw(3, 393);
+                            .icon {
+                                img {
+                                    width: vw(15, 393);
+                                    height: vw(15, 393);
+                                }
+                            }
+                            .count {
+                                color: $fff;
+                            }
                         }
                     }
                 }
