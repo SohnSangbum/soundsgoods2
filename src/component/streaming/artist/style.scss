@@ -2,6 +2,11 @@
 
 #artist-wrap {
     width: 100%;
+    display: flex;
+    .space {
+        width: vw(230);
+        flex-shrink: 0;
+    }
     .inner {
         max-width: vw(1410);
         width: 100%;
@@ -11,6 +16,9 @@
     }
     @include tablet {
         width: 100% !important;
+        .space {
+            display: none;
+        }
         .inner {
             width: 100% !important;
             max-width: 100% !important;

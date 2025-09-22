@@ -1,77 +1,85 @@
 @use '../../../styled/utils' as *;
 #latest-wrap {
-    width: vw(1690px);
-    .visual-area {
-        width: vw(1690px);
-        height: vw(400px);
-        position: absolute;
-        .btn-wrap {
+    width: 100%;
+    display: flex;
+    .space {
+        width: vw(230);
+        flex-shrink: 0;
+    }
+    .latest-con {
+        width: vw(1690);
+        .visual-area {
+            width: vw(1690px);
+            height: vw(400px);
             position: absolute;
-            height: vw(40px);
-            position: absolute;
-            bottom: vw(50px);
-            right: vw(50px);
-            z-index: 10;
-            i {
-                font-size: vw(40px);
-                color: $fff;
-                margin-left: vw(30px);
-                pointer-events: auto;
-                cursor: pointer;
+            .btn-wrap {
+                position: absolute;
+                height: vw(40px);
+                position: absolute;
+                bottom: vw(50px);
+                right: vw(50px);
+                z-index: 10;
+                i {
+                    font-size: vw(40px);
+                    color: $fff;
+                    margin-left: vw(30px);
+                    pointer-events: auto;
+                    cursor: pointer;
+                }
             }
         }
-    }
 
-    .video-visual {
-        position: relative;
-        width: 100%;
-        height: vw(400px);
-        overflow: hidden;
-        margin: 0 0 vw(60px) 0;
-
-        .bg-opacity {
-            position: absolute;
-            left: 0;
-            top: 0;
+        .video-visual {
+            position: relative;
             width: 100%;
-            height: 100%;
-            background: $fc;
-            opacity: 0.35;
-            z-index: 1;
-        }
-        iframe {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 250%; // 부모 가로에 맞춤
-            height: 250%;
-            transform: translate(-50%, -50%);
-            pointer-events: none; // 클릭 막기 (텍스트 클릭 가능)
-            z-index: 0;
-        }
+            height: vw(400px);
+            overflow: hidden;
+            margin: 0 0 vw(60px) 0;
 
-        .video-text {
-            position: absolute; // 텍스트는 iframe 위로 올라오게
-            bottom: vw(50px);
-            left: vw(50px);
-            z-index: 2;
-            li {
-                text-align: left;
-                &:nth-child(1) {
-                    @include font-80px-600;
-                    letter-spacing: vw(-1px);
-                    color: $fff;
-                    line-height: 1;
-                }
-                &:nth-child(2) {
-                    font-family: 'Bricolage Grotesque';
-                    @include font-40px-700;
-                    color: $fff;
-                    margin-bottom: vw(40px);
-                }
-                &:nth-child(3) {
-                    @include font-18px-500;
-                    color: $fff;
+            .bg-opacity {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background: $fc;
+                opacity: 0.35;
+                z-index: 1;
+            }
+            iframe {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 250%; // 부모 가로에 맞춤
+                height: 250%;
+                transform: translate(-50%, -50%);
+                pointer-events: none; // 클릭 막기 (텍스트 클릭 가능)
+                z-index: 0;
+            }
+
+            .video-text {
+                position: absolute; // 텍스트는 iframe 위로 올라오게
+                bottom: vw(50px);
+                left: vw(50px);
+                z-index: 2;
+                li {
+                    text-align: left;
+                    &:nth-child(1) {
+                        @include font-80px-600;
+                        letter-spacing: vw(-1px);
+                        color: $fff;
+                        line-height: 1;
+                    }
+                    &:nth-child(2) {
+                        font-family: 'Bricolage Grotesque';
+                        @include font-40px-700;
+                        color: $fff;
+                        margin-bottom: vw(40px);
+                    }
+                    &:nth-child(3) {
+                        @include font-18px-500;
+                        color: $fff;
+                    }
                 }
             }
         }

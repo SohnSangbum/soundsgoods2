@@ -2,22 +2,34 @@
 
 #genre-wrap {
     width: 100%;
+    display: flex;
+    .space {
+        width: vw(230);
+        flex-shrink: 0;
+    }
     .genre-img {
-        max-width: vw(1690);
-        width: 100%;
+        width: vw(1690);
         margin: 0 auto;
+        max-width: 100%;
+        overflow: hidden;
     }
     .genre_con {
         max-width: vw(1410);
         width: 100%;
         margin: 0 auto;
+        min-width: 0;
     }
     @include tablet {
+        flex-direction: column;
         width: 100% !important;
+        .space {
+            display: none;
+        }
         .genre-img {
             max-width: 100%;
             width: 100%;
             padding-top: vw(20, 393);
+            margin: 0;
         }
         .genre_con {
             width: 100% !important;
@@ -25,6 +37,10 @@
             margin: 0;
             padding: 0 vw(18, 393);
             box-sizing: border-box;
+            > * {
+                max-width: 100%;
+                box-sizing: border-box;
+            }
         }
     }
 }

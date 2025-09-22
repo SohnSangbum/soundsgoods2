@@ -52,70 +52,73 @@ const LatestMusicWrap = () => {
 
     return (
         <section id="latest-wrap">
-            <div className="visual-area">
-                <div className="btn-wrap">
-                    <i
-                        className="swiper-no-swiping"
-                        onClick={() => {
-                            const swiper = swiperRef.current;
-                            if (!swiper) return;
+            <div className="space">&nbsp;</div>
+            <div className="latest-con">
+                <div className="visual-area">
+                    <div className="btn-wrap">
+                        <i
+                            className="swiper-no-swiping"
+                            onClick={() => {
+                                const swiper = swiperRef.current;
+                                if (!swiper) return;
 
-                            if (swiper.activeIndex === 0) {
-                                // 맨 앞에서 왼쪽 누르면 → 맨 끝으로
-                                swiper.slideTo(swiper.slides.length - 1);
-                            } else {
-                                swiper.slidePrev();
-                            }
-                        }}
-                    >
-                        <SlArrowLeft />
-                    </i>
+                                if (swiper.activeIndex === 0) {
+                                    // 맨 앞에서 왼쪽 누르면 → 맨 끝으로
+                                    swiper.slideTo(swiper.slides.length - 1);
+                                } else {
+                                    swiper.slidePrev();
+                                }
+                            }}
+                        >
+                            <SlArrowLeft />
+                        </i>
 
-                    <i
-                        className="swiper-no-swiping"
-                        onClick={() => {
-                            const swiper = swiperRef.current;
-                            if (!swiper) return;
+                        <i
+                            className="swiper-no-swiping"
+                            onClick={() => {
+                                const swiper = swiperRef.current;
+                                if (!swiper) return;
 
-                            if (swiper.activeIndex === swiper.slides.length - 1) {
-                                // 맨 끝에서 오른쪽 누르면 → 맨 앞으로
-                                swiper.slideTo(0);
-                            } else {
-                                swiper.slideNext();
-                            }
-                        }}
-                    >
-                        <SlArrowRight />
-                    </i>
+                                if (swiper.activeIndex === swiper.slides.length - 1) {
+                                    // 맨 끝에서 오른쪽 누르면 → 맨 앞으로
+                                    swiper.slideTo(0);
+                                } else {
+                                    swiper.slideNext();
+                                }
+                            }}
+                        >
+                            <SlArrowRight />
+                        </i>
+                    </div>
                 </div>
+                <Swiper
+                    slidesPerView={1}
+                    onSwiper={(swiper) => {
+                        swiperRef.current = swiper;
+                    }}
+                >
+                    {videos.map((v) => (
+                        <SwiperSlide key={v.id}>
+                            <div className="video-visual">
+                                <div className="bg-opacity"></div>
+                                <iframe
+                                    src={`https://www.youtube.com/embed/${v.id}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&loop=1&playlist=${v.id}`}
+                                    title={v.title}
+                                    frameBorder="0"
+                                    allow="autoplay; encrypted-media"
+                                    allowFullScreen
+                                ></iframe>
+                                <ul className="video-text">
+                                    <li>{v.artist}</li>
+                                    <li>{v.title}</li>
+                                    <li>발매일: {v.date}</li>
+                                </ul>
+                            </div>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+                <LatestMusicListWrap />
             </div>
-            <Swiper
-                slidesPerView={1}
-                onSwiper={(swiper) => {
-                    swiperRef.current = swiper;
-                }}
-            >
-                {videos.map((v) => (
-                    <SwiperSlide key={v.id}>
-                        <div className="video-visual">
-                            <div className="bg-opacity"></div>
-                            <iframe
-                                src={`https://www.youtube.com/embed/${v.id}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&loop=1&playlist=${v.id}`}
-                                title={v.title}
-                                frameBorder="0"
-                                allow="autoplay; encrypted-media"
-                                allowFullScreen
-                            ></iframe>
-                            <ul className="video-text">
-                                <li>{v.artist}</li>
-                                <li>{v.title}</li>
-                                <li>발매일: {v.date}</li>
-                            </ul>
-                        </div>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
-            <LatestMusicListWrap />
         </section>
     );
 };

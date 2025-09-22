@@ -16,14 +16,21 @@ const ArtistInfoWrap = ({ data }) => {
     }, []);
     return (
         <section id="artist-info-wrap">
-            <div className="artist-info-img">
-                <ArtistIImg data={data} />
-            </div>
-            <div className="artist-info-con">
-                <ArtistITop data={data} />
-                {width > 1024 ? <ArtistIAlbum data={data} /> : <ArtistIAlbumMobile data={data} />}
-                <ArtistIVideo data={data} />
-                <ArtistIGoods data={data} />
+            <div className="space">&nbsp;</div>
+            <div>
+                <div className="artist-info-img">
+                    <ArtistIImg data={data} />
+                </div>
+                <div className="artist-info-con">
+                    <ArtistITop data={data} />
+                    {width > 1024 ? (
+                        <ArtistIAlbum data={data} />
+                    ) : (
+                        <ArtistIAlbumMobile data={data} />
+                    )}
+                    <ArtistIVideo data={data} />
+                    <ArtistIGoods data={data} />
+                </div>
             </div>
         </section>
     );

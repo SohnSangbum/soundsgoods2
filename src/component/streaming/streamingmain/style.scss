@@ -16,377 +16,268 @@
 //     }
 // }
 #streaming-wrap {
-    width: vw(1690px);
-
+    width: 100%;
+    display: flex;
+    .space {
+        width: vw(230);
+        flex-shrink: 0;
+    }
     @include tablet {
         width: 100%;
         padding-top: vw(20, 393);
+        .space {
+            display: none;
+        }
     }
-
-    .video-visual {
-        position: relative;
-        width: 100%;
-        height: vw(400px);
-        overflow: hidden;
-        margin: 0 0 vw(60px) 0;
+    .streaming-main-con {
+        width: vw(1690);
         @include tablet {
-            width: 100% !important;
-            height: vw(160, 393);
-            margin: 0 0 vw(20, 393) 0;
-        }
-        .bg-opacity {
-            position: absolute;
-            left: 0;
-            top: 0;
             width: 100%;
-            height: 100%;
-            background: $fc;
-            opacity: 0.35;
-            z-index: 1;
         }
-        iframe {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 250%; // 부모 가로에 맞춤
-            height: 250%;
-            transform: translate(-50%, -50%);
-            pointer-events: none; // 클릭 막기 (텍스트 클릭 가능)
-            z-index: 0;
-        }
-
-        .video-text {
-            position: absolute; // 텍스트는 iframe 위로 올라오게
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
-            color: $fff;
-            @include font-80px-600;
-            @include display_center();
-            height: 100%;
-            letter-spacing: vw(-1px);
+        .video-visual {
+            position: relative;
+            width: 100%;
+            height: vw(400px);
+            overflow: hidden;
+            margin: 0 0 vw(60px) 0;
             @include tablet {
-                @include m-font-30px-600;
-                color: $fff;
+                width: 100% !important;
+                height: vw(160, 393);
+                margin: 0 0 vw(20, 393) 0;
+            }
+            .bg-opacity {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background: $fc;
+                opacity: 0.35;
+                z-index: 1;
+            }
+            iframe {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 250%; // 부모 가로에 맞춤
+                height: 250%;
+                transform: translate(-50%, -50%);
+                pointer-events: none; // 클릭 막기 (텍스트 클릭 가능)
+                z-index: 0;
             }
 
-            span {
-                @include font-80px-300;
-                margin-left: vw(18px);
-                letter-spacing: vw(1px);
+            .video-text {
+                position: absolute; // 텍스트는 iframe 위로 올라오게
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 2;
+                color: $fff;
+                @include font-80px-600;
+                @include display_center();
+                height: 100%;
+                letter-spacing: vw(-1px);
                 @include tablet {
-                    margin-left: vw(6, 393);
-                    @include m-font-30px-300;
+                    @include m-font-30px-600;
                     color: $fff;
                 }
-            }
-        }
-    }
-    .inner {
-        width: vw(1410) !important;
-        max-width: 100%;
-        margin: 0 auto;
-        padding: 0 0 vw(80px) 0;
-        box-sizing: border-box;
-        @include tablet {
-            width: 100% !important;
-            margin: auto;
-            padding: 0 vw(18, 393) vw(40, 393) vw(18, 393) !important;
-            box-sizing: border-box;
-        }
-        h3 {
-            @include font-30px-600;
-            margin-bottom: vw(20px);
-            @include tablet {
-                @include m-font-20px-600;
-                margin-bottom: vw(20, 393);
-            }
-            img {
-                width: vw(40px);
-                height: vw(40px);
-                margin-left: vw(14px);
-                object-fit: cover;
-                vertical-align: top;
-                @include tablet {
-                    // display: none;
-                    margin-left: vw(10, 393);
-                    width: vw(24, 393);
-                    height: vw(24, 393);
-                }
-            }
-        }
 
-        .latest-wrap {
-            width: 100%;
-            @include display_between;
-            @include tablet {
-                display: flex;
-                gap: vw(10, 393) !important;
-            }
-
-            li {
-                position: relative;
-                &:nth-child(3) {
+                span {
+                    @include font-80px-300;
+                    margin-left: vw(18px);
+                    letter-spacing: vw(1px);
                     @include tablet {
-                        display: none;
+                        margin-left: vw(6, 393);
+                        @include m-font-30px-300;
+                        color: $fff;
                     }
                 }
+            }
+        }
+        .inner {
+            width: vw(1410) !important;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 0 vw(80px) 0;
+            box-sizing: border-box;
+            @include tablet {
+                width: 100% !important;
+                margin: auto;
+                padding: 0 vw(18, 393) vw(40, 393) vw(18, 393) !important;
+                box-sizing: border-box;
+            }
+            h3 {
+                @include font-30px-600;
+                margin-bottom: vw(20px);
                 @include tablet {
-                    width: vw(173.5, 393) !important;
+                    @include m-font-20px-600;
+                    margin-bottom: vw(20, 393);
+                }
+                img {
+                    width: vw(40px);
+                    height: vw(40px);
+                    margin-left: vw(14px);
+                    object-fit: cover;
+                    vertical-align: top;
+                    @include tablet {
+                        // display: none;
+                        margin-left: vw(10, 393);
+                        width: vw(24, 393);
+                        height: vw(24, 393);
+                    }
+                }
+            }
+
+            .latest-wrap {
+                width: 100%;
+                @include display_between;
+                @include tablet {
+                    display: flex;
+                    gap: vw(10, 393) !important;
                 }
 
-                .video-wrap {
+                li {
                     position: relative;
-                    width: vw(444);
-                    height: vw(250);
-                    border-radius: 10px;
-                    overflow: hidden;
-                    margin-bottom: vw(20);
+                    &:nth-child(3) {
+                        @include tablet {
+                            display: none;
+                        }
+                    }
                     @include tablet {
                         width: vw(173.5, 393) !important;
-                        height: vw(97, 393) !important;
-                        margin-bottom: vw(10, 393);
                     }
 
-                    video {
-                        width: 100%;
-                        height: 100%;
-                        display: block;
-                        object-fit: cover;
-                    }
+                    .video-wrap {
+                        position: relative;
+                        width: vw(444);
+                        height: vw(250);
+                        border-radius: 10px;
+                        overflow: hidden;
+                        margin-bottom: vw(20);
+                        @include tablet {
+                            width: vw(173.5, 393) !important;
+                            height: vw(97, 393) !important;
+                            margin-bottom: vw(10, 393);
+                        }
 
-                    &::after {
-                        content: '';
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        width: 100%;
-                        height: 100%;
-                        background: rgba(0, 0, 0, 0.4);
-                        opacity: 0;
-                        transition: opacity 0.3s ease;
-                        z-index: 1;
-                        pointer-events: none;
-                    }
+                        video {
+                            width: 100%;
+                            height: 100%;
+                            display: block;
+                            object-fit: cover;
+                        }
 
-                    &:hover::after {
-                        opacity: 1;
-                    }
+                        &::after {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            background: rgba(0, 0, 0, 0.4);
+                            opacity: 0;
+                            transition: opacity 0.3s ease;
+                            z-index: 1;
+                            pointer-events: none;
+                        }
 
-                    .play-btn {
-                        position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
-                        z-index: 2; // 오버레이 위
-                        opacity: 0;
-                        transition: opacity 0.3s ease;
-                        cursor: pointer;
-                        background: none;
+                        &:hover::after {
+                            opacity: 1;
+                        }
 
-                        img {
-                            width: vw(50px);
-                            height: vw(50px);
-                            @include tablet {
-                                width: vw(30, 393);
-                                height: vw(30, 393);
+                        .play-btn {
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            z-index: 2; // 오버레이 위
+                            opacity: 0;
+                            transition: opacity 0.3s ease;
+                            cursor: pointer;
+                            background: none;
+
+                            img {
+                                width: vw(50px);
+                                height: vw(50px);
+                                @include tablet {
+                                    width: vw(30, 393);
+                                    height: vw(30, 393);
+                                }
                             }
+                        }
+
+                        &:hover .play-btn {
+                            opacity: 1;
+                        }
+                    }
+                    h4 {
+                        @include font-18px-600;
+                        margin-bottom: vw(6px);
+                        line-height: 1.1;
+                        width: vw(444px);
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        @include tablet {
+                            width: vw(173.5, 393) !important;
+                            @include m-font-16px-600;
+                            line-height: 1.1;
+                            margin-bottom: vw(6, 393);
                         }
                     }
 
-                    &:hover .play-btn {
-                        opacity: 1;
-                    }
-                }
-                h4 {
-                    @include font-18px-600;
-                    margin-bottom: vw(6px);
-                    line-height: 1.1;
-                    width: vw(444px);
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    @include tablet {
-                        width: vw(173.5, 393) !important;
-                        @include m-font-16px-600;
-                        line-height: 1.1;
-                        margin-bottom: vw(6, 393);
-                    }
-                }
-
-                strong {
-                    @include font-18px-400;
-                    margin-bottom: vw(6px);
-                    color: $grey777;
-                    width: vw(444px);
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    display: block;
-                    @include tablet {
-                        width: vw(173.5, 393) !important;
-                        @include m-font-14px-400;
+                    strong {
+                        @include font-18px-400;
+                        margin-bottom: vw(6px);
                         color: $grey777;
-                        line-height: 1;
-                        margin-bottom: vw(6, 393);
+                        width: vw(444px);
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        display: block;
+                        @include tablet {
+                            width: vw(173.5, 393) !important;
+                            @include m-font-14px-400;
+                            color: $grey777;
+                            line-height: 1;
+                            margin-bottom: vw(6, 393);
+                        }
                     }
-                }
 
-                p {
-                    width: vw(444px);
-                    @include font-18px-400;
-                    color: $grey777;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    @include tablet {
-                        width: vw(173.5, 393) !important;
-                        @include m-font-14px-400;
+                    p {
+                        width: vw(444px);
+                        @include font-18px-400;
                         color: $grey777;
-                        line-height: 1;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        @include tablet {
+                            width: vw(173.5, 393) !important;
+                            @include m-font-14px-400;
+                            color: $grey777;
+                            line-height: 1;
+                        }
                     }
                 }
             }
-        }
-        .swiper-slide {
-            display: flex; // 슬라이드 안에서 강제로 block처럼 맞추기
-            justify-content: center;
-            align-items: center;
-            .img-wrap {
-                position: relative;
-                border-radius: vw(10, 393);
-                overflow: hidden;
-                width: vw(100, 393) !important;
-                height: vw(100, 393) !important;
-                margin-bottom: vw(10, 393);
-                strong {
-                    position: absolute;
-                    top: vw(6, 393);
-                    left: vw(8, 393);
-                    @include m-font-20px-800;
-                    z-index: 5;
-                }
-                .play-btn {
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    z-index: 2;
-                    opacity: 0;
-                    transition: opacity 0.3s ease;
-                    background: none;
-                    cursor: pointer;
-                    img {
-                        width: vw(30, 393);
-                        height: vw(30, 393);
-                    }
-                }
-                &::after {
-                    content: '';
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: rgba(0, 0, 0, 0.4);
-                    opacity: 0;
-                    transition: opacity 0.3s ease;
-                    z-index: 1;
-                    pointer-events: none;
-                }
-
-                &:hover::after {
-                    opacity: 1;
-                }
-                &:hover .play-btn {
-                    opacity: 1;
-                }
-            }
-            h4 {
-                @include m-font-14px-600;
-                margin-bottom: vw(4, 393);
-                line-height: 1;
-                text-align: left;
-            }
-
-            strong {
-                @include m-font-14px-400;
-                margin-bottom: vw(4, 393);
-                line-height: 1;
-                color: $grey777;
-                width: vw(100, 393);
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: block;
-                text-align: left;
-            }
-
-            p {
-                @include m-font-14px-400;
-                line-height: 1;
-                color: $grey777;
-                width: vw(100, 393);
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: block;
-                text-align: left;
-            }
-        }
-        .top100-wrap {
-            width: 100%;
-            @include display_between;
-            li {
-                cursor: pointer;
+            .swiper-slide {
+                display: flex; // 슬라이드 안에서 강제로 block처럼 맞추기
+                justify-content: center;
+                align-items: center;
                 .img-wrap {
                     position: relative;
-                    display: block; // 최신화된 버전 반영
-                    width: vw(168px);
-                    height: vw(168px);
-                    margin-bottom: vw(20px);
-                    &:hover strong {
-                        opacity: 1;
-                        transition: 0.25s ease;
-                        top: vw(10);
-                    }
+                    border-radius: vw(10, 393);
+                    overflow: hidden;
+                    width: vw(100, 393) !important;
+                    height: vw(100, 393) !important;
+                    margin-bottom: vw(10, 393);
                     strong {
                         position: absolute;
-                        top: vw(60);
-                        left: vw(14);
-                        @include font-32px-800;
-                        line-height: 1;
-                        z-index: 50;
-                        opacity: 0;
+                        top: vw(6, 393);
+                        left: vw(8, 393);
+                        @include m-font-20px-800;
+                        z-index: 5;
                     }
-                    img {
-                        width: 100%;
-                        height: 100%;
-                        border-radius: 10px;
-                        display: block;
-                    }
-
-                    // 오버레이
-                    &::after {
-                        content: '';
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        width: 100%;
-                        height: 100%;
-                        background: rgba(0, 0, 0, 0.4);
-                        border-radius: 10px;
-                        opacity: 0;
-                        transition: opacity 0.3s ease;
-                        z-index: 1;
-                        pointer-events: none; // 첫 번째 코드에서 유지
-                    }
-
-                    &:hover::after {
-                        opacity: 1;
-                    }
-
                     .play-btn {
                         position: absolute;
                         top: 50%;
@@ -397,389 +288,11 @@
                         transition: opacity 0.3s ease;
                         background: none;
                         cursor: pointer;
-
                         img {
-                            width: vw(50px);
-                            height: vw(50px);
-                            margin-bottom: 0;
-                            @include tablet {
-                                width: vw(30, 393);
-                                height: vw(30, 393);
-                            }
-                        }
-                    }
-
-                    &:hover .play-btn {
-                        opacity: 1;
-                    }
-                }
-
-                h4 {
-                    @include font-18px-600;
-                    margin-bottom: vw(6px);
-                    line-height: 1;
-                }
-
-                strong {
-                    @include font-18px-400;
-                    margin-bottom: vw(6px);
-                    color: $g777;
-                    width: vw(168);
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    display: block;
-                }
-
-                p {
-                    @include font-18px-400;
-                    color: $g777;
-                }
-            }
-        }
-        .artist-swiper {
-            width: 100%;
-            padding: 0 0 0 vw(10, 393);
-            box-sizing: border-box;
-            .artist-slide {
-                li {
-                    width: vw(60, 393);
-                    cursor: pointer;
-                    img {
-                        width: vw(60, 393);
-                        height: vw(60, 393);
-                        margin-bottom: vw(10, 393);
-                        border-radius: vw(30, 393);
-                        object-fit: cover;
-                        overflow: hidden;
-                        cursor: pointer;
-                    }
-                    h4 {
-                        @include m-font-14px-500();
-                        width: vw(60, 393);
-                        margin-bottom: vw(4, 393);
-                        text-align: center;
-                        white-space: nowrap;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                    }
-                    p {
-                        @include m-font-12px-400();
-                        width: vw(60, 393);
-                        text-align: center;
-                        white-space: nowrap;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                    }
-                }
-            }
-        }
-        .artist-wrap {
-            @include display_ju;
-            gap: 60px;
-            li {
-                text-align: center;
-
-                img {
-                    width: vw(120px);
-                    height: vw(120px);
-                    border-radius: 120px;
-                    box-sizing: border-box;
-                    margin-bottom: vw(20px);
-                    object-fit: cover;
-                    cursor: pointer;
-                }
-                h4 {
-                    @include font-16px-700;
-                    width: vw(120px);
-                    margin-bottom: vw(8px);
-                    text-align: center;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                }
-                p {
-                    @include font-14px-500;
-                    width: vw(120px);
-                    text-align: center;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                }
-            }
-        }
-        .genre-wrap {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            @include tablet {
-                width: (100%, 393);
-            }
-            li {
-                cursor: pointer;
-                margin-bottom: vw(30);
-                &:nth-child(7),
-                &:nth-child(8) {
-                    @include tablet {
-                        margin-bottom: vw(0, 393);
-                    }
-                }
-                @include tablet {
-                    width: vw(173.5, 393);
-                    margin-bottom: vw(16, 393);
-                }
-
-                .genre-sub-img {
-                    position: relative;
-                    display: block;
-                    overflow: hidden; // 오버레이 안 넘치게
-                    transition: transform 0.3s; // 박스 이동 애니메이션
-                    @include tablet {
-                        width: vw(173.5, 393);
-                        height: vw(97, 393);
-                        border-radius: vw(10, 393);
-                    }
-
-                    img {
-                        border-radius: vw(10);
-                        width: vw(337);
-                        height: vw(190);
-                        display: block;
-                        object-fit: cover;
-                        @include tablet {
-                            width: 100%;
-                            height: 100%;
-                        }
-                    }
-
-                    // 오버레이
-                    &::after {
-                        content: '';
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        width: 100%;
-                        height: 100%;
-                        background: rgba(0, 0, 0, 0.4);
-                        border-radius: vw(10);
-                        opacity: 0;
-                        transition: opacity 0.3s; // <-- 여기!
-                        @include tablet {
-                            border-radius: vw(10, 393);
-                        }
-                    }
-
-                    span {
-                        font-family: 'Bricolage Grotesque', 'sans-serif';
-                        position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
-                        opacity: 0;
-                        transition: opacity 0.3s; // <-- 여기!
-                        color: $fff !important;
-                        z-index: 1;
-                        @include font-40px-800();
-                        @include tablet {
-                            @include m-font-26px-800;
-                            color: $fff;
-                        }
-                    }
-
-                    &:hover {
-                        transform: translateY(vw(20));
-                        @include tablet {
-                            transform: translateY(vw(16, 393)) !important;
-                        }
-
-                        &::after {
-                            opacity: 1;
-                        }
-
-                        span {
-                            opacity: 1;
-                        }
-                    }
-                }
-                p {
-                    text-align: center;
-                    @include font-20px-600();
-                    margin-top: vw(16);
-                    transition: opacity 0.3s;
-                    @include tablet {
-                        margin-top: vw(10, 393);
-                        @include m-font-14px-600;
-                    }
-                }
-                &:hover {
-                    p {
-                        opacity: 0;
-                    }
-                    .genre-sub-img {
-                        transform: translateY(vw(20));
-                        @include tablet {
-                            transform: translateY(vw(10), 393);
-                        }
-
-                        span {
-                            opacity: 1;
-                            z-index: 50;
-                        }
-                    }
-                }
-            }
-        }
-
-        .mv-visual-wrap {
-            @include display_between;
-            @include tablet {
-                display: flex;
-                flex-wrap: wrap;
-            }
-            // align-items: center;
-            margin-bottom: vw(40px);
-            .video {
-                width: vw(710px);
-                height: vw(400px);
-                border-radius: vw(10px);
-                box-sizing: border-box;
-                overflow: hidden;
-                position: relative;
-                @include tablet {
-                    width: vw(357, 393);
-                    height: vw(200, 393);
-                    border-radius: vw(10, 393);
-                    margin-bottom: vw(14, 393);
-                }
-                .play-btn {
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    opacity: 0;
-                    transition: opacity 0.3s ease;
-                    z-index: 100;
-                    cursor: pointer;
-                    background: none;
-                    &:hover {
-                        background: none;
-                        opacity: 1;
-                    }
-                    img {
-                        width: vw(50px);
-                        height: vw(50px);
-                        margin-bottom: 0;
-                        background: none;
-                        @include tablet {
                             width: vw(30, 393);
                             height: vw(30, 393);
                         }
                     }
-                }
-                iframe {
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    width: 100%; // 부모 가로에 맞춤
-                    height: 100%;
-                    transform: translate(-50%, -50%);
-                    pointer-events: none; // 클릭 막기 (텍스트 클릭 가능)
-                }
-            }
-            .text-wrap {
-                width: vw(660px);
-                @include tablet {
-                    width: vw(357, 393);
-                }
-                strong {
-                    width: 100%;
-                    display: block;
-                    @include font-40px-600;
-                    line-height: 1;
-                    margin-bottom: vw(10px);
-                    @include tablet {
-                        @include m-font-20px-600;
-                        margin-bottom: vw(6, 393);
-                    }
-                }
-                em {
-                    width: 100%;
-                    @include display_between;
-                    margin-bottom: vw(60px);
-                    @include font-20px-600;
-                    @include tablet {
-                        @include m-font-14px-400;
-                        align-items: center;
-                        margin-bottom: vw(20, 393);
-                    }
-                    span {
-                        @include font-16px-400;
-                        color: $grey777;
-                        display: block;
-                        text-align: right;
-                        height: vw(24px);
-                        line-height: vw(24px);
-                        padding-right: vw(12px);
-                        @include tablet {
-                            @include m-font-12px-400;
-                            color: $grey777;
-                        }
-                    }
-                }
-                p {
-                    width: 100%;
-                    color: $grey777;
-                    line-height: 1.5;
-                    @include tablet {
-                        @include m-font-14px-400;
-                        color: $grey777;
-                        line-height: 1.4;
-                        margin-bottom: vw(20, 393);
-                        display: -webkit-box;
-                        -webkit-line-clamp: 3; /* 표시할 줄 수 */
-                        -webkit-box-orient: vertical;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                    }
-                }
-            }
-        }
-        .newmv-wrap {
-            @include display_between;
-            @include tablet {
-                display: flex;
-                gap: vw(10, 393) !important;
-            }
-
-            li {
-                position: relative;
-                &:nth-child(3) {
-                    @include tablet {
-                        display: none;
-                    }
-                }
-                @include tablet {
-                    width: vw(173.5, 393) !important;
-                }
-                .video-wrap {
-                    position: relative;
-                    width: vw(444px);
-                    height: vw(250px);
-                    border-radius: 10px;
-                    overflow: hidden;
-                    margin-bottom: vw(20px);
-                    @include tablet {
-                        width: vw(173.5, 393) !important;
-                        height: vw(97, 393) !important;
-                        margin-bottom: vw(10, 393);
-                    }
-
-                    video {
-                        width: 100%;
-                        height: 100%;
-                        display: block;
-                    }
-
                     &::after {
                         content: '';
                         position: absolute;
@@ -797,78 +310,577 @@
                     &:hover::after {
                         opacity: 1;
                     }
+                    &:hover .play-btn {
+                        opacity: 1;
+                    }
+                }
+                h4 {
+                    @include m-font-14px-600;
+                    margin-bottom: vw(4, 393);
+                    line-height: 1;
+                    text-align: left;
+                }
 
+                strong {
+                    @include m-font-14px-400;
+                    margin-bottom: vw(4, 393);
+                    line-height: 1;
+                    color: $grey777;
+                    width: vw(100, 393);
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: block;
+                    text-align: left;
+                }
+
+                p {
+                    @include m-font-14px-400;
+                    line-height: 1;
+                    color: $grey777;
+                    width: vw(100, 393);
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: block;
+                    text-align: left;
+                }
+            }
+            .top100-wrap {
+                width: 100%;
+                @include display_between;
+                li {
+                    cursor: pointer;
+                    .img-wrap {
+                        position: relative;
+                        display: block; // 최신화된 버전 반영
+                        width: vw(168px);
+                        height: vw(168px);
+                        margin-bottom: vw(20px);
+                        &:hover strong {
+                            opacity: 1;
+                            transition: 0.25s ease;
+                            top: vw(10);
+                        }
+                        strong {
+                            position: absolute;
+                            top: vw(60);
+                            left: vw(14);
+                            @include font-32px-800;
+                            line-height: 1;
+                            z-index: 50;
+                            opacity: 0;
+                        }
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            border-radius: 10px;
+                            display: block;
+                        }
+
+                        // 오버레이
+                        &::after {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            background: rgba(0, 0, 0, 0.4);
+                            border-radius: 10px;
+                            opacity: 0;
+                            transition: opacity 0.3s ease;
+                            z-index: 1;
+                            pointer-events: none; // 첫 번째 코드에서 유지
+                        }
+
+                        &:hover::after {
+                            opacity: 1;
+                        }
+
+                        .play-btn {
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            z-index: 2;
+                            opacity: 0;
+                            transition: opacity 0.3s ease;
+                            background: none;
+                            cursor: pointer;
+
+                            img {
+                                width: vw(50px);
+                                height: vw(50px);
+                                margin-bottom: 0;
+                                @include tablet {
+                                    width: vw(30, 393);
+                                    height: vw(30, 393);
+                                }
+                            }
+                        }
+
+                        &:hover .play-btn {
+                            opacity: 1;
+                        }
+                    }
+
+                    h4 {
+                        @include font-18px-600;
+                        margin-bottom: vw(6px);
+                        line-height: 1;
+                    }
+
+                    strong {
+                        @include font-18px-400;
+                        margin-bottom: vw(6px);
+                        color: $g777;
+                        width: vw(168);
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        display: block;
+                    }
+
+                    p {
+                        @include font-18px-400;
+                        color: $g777;
+                    }
+                }
+            }
+            .artist-swiper {
+                width: 100%;
+                padding: 0 0 0 vw(10, 393);
+                box-sizing: border-box;
+                .artist-slide {
+                    li {
+                        width: vw(60, 393);
+                        cursor: pointer;
+                        img {
+                            width: vw(60, 393);
+                            height: vw(60, 393);
+                            margin-bottom: vw(10, 393);
+                            border-radius: vw(30, 393);
+                            object-fit: cover;
+                            overflow: hidden;
+                            cursor: pointer;
+                        }
+                        h4 {
+                            @include m-font-14px-500();
+                            width: vw(60, 393);
+                            margin-bottom: vw(4, 393);
+                            text-align: center;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                        p {
+                            @include m-font-12px-400();
+                            width: vw(60, 393);
+                            text-align: center;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
+                }
+            }
+            .artist-wrap {
+                @include display_ju;
+                gap: 60px;
+                li {
+                    text-align: center;
+
+                    img {
+                        width: vw(120px);
+                        height: vw(120px);
+                        border-radius: 120px;
+                        box-sizing: border-box;
+                        margin-bottom: vw(20px);
+                        object-fit: cover;
+                        cursor: pointer;
+                    }
+                    h4 {
+                        @include font-16px-700;
+                        width: vw(120px);
+                        margin-bottom: vw(8px);
+                        text-align: center;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                    p {
+                        @include font-14px-500;
+                        width: vw(120px);
+                        text-align: center;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+            }
+            .genre-wrap {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                @include tablet {
+                    width: (100%, 393);
+                }
+                li {
+                    cursor: pointer;
+                    margin-bottom: vw(30);
+                    &:nth-child(7),
+                    &:nth-child(8) {
+                        @include tablet {
+                            margin-bottom: vw(0, 393);
+                        }
+                    }
+                    @include tablet {
+                        width: vw(173.5, 393);
+                        margin-bottom: vw(16, 393);
+                    }
+
+                    .genre-sub-img {
+                        position: relative;
+                        display: block;
+                        overflow: hidden; // 오버레이 안 넘치게
+                        transition: transform 0.3s; // 박스 이동 애니메이션
+                        @include tablet {
+                            width: vw(173.5, 393);
+                            height: vw(97, 393);
+                            border-radius: vw(10, 393);
+                        }
+
+                        img {
+                            border-radius: vw(10);
+                            width: vw(337);
+                            height: vw(190);
+                            display: block;
+                            object-fit: cover;
+                            @include tablet {
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
+
+                        // 오버레이
+                        &::after {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            background: rgba(0, 0, 0, 0.4);
+                            border-radius: vw(10);
+                            opacity: 0;
+                            transition: opacity 0.3s; // <-- 여기!
+                            @include tablet {
+                                border-radius: vw(10, 393);
+                            }
+                        }
+
+                        span {
+                            font-family: 'Bricolage Grotesque', 'sans-serif';
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            opacity: 0;
+                            transition: opacity 0.3s; // <-- 여기!
+                            color: $fff !important;
+                            z-index: 1;
+                            @include font-40px-800();
+                            @include tablet {
+                                @include m-font-26px-800;
+                                color: $fff;
+                            }
+                        }
+
+                        &:hover {
+                            transform: translateY(vw(20));
+                            @include tablet {
+                                transform: translateY(vw(16, 393)) !important;
+                            }
+
+                            &::after {
+                                opacity: 1;
+                            }
+
+                            span {
+                                opacity: 1;
+                            }
+                        }
+                    }
+                    p {
+                        text-align: center;
+                        @include font-20px-600();
+                        margin-top: vw(16);
+                        transition: opacity 0.3s;
+                        @include tablet {
+                            margin-top: vw(10, 393);
+                            @include m-font-14px-600;
+                        }
+                    }
+                    &:hover {
+                        p {
+                            opacity: 0;
+                        }
+                        .genre-sub-img {
+                            transform: translateY(vw(20));
+                            @include tablet {
+                                transform: translateY(vw(10), 393);
+                            }
+
+                            span {
+                                opacity: 1;
+                                z-index: 50;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .mv-visual-wrap {
+                @include display_between;
+                @include tablet {
+                    display: flex;
+                    flex-wrap: wrap;
+                }
+                // align-items: center;
+                margin-bottom: vw(40px);
+                .video {
+                    width: vw(710px);
+                    height: vw(400px);
+                    border-radius: vw(10px);
+                    box-sizing: border-box;
+                    overflow: hidden;
+                    position: relative;
+                    @include tablet {
+                        width: vw(357, 393);
+                        height: vw(200, 393);
+                        border-radius: vw(10, 393);
+                        margin-bottom: vw(14, 393);
+                    }
                     .play-btn {
                         position: absolute;
                         top: 50%;
                         left: 50%;
                         transform: translate(-50%, -50%);
-                        z-index: 2; // 오버레이 위
                         opacity: 0;
                         transition: opacity 0.3s ease;
+                        z-index: 100;
                         cursor: pointer;
                         background: none;
-
+                        &:hover {
+                            background: none;
+                            opacity: 1;
+                        }
                         img {
                             width: vw(50px);
                             height: vw(50px);
+                            margin-bottom: 0;
+                            background: none;
                             @include tablet {
                                 width: vw(30, 393);
                                 height: vw(30, 393);
                             }
                         }
                     }
-
-                    &:hover .play-btn {
-                        opacity: 1;
+                    iframe {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        width: 100%; // 부모 가로에 맞춤
+                        height: 100%;
+                        transform: translate(-50%, -50%);
+                        pointer-events: none; // 클릭 막기 (텍스트 클릭 가능)
                     }
                 }
-                h4 {
-                    @include font-18px-600;
-                    margin-bottom: vw(6px);
-                    line-height: 1;
-                    width: vw(444px);
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
+                .text-wrap {
+                    width: vw(660px);
                     @include tablet {
-                        width: vw(173.5, 393) !important;
-                        @include m-font-16px-600;
+                        width: vw(357, 393);
+                    }
+                    strong {
+                        width: 100%;
+                        display: block;
+                        @include font-40px-600;
                         line-height: 1;
-                        margin-bottom: vw(6, 393);
+                        margin-bottom: vw(10px);
+                        @include tablet {
+                            @include m-font-20px-600;
+                            margin-bottom: vw(6, 393);
+                        }
                     }
-                }
-
-                strong {
-                    @include font-18px-400;
-                    margin-bottom: vw(6px);
-                    color: $g777;
-                    width: vw(444px);
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    display: block;
-                    @include tablet {
-                        width: vw(173.5, 393) !important;
-                        @include m-font-14px-400;
+                    em {
+                        width: 100%;
+                        @include display_between;
+                        margin-bottom: vw(60px);
+                        @include font-20px-600;
+                        @include tablet {
+                            @include m-font-14px-400;
+                            align-items: center;
+                            margin-bottom: vw(20, 393);
+                        }
+                        span {
+                            @include font-16px-400;
+                            color: $grey777;
+                            display: block;
+                            text-align: right;
+                            height: vw(24px);
+                            line-height: vw(24px);
+                            padding-right: vw(12px);
+                            @include tablet {
+                                @include m-font-12px-400;
+                                color: $grey777;
+                            }
+                        }
+                    }
+                    p {
+                        width: 100%;
                         color: $grey777;
-                        line-height: 1;
-                        margin-bottom: vw(6, 393);
+                        line-height: 1.5;
+                        @include tablet {
+                            @include m-font-14px-400;
+                            color: $grey777;
+                            line-height: 1.4;
+                            margin-bottom: vw(20, 393);
+                            display: -webkit-box;
+                            -webkit-line-clamp: 3; /* 표시할 줄 수 */
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
                     }
                 }
+            }
+            .newmv-wrap {
+                @include display_between;
+                @include tablet {
+                    display: flex;
+                    gap: vw(10, 393) !important;
+                }
 
-                p {
-                    width: vw(444px);
-                    @include font-18px-400;
-                    color: $g777;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
+                li {
+                    position: relative;
+                    &:nth-child(3) {
+                        @include tablet {
+                            display: none;
+                        }
+                    }
                     @include tablet {
                         width: vw(173.5, 393) !important;
-                        @include m-font-14px-400;
-                        color: $grey777;
+                    }
+                    .video-wrap {
+                        position: relative;
+                        width: vw(444px);
+                        height: vw(250px);
+                        border-radius: 10px;
+                        overflow: hidden;
+                        margin-bottom: vw(20px);
+                        @include tablet {
+                            width: vw(173.5, 393) !important;
+                            height: vw(97, 393) !important;
+                            margin-bottom: vw(10, 393);
+                        }
+
+                        video {
+                            width: 100%;
+                            height: 100%;
+                            display: block;
+                        }
+
+                        &::after {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            background: rgba(0, 0, 0, 0.4);
+                            opacity: 0;
+                            transition: opacity 0.3s ease;
+                            z-index: 1;
+                            pointer-events: none;
+                        }
+
+                        &:hover::after {
+                            opacity: 1;
+                        }
+
+                        .play-btn {
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            z-index: 2; // 오버레이 위
+                            opacity: 0;
+                            transition: opacity 0.3s ease;
+                            cursor: pointer;
+                            background: none;
+
+                            img {
+                                width: vw(50px);
+                                height: vw(50px);
+                                @include tablet {
+                                    width: vw(30, 393);
+                                    height: vw(30, 393);
+                                }
+                            }
+                        }
+
+                        &:hover .play-btn {
+                            opacity: 1;
+                        }
+                    }
+                    h4 {
+                        @include font-18px-600;
+                        margin-bottom: vw(6px);
                         line-height: 1;
+                        width: vw(444px);
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        @include tablet {
+                            width: vw(173.5, 393) !important;
+                            @include m-font-16px-600;
+                            line-height: 1;
+                            margin-bottom: vw(6, 393);
+                        }
+                    }
+
+                    strong {
+                        @include font-18px-400;
+                        margin-bottom: vw(6px);
+                        color: $g777;
+                        width: vw(444px);
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        display: block;
+                        @include tablet {
+                            width: vw(173.5, 393) !important;
+                            @include m-font-14px-400;
+                            color: $grey777;
+                            line-height: 1;
+                            margin-bottom: vw(6, 393);
+                        }
+                    }
+
+                    p {
+                        width: vw(444px);
+                        @include font-18px-400;
+                        color: $g777;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        @include tablet {
+                            width: vw(173.5, 393) !important;
+                            @include m-font-14px-400;
+                            color: $grey777;
+                            line-height: 1;
+                        }
                     }
                 }
             }

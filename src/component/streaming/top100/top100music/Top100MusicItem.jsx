@@ -4,7 +4,6 @@ import { usemainAlbumStore } from '../../../../store';
 import Likemodal from '../../../likemodal/Likemodal';
 import { usePlaylistStore } from '../../../../store/albumSlice';
 import useUserStore from '../../../../store/userSlice';
-
 const Top100MusicItem = ({ item, rank, isSelected, playlists }) => {
     const [minute, setMinute] = useState(0);
     const [liked, setLiked] = useState(false);
@@ -16,13 +15,10 @@ const Top100MusicItem = ({ item, rank, isSelected, playlists }) => {
     const addPlaylist = usePlaylistStore((state) => state.addPlaylist);
     const selectPlaylist = usePlaylistStore((state) => state.selectPlaylist);
     const isLoggedIn = useUserStore((state) => state.isLoggedIn);
-
     const MStart = usemainAlbumStore((state) => state.MStart);
-
     useEffect(() => {
         setMinute(Math.floor(Math.random() * 60));
     }, []);
-
     return (
         <>
             <tr className={isSelected ? 'selected' : ''}>
@@ -81,7 +77,6 @@ const Top100MusicItem = ({ item, rank, isSelected, playlists }) => {
                     />
                 </td>
             </tr>
-
             {dropdownOpen && (
                 <tr className="dropdown-row">
                     <td colSpan={9}>
@@ -101,5 +96,4 @@ const Top100MusicItem = ({ item, rank, isSelected, playlists }) => {
         </>
     );
 };
-
 export default Top100MusicItem;

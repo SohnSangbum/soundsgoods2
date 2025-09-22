@@ -12,25 +12,28 @@ const StreamingMainWrap = ({ data, allGenres, onSelect }) => {
     }, []);
     return (
         <section id="streaming-wrap">
-            <div className="video-visual">
-                <div className="bg-opacity"></div>
-                <iframe
-                    src="https://www.youtube.com/embed/ekr2nIex040?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&showinfo=0&loop=1&playlist=ekr2nIex040"
-                    title="dd"
-                    frameBorder="0"
-                    allow="autoplay; encrypted-media"
-                    allowFullScreen
-                ></iframe>
-                <div className="video-text">
-                    MUSIC<span>Streaming</span>
+            <div className="space">&nbsp;</div>
+            <div className="streaming-main-con">
+                <div className="video-visual">
+                    <div className="bg-opacity"></div>
+                    <iframe
+                        src="https://www.youtube.com/embed/ekr2nIex040?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&showinfo=0&loop=1&playlist=ekr2nIex040"
+                        title="dd"
+                        frameBorder="0"
+                        allow="autoplay; encrypted-media"
+                        allowFullScreen
+                    ></iframe>
+                    <div className="video-text">
+                        MUSIC<span>Streaming</span>
+                    </div>
                 </div>
-            </div>
 
-            <Con1Latest />
-            <Con2Top100 />
-            <Con3Artist />
-            <Con4Genre data={data} allGenres={allGenres} onSelect={onSelect} />
-            <Con5Newmv />
+                <Con1Latest />
+                <Con2Top100 />
+                <Con3Artist />
+                <Con4Genre data={data} allGenres={allGenres} onSelect={onSelect} />
+                <Con5Newmv />
+            </div>
         </section>
     );
 };

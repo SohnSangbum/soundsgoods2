@@ -257,7 +257,7 @@ const Main_visual = ({ onVideoPlay }) => {
                 .to(
                     titleRef.current,
                     {
-                        x: '-90%',
+                        x: '-140%',
                         fontSize: 80,
                         duration: 1,
                         ease: 'power2.out',

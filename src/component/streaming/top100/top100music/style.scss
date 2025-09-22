@@ -2,6 +2,11 @@
 #top100-music {
     width: vw(1410);
     margin: auto;
+    display: flex;
+    .space {
+        width: vw(230);
+        flex-shrink: 0;
+    }
     h2 {
         @include font-34px-600();
         margin-bottom: vw(50);

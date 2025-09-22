@@ -1,10 +1,16 @@
 import { create } from 'zustand';
 
 const getLocalPlaylists = () => JSON.parse(localStorage.getItem('playlists')) || [];
+const getLocalSelected = () => JSON.parse(localStorage.getItem('selectedPlaylist')) || null;
+const getLocalSelectedItem = () => JSON.parse(localStorage.getItem('selectedItem')) || null;
+
+
+const getLocalPlaylists = () => JSON.parse(localStorage.getItem('playlists')) || [];
 
 const getLocalSelected = () => JSON.parse(localStorage.getItem('selectedPlaylist')) || null;
 
 const getLocalSelectedItem = () => JSON.parse(localStorage.getItem('selectedItem')) || null;
+
 
 export const usePlaylistStore = create((set, get) => ({
     playlists: getLocalPlaylists(),
@@ -22,12 +28,18 @@ export const usePlaylistStore = create((set, get) => ({
         set({ playlists: newPlaylists });
     },
 
+
+
+
     deletePlaylist: (id) => {
         const newPlaylists = get().playlists.filter((p) => p.id !== id);
         localStorage.setItem('playlists', JSON.stringify(newPlaylists));
         set({ playlists: newPlaylists });
         if (get().selectedPlaylist?.id === id) get().deselectPlaylist();
     },
+
+
+
 
     selectPlaylist: (playlist) => {
         localStorage.setItem('selectedPlaylist', JSON.stringify(playlist));

@@ -2,8 +2,6 @@
 @use 'sass:math';
 
 .main-card {
-    overflow: hidden;
-
     :root {
         --dark: #000;
         --light: #f9f4eb;
@@ -15,6 +13,10 @@
 
     * {
         box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'DM Sans';
     }
 
     h1 {
@@ -41,7 +43,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        z-index: 20; // z-index 증가
+        z-index: 10;
 
         .logo span,
         .menu-btn span {
@@ -258,25 +260,17 @@
     }
 
     .main-card-cards {
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100svh;
         display: flex;
         justify-content: center;
-        z-index: 5;
+        z-index: 1;
         background-color: var(--light);
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-
-        // con3 섹션에서만 클릭 가능하도록
-        &.active {
-            pointer-events: auto;
-            opacity: 1;
-        }
     }
+
     .main-card-cards-container {
         position: relative;
         width: 75%;
