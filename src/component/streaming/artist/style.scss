@@ -1,7 +1,7 @@
 @use '../../../styled/utils' as *;
 
 #artist-wrap {
-    width: 100%; //100vw 말고 100%
+    width: 100%;
     .inner {
         max-width: vw(1410);
         width: 100%;
