@@ -1,68 +1,68 @@
 li.song_item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 16px;
-  width: vw(920);
-
-  .song_img_wrapper {
-    position: relative;
-    margin-right: 16px;
-
-    img.song_img {
-      width: 111px;
-      height: 111px;
-      object-fit: cover;
-      border-radius: 8px;
-      display: block;
-    }
-
-    .delete_btn {
-      position: absolute;
-      top: 4px;
-      right: 4px;
-      font-size: 1.2rem;
-      color: white;
-      background-color: rgba(0, 0, 0, 0.5);
-      border-radius: 50%;
-      width: 24px;
-      height: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    &:hover .delete_btn {
-      opacity: 1;
-    }
-  }
-
-  .song_info {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
+    width: vw(920);
 
-    .info_head {
-      .song_title {
-        font-size: 1.1rem;
-        font-weight: bold;
-        margin-bottom: 4px;
-      }
+    .song_img_wrapper {
+        position: relative;
+        margin-right: 16px;
+
+        img.song_img {
+            width: 111px;
+            height: 111px;
+            object-fit: cover;
+            border-radius: 8px;
+            display: block;
+        }
+
+        .delete_btn {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            font-size: 1.2rem;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        &:hover .delete_btn {
+            opacity: 1;
+        }
     }
 
-    .song_artist,
-    .song_album,
-    .song_release {
-      font-size: 0.9rem;
-      color: #888;
-      margin-bottom: 2px;
-    }
+    .song_info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
 
-    .song_release {
-      font-size: 0.8rem;
-      color: #aaa;
+        .info_head {
+            .song_title {
+                font-size: 1.1rem;
+                font-weight: bold;
+                margin-bottom: 4px;
+            }
+        }
+
+        .song_artist,
+        .song_album,
+        .song_release {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 2px;
+        }
+
+        .song_release {
+            font-size: 0.8rem;
+            color: #aaa;
+        }
     }
-  }
 }
