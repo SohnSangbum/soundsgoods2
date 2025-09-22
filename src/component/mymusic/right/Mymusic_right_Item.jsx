@@ -1,31 +1,61 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { usemainAlbumStore } from '../../../store';
-
-const Mymusic_right_Item = () => {
+import { AiOutlineClose } from 'react-icons/ai';
+const Mymusic_right_Item = ({ song, type = 'top', onDelete }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const { MStart, MStop } = usemainAlbumStore();
+
+    const {
+        togglePlayPause, // MStart 대신 togglePlayPause 사용
+
+        currentPlayerId,
+    } = usemainAlbumStore();
+
+    // 이 아이템이 현재 재생 중인지 확인
+    const isCurrentPlaying = isPlaying && currentPlayerId === song.id;
+    const handleDelete = (e) => {
+        e.stopPropagation(); // 재생 이벤트 막기
+        onDelete(song.id); // 부모에게 삭제 요청
+    };
+    const handleClick1 = () => {
+        togglePlayPause(song.id, type); // 토글 함수 사용
+    };
     const handleClick = () => {
         if (isPlaying) {
-            // 재생 중이면 일시정지
-            MStop(data.id); // 필요 시 스토어에서 정지 함수 호출
+            MStop(song.id); // 재생 중이면 정지
             setIsPlaying(false);
         } else {
-            // 정지 상태면 재생
-            MStart(data.id, type); // type 전달로 topData / mainAlAtData 구분
+            MStart(song.id, type); // 정지 상태면 재생
             setIsPlaying(true);
         }
     };
+
     return (
         <div className="Mymusic_right_Item" onClick={handleClick}>
             <div className="right_img">
-                <img src="../../../../../public/images/mymusic/music1.jpg" alt="" />
+                <img src={song.image} alt={song.title} />
+                <button className="play-btn">
+                    <img
+                        src={
+                            isCurrentPlaying
+                                ? '/images/streaming/mv-pause-icon.png'
+                                : '/images/streaming/mv-play-icon.png'
+                        }
+                        alt={isCurrentPlaying ? 'Pause' : 'Play'}
+                        style={{ cursor: 'pointer' }}
+                        onClick={handleClick1}
+                    />
+                </button>
             </div>
             <div className="right_text">
                 <div className="title">
-                    <h2>아아아</h2>
-                    <div className="subtitle">
-                        <p>ㅏㅇ아아ㅏㅇ</p>
+                    <h2>{song.title}</h2>
+                    <div className="xbutton">
+                        <AiOutlineClose onClick={handleDelete} />
                     </div>
+                </div>
+                <div className="subtitle">
+                    <p>{song.artist}</p>
                 </div>
             </div>
         </div>

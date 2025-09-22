@@ -1,10 +1,18 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const RecommendListItem = () => {
+const RecommendListItem = ({ artist }) => {
+    const navigate = useNavigate();
+    const goInfo = () => {
+        navigate(`/streaming/artistinfo/${artist.id}`);
+    };
     return (
         <div className="recomendlistItem">
-            <div className="recomendlistimg">
-                <img src="../../../../../public/images/mymusic/recommend1.png" alt="" />
+            <div className="recomendlistimg" onClick={goInfo}>
+                <img src={artist.imageS} alt="" />{' '}
+                <div className="artistTitle">
+                    <h2>{artist.artist}</h2>
+                </div>
             </div>
         </div>
     );

@@ -94,6 +94,7 @@
             box-shadow: 0 0 vw(4) 0 rgba(0, 0, 0, 0.25);
             backdrop-filter: blur(25px);
             display: flex;
+
             flex-direction: column;
 
             .left_playlisttitle {
@@ -148,10 +149,11 @@
                 margin-bottom: vw(20);
                 position: relative;
                 width: vw(880);
-                height: vw(151);
+
                 display: flex;
-                justify-content: space-between;
+                gap: vw(30);
                 right: 0;
+
                 .nonebox {
                     display: flex;
                     flex-direction: column; // 세로 정렬
@@ -210,106 +212,155 @@
                 width: vw(880);
                 height: vw(160);
                 display: flex;
-                justify-content: space-between;
 
                 .recomendlistItem {
-                    width: vw(160);
-                    height: vw(160);
+                    display: flex;
+                    width: vw(180);
+                    flex-direction: column;
+                    align-items: center;
 
-                    .recomendlistimg img {
-                        width: 100%;
-                        height: 100%;
+                    .recomendlistimg {
+                        position: relative;
+                        width: vw(150);
+                        height: vw(120);
                         object-fit: cover;
                         display: block;
+                        .aritstTitle {
+                            margin-top: vw(5);
+                            display: flex;
+                            justify-content: center;
+                            h2 {
+                                text-align: center;
+                                font-size: vw(15);
+                            }
+                        }
+                        img {
+                            width: vw(120);
+                            height: vw(120);
+                            object-fit: cover;
+                        }
+
+                        &:hover {
+                            img {
+                                filter: brightness(60%);
+                            }
+                        }
+                        &::after {
+                            content: '+';
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            font-size: vw(60);
+                            color: $fff;
+                            opacity: 0;
+                            transform: translate(-50%, -50%);
+                            transform-origin: center center;
+                            transition: opacity 0.3s ease;
+                        }
+                        &:hover::after {
+                            opacity: 1;
+                            animation: spin 0.3s ease-in-out forwards;
+                        }
                     }
-                }
-            }
-            .recommnedlisttitle {
-                width: vw(880);
-                display: flex;
-                justify-content: space-between;
-                margin-bottom: 20px;
-                h2 {
-                    font-size: vw(18);
+                    @keyframes spin {
+                        0% {
+                            opacity: 0;
+                            transform: translate(-50%, -50%) rotate(0deg) scale(1);
+                        }
+
+                        100% {
+                            opacity: 1;
+                            transform: translate(-50%, -50%) rotate(360deg) scale(1);
+                        }
+                    }
                 }
             }
         }
-    }
-    //이용권
-    .Mymusic_promotion {
-        margin-top: vw(20);
-        .Mymusic_promotion_List {
-            width: vw(920);
-            height: vw(204);
-            padding: vw(40) vw(60);
-            border-radius: vw(20);
-            background: rgba(255, 255, 255, 0.6);
-            box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
-            backdrop-filter: blur(25px);
-            .PromotionItembigbox {
-                width: vw(880);
-                height: vw(160);
-                display: flex;
-                justify-content: space-between;
+        .recommnedlisttitle {
+            width: vw(880);
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            h2 {
+                font-size: vw(18);
             }
-            .Mymusic_PromotionList {
-                width: vw(880);
+        }
+    }
+}
+//이용권
+.Mymusic_promotion {
+    margin-top: vw(20);
+    .Mymusic_promotion_List {
+        width: vw(920);
+        height: vw(204);
+        padding: vw(40) vw(60);
+        border-radius: vw(20);
+        background: rgba(255, 255, 255, 0.6);
+        box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(25px);
+        .PromotionItembigbox {
+            width: vw(880);
+            height: vw(160);
+            display: flex;
+            justify-content: space-between;
+        }
+        .Mymusic_PromotionList {
+            width: vw(880);
+            height: vw(160);
+            display: flex;
+            justify-content: space-between;
+            .PromotionItem {
+                width: vw(160);
                 height: vw(160);
-                display: flex;
-                justify-content: space-between;
-                .PromotionItem {
-                    width: vw(160);
-                    height: vw(160);
-                    border-radius: vw(20);
-                    background: #fff;
-                    box-shadow: 0 0 vw(5) 0 rgba(0, 0, 0, 0.25);
-                    .PromotionItembox {
-                        .Promotionimg {
-                            display: flex;
-                            flex-direction: column;
-                            justify-content: center;
-                            align-items: center;
-                            text-align: center;
-                            h2 {
-                                color: #777;
-                                font-size: vw(14);
-                            }
-                            p {
-                                color: #777;
-                                font-size: vw(18);
-                            }
-                            img {
-                                margin-top: vw(25);
-                                display: block;
-                                width: vw(50);
-                                height: vw(50);
-                                margin-bottom: vw(10);
-                            }
+                border-radius: vw(20);
+                background: #fff;
+                box-shadow: 0 0 vw(5) 0 rgba(0, 0, 0, 0.25);
+                .PromotionItembox {
+                    .Promotionimg {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        text-align: center;
+                        h2 {
+                            color: #777;
+                            font-size: vw(14);
+                        }
+                        p {
+                            color: #777;
+                            font-size: vw(18);
+                        }
+                        img {
+                            margin-top: vw(25);
+                            display: block;
+                            width: vw(50);
+                            height: vw(50);
+                            margin-bottom: vw(10);
                         }
                     }
+                }
 
-                    .PromotionItembox {
-                        width: 100%;
-                        height: 100%;
-                        object-fit: cover;
-                        display: block;
-                    }
+                .PromotionItembox {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
                 }
             }
-            .Mymusic_promotion_title {
-                width: vw(880);
-                display: flex;
-                justify-content: space-between;
-                margin-bottom: vw(20);
-                h2 {
-                    font-size: vw(18);
-                    font-weight: 500;
-                    color: #777777;
-                }
-                p {
-                    font-weight: 500;
-                    font-size: vw(18);
-                }
+        }
+        .Mymusic_promotion_title {
+            width: vw(880);
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: vw(20);
+            h2 {
+                font-size: vw(18);
+                font-weight: 500;
+                color: #777777;
+            }
+            p {
+                font-weight: 500;
+                font-size: vw(18);
             }
         }
     }

@@ -1,21 +1,15 @@
-import React from 'react';
+import { usePlaylistStore } from '../../../store/albumSlice';
 import Mymusic_right_Item from './Mymusic_right_Item';
 
 const Mymusic_right_List = () => {
+    const myMusicList = usePlaylistStore((state) => state.myMusicList) || [];
+    const removeSong = usePlaylistStore((state) => state.removeSong);
+
     return (
         <div className="Mymusic_right_List">
-            <Mymusic_right_Item />
-            <Mymusic_right_Item />
-            <Mymusic_right_Item />
-            <Mymusic_right_Item />
-            <Mymusic_right_Item />
-            <Mymusic_right_Item />
-            <Mymusic_right_Item />
-            <Mymusic_right_Item />
-            <Mymusic_right_Item />
-            <Mymusic_right_Item />
-            <Mymusic_right_Item />
-            <Mymusic_right_Item />
+            {myMusicList.map((song) => (
+                <Mymusic_right_Item key={song.id} song={song} onDelete={removeSong} />
+            ))}
         </div>
     );
 };

@@ -12,8 +12,16 @@ const Mymusic_left_playlist = () => {
 
     const [newPlaylistName, setNewPlaylistName] = useState('');
 
+    const MAX_PLAYLISTS = 6;
+
     const handleAddPlaylist = () => {
         if (!newPlaylistName.trim()) return;
+
+        if (playlists.length >= MAX_PLAYLISTS) {
+            alert(`플레이리스트는 최대 ${MAX_PLAYLISTS}개까지 생성할 수 있습니다.`);
+            return;
+        }
+
         addPlaylist(newPlaylistName);
         setNewPlaylistName('');
     };
