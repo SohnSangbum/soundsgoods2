@@ -1,316 +1,316 @@
-@use "../../../styled/utils" as *;
+@use '../../../styled/utils' as *;
 
 .Mymusic_left {
-  margin-right: vw(30);
-  .Mymusic_left_profile {
-    .left_profile {
-      width: vw(920);
-      height: vw(160);
-      padding: vw(50) vw(60);
-      border-radius: vw(20);
-      background: rgba(255, 255, 255, 0.6);
-      box-shadow: 0 0 vw(4) 0 rgba(0, 0, 0, 0.25);
-      backdrop-filter: blur(25px);
-      display: flex;
-
-      .profile {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        .profile_top {
-          width: vw(500);
-          margin-bottom: vw(40);
-          h2 {
-            font-size: vw(24);
-          }
-          p {
-            font-size: vw(14);
-          }
-        }
-        .profile_friend {
-          display: flex;
-          position: absolute;
-          top: vw(59);
-          right: vw(60);
-          .profile_follow {
-            text-align: center;
-            h2 {
-              font-size: vw(18);
-            }
-            p {
-              font-size: vw(16);
-            }
-          }
-          .profile_following {
-            text-align: center;
-            margin-left: vw(40);
-            h2 {
-              font-size: vw(18);
-            }
-            p {
-              font-size: vw(16);
-            }
-          }
-        }
-        .profile_bottom {
-          h2 {
-            font-size: vw(14);
+    margin-right: vw(30);
+    .Mymusic_left_profile {
+        .left_profile {
+            width: vw(920);
+            height: vw(160);
+            padding: vw(50) vw(60);
+            border-radius: vw(20);
+            background: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 vw(4) 0 rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(25px);
             display: flex;
-            strong {
-              font-size: vw(12);
-              margin-left: vw(30);
-            }
-          }
-          p {
-            font-size: vw(18);
-          }
-        }
-        // 이미지
-      }
-      .profileimg {
-        display: flex;
-        justify-content: center;
-        width: vw(160);
-        height: vw(160);
-        img {
-          width: vw(160);
-          height: vw(160);
-          object-fit: cover;
-          border-radius: vw(500);
-          margin-right: vw(40);
-        }
-      }
-    }
-  }
-  // 플레이리스트
-  .Mymusic_left_playlist {
-    margin-top: vw(20);
-    .left_playlist {
-      width: vw(920);
-      height: vw(195);
-      padding: vw(40) vw(60);
-      border-radius: vw(20);
-      background: rgba(255, 255, 255, 0.6);
-      box-shadow: 0 0 vw(4) 0 rgba(0, 0, 0, 0.25);
-      backdrop-filter: blur(25px);
-      display: flex;
-      flex-direction: column;
 
-      .left_playlisttitle {
-        width: vw(880);
-        height: vw(30);
-        display: flex;
-        justify-content: space-between;
-        h2 {
-          font-size: vw(18);
-        }
-        .add_playlist {
-          display: flex;
-          width: vw(250);
-          display: flex;
-          justify-content: space-between;
-          input {
-            width: vw(180);
-            height: vw(20);
-            border-radius: vw(20);
-            background: rgba(255, 255, 255, 0.6);
-            box-shadow: 0 0 vw(4) 0 rgba(0, 0, 0, 0.25);
-            backdrop-filter: blur(25px);
-            border: none;
-            align-items: center;
-            margin-bottom: 50px;
-          }
-          button {
-            padding: vw(5);
-            width: vw(50);
-            height: vw(20);
-            border-radius: vw(20);
-            background: rgba(255, 255, 255, 0.6);
-            box-shadow: 0 0 vw(4) 0 rgba(0, 0, 0, 0.25);
-            backdrop-filter: blur(25px);
-            padding: 0;
-            p {
-              display: flex;
-              justify-content: center;
-              text-align: center;
-              font-size: 40px;
+            .profile {
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                .profile_top {
+                    width: vw(500);
+                    margin-bottom: vw(40);
+                    h2 {
+                        font-size: vw(24);
+                    }
+                    p {
+                        font-size: vw(14);
+                    }
+                }
+                .profile_friend {
+                    display: flex;
+                    position: absolute;
+                    top: vw(59);
+                    right: vw(60);
+                    .profile_follow {
+                        text-align: center;
+                        h2 {
+                            font-size: vw(18);
+                        }
+                        p {
+                            font-size: vw(16);
+                        }
+                    }
+                    .profile_following {
+                        text-align: center;
+                        margin-left: vw(40);
+                        h2 {
+                            font-size: vw(18);
+                        }
+                        p {
+                            font-size: vw(16);
+                        }
+                    }
+                }
+                .profile_bottom {
+                    h2 {
+                        font-size: vw(14);
+                        display: flex;
+                        strong {
+                            font-size: vw(12);
+                            margin-left: vw(30);
+                        }
+                    }
+                    p {
+                        font-size: vw(18);
+                    }
+                }
+                // 이미지
             }
-            &:hover {
-              background: rgba(255, 255, 255, 0.8);
-              box-shadow: 0 0 vw(8) 0 rgba(0, 0, 0, 0.35);
-              transform: scale(1.05);
+            .profileimg {
+                display: flex;
+                justify-content: center;
+                width: vw(160);
+                height: vw(160);
+                img {
+                    width: vw(160);
+                    height: vw(160);
+                    object-fit: cover;
+                    border-radius: vw(500);
+                    margin-right: vw(40);
+                }
             }
-          }
         }
-      }
-      .left_playlistmusic2 {
+    }
+    // 플레이리스트
+    .Mymusic_left_playlist {
         margin-top: vw(20);
-        margin-bottom: vw(20);
-        position: relative;
-        width: vw(880);
-        height: vw(151);
-        display: flex;
-        justify-content: space-between;
-        right: 0;
-        .nonebox {
-          display: flex;
-          flex-direction: column; // 세로 정렬
-          align-items: center; // 가로 중앙 정렬
-          justify-content: center; // 세로 중앙 정렬 (부모 높이 지정 시)
-          margin: 0 auto;
-          text-align: center;
+        .left_playlist {
+            width: vw(920);
+            height: vw(195);
+            padding: vw(40) vw(60);
+            border-radius: vw(20);
+            background: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 vw(4) 0 rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(25px);
+            display: flex;
+            flex-direction: column;
 
-          img {
-            width: vw(70);
-            height: vw(70);
-          }
-
-          h2 {
-            margin-top: vw(10);
-            font-size: 20px;
-          }
-        }
-
-        .playlistItem {
-          width: vw(121);
-          height: vw(151);
-
-          .playlistimg {
-            align-items: center;
-            margin-bottom: vw;
-            width: vw(120);
-            height: vw(120);
-            img {
-              width: vw(120);
-              height: vw(120);
-              border-radius: vw(5);
+            .left_playlisttitle {
+                width: vw(880);
+                height: vw(30);
+                display: flex;
+                justify-content: space-between;
+                h2 {
+                    font-size: vw(18);
+                }
+                .add_playlist {
+                    display: flex;
+                    width: vw(250);
+                    display: flex;
+                    justify-content: space-between;
+                    input {
+                        width: vw(180);
+                        height: vw(20);
+                        border-radius: vw(20);
+                        background: rgba(255, 255, 255, 0.6);
+                        box-shadow: 0 0 vw(4) 0 rgba(0, 0, 0, 0.25);
+                        backdrop-filter: blur(25px);
+                        border: none;
+                        align-items: center;
+                        margin-bottom: 50px;
+                    }
+                    button {
+                        padding: vw(5);
+                        width: vw(50);
+                        height: vw(20);
+                        border-radius: vw(20);
+                        background: rgba(255, 255, 255, 0.6);
+                        box-shadow: 0 0 vw(4) 0 rgba(0, 0, 0, 0.25);
+                        backdrop-filter: blur(25px);
+                        padding: 0;
+                        p {
+                            display: flex;
+                            justify-content: center;
+                            text-align: center;
+                            font-size: 40px;
+                        }
+                        &:hover {
+                            background: rgba(255, 255, 255, 0.8);
+                            box-shadow: 0 0 vw(8) 0 rgba(0, 0, 0, 0.35);
+                            transform: scale(1.05);
+                        }
+                    }
+                }
             }
-            h2 {
-              font-size: vw(14);
-              font-size: 600;
-              text-align: center;
+            .left_playlistmusic2 {
+                margin-top: vw(20);
+                margin-bottom: vw(20);
+                position: relative;
+                width: vw(880);
+                height: vw(151);
+                display: flex;
+                justify-content: space-between;
+                right: 0;
+                .nonebox {
+                    display: flex;
+                    flex-direction: column; // 세로 정렬
+                    align-items: center; // 가로 중앙 정렬
+                    justify-content: center; // 세로 중앙 정렬 (부모 높이 지정 시)
+                    margin: 0 auto;
+                    text-align: center;
+
+                    img {
+                        width: vw(70);
+                        height: vw(70);
+                    }
+
+                    h2 {
+                        margin-top: vw(10);
+                        font-size: 20px;
+                    }
+                }
+
+                .playlistItem {
+                    width: vw(121);
+                    height: vw(151);
+
+                    .playlistimg {
+                        align-items: center;
+                        margin-bottom: vw;
+                        width: vw(120);
+                        height: vw(120);
+                        img {
+                            width: vw(120);
+                            height: vw(120);
+                            border-radius: vw(5);
+                        }
+                        h2 {
+                            font-size: vw(14);
+                            font-size: 600;
+                            text-align: center;
+                        }
+                    }
+                }
             }
-          }
         }
-      }
     }
-  }
-  //추천플리
-  .Recomnedplaylist {
-    margin-top: vw(20);
-    .recommendList {
-      width: vw(920);
-      height: vw(204);
-      padding: vw(40) vw(60);
-      border-radius: vw(20);
-      background: rgba(255, 255, 255, 0.6);
-      box-shadow: 0 0 vw(4) 0 rgba(0, 0, 0, 0.25);
-      backdrop-filter: blur(25px);
-      .Recomnedplaylist1 {
-        width: vw(880);
-        height: vw(160);
-        display: flex;
-        justify-content: space-between;
+    //추천플리
+    .Recomnedplaylist {
+        margin-top: vw(20);
+        .recommendList {
+            width: vw(920);
+            height: vw(204);
+            padding: vw(40) vw(60);
+            border-radius: vw(20);
+            background: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 vw(4) 0 rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(25px);
+            .Recomnedplaylist1 {
+                width: vw(880);
+                height: vw(160);
+                display: flex;
+                justify-content: space-between;
 
-        .recomendlistItem {
-          width: vw(160);
-          height: vw(160);
+                .recomendlistItem {
+                    width: vw(160);
+                    height: vw(160);
 
-          .recomendlistimg img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-          }
-        }
-      }
-      .recommnedlisttitle {
-        width: vw(880);
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 20px;
-        h2 {
-          font-size: vw(18);
-        }
-      }
-    }
-  }
-  //이용권
-  .Mymusic_promotion {
-    margin-top: vw(20);
-    .Mymusic_promotion_List {
-      width: vw(920);
-      height: vw(204);
-      padding: vw(40) vw(60);
-      border-radius: vw(20);
-      background: rgba(255, 255, 255, 0.6);
-      box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
-      backdrop-filter: blur(25px);
-      .PromotionItembigbox {
-        width: vw(880);
-        height: vw(160);
-        display: flex;
-        justify-content: space-between;
-      }
-      .Mymusic_PromotionList {
-        width: vw(880);
-        height: vw(160);
-        display: flex;
-        justify-content: space-between;
-        .PromotionItem {
-          width: vw(160);
-          height: vw(160);
-          border-radius: vw(20);
-          background: #fff;
-          box-shadow: 0 0 vw(5) 0 rgba(0, 0, 0, 0.25);
-          .PromotionItembox {
-            .Promotionimg {
-              display: flex;
-              flex-direction: column;
-              justify-content: center;
-              align-items: center;
-              text-align: center;
-              h2 {
-                color: #777;
-                font-size: vw(14);
-              }
-              p {
-                color: #777;
-                font-size: vw(18);
-              }
-              img {
-                margin-top: vw(25);
-                display: block;
-                width: vw(50);
-                height: vw(50);
-                margin-bottom: vw(10);
-              }
+                    .recomendlistimg img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        display: block;
+                    }
+                }
             }
-          }
-
-          .PromotionItembox {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-          }
+            .recommnedlisttitle {
+                width: vw(880);
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+                h2 {
+                    font-size: vw(18);
+                }
+            }
         }
-      }
-      .Mymusic_promotion_title {
-        width: vw(880);
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: vw(20);
-        h2 {
-          font-size: vw(18);
-          font-weight: 500;
-          color: #777777;
-        }
-        p {
-          font-weight: 500;
-          font-size: vw(18);
-        }
-      }
     }
-  }
+    //이용권
+    .Mymusic_promotion {
+        margin-top: vw(20);
+        .Mymusic_promotion_List {
+            width: vw(920);
+            height: vw(204);
+            padding: vw(40) vw(60);
+            border-radius: vw(20);
+            background: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(25px);
+            .PromotionItembigbox {
+                width: vw(880);
+                height: vw(160);
+                display: flex;
+                justify-content: space-between;
+            }
+            .Mymusic_PromotionList {
+                width: vw(880);
+                height: vw(160);
+                display: flex;
+                justify-content: space-between;
+                .PromotionItem {
+                    width: vw(160);
+                    height: vw(160);
+                    border-radius: vw(20);
+                    background: #fff;
+                    box-shadow: 0 0 vw(5) 0 rgba(0, 0, 0, 0.25);
+                    .PromotionItembox {
+                        .Promotionimg {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;
+                            text-align: center;
+                            h2 {
+                                color: #777;
+                                font-size: vw(14);
+                            }
+                            p {
+                                color: #777;
+                                font-size: vw(18);
+                            }
+                            img {
+                                margin-top: vw(25);
+                                display: block;
+                                width: vw(50);
+                                height: vw(50);
+                                margin-bottom: vw(10);
+                            }
+                        }
+                    }
+
+                    .PromotionItembox {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        display: block;
+                    }
+                }
+            }
+            .Mymusic_promotion_title {
+                width: vw(880);
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: vw(20);
+                h2 {
+                    font-size: vw(18);
+                    font-weight: 500;
+                    color: #777777;
+                }
+                p {
+                    font-weight: 500;
+                    font-size: vw(18);
+                }
+            }
+        }
+    }
 }
