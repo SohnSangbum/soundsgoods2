@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './style.scss';
 import { useNavigate } from 'react-router-dom';
-import cardList from '../../../assets/api/cardData';
+import cardList from '../../../assets/api/cardData'; // 별도 파일로 분리
 
 const MainCard = () => {
     const sectionRef = useRef(null);
@@ -15,24 +15,8 @@ const MainCard = () => {
     const svgRef = useRef(null);
     const textAnimationRef = useRef(null);
     const nav = useNavigate();
-    const isCardsClickable = useRef(false);
-    const [scrollY, setScrollY] = useState(0);
 
-    const handleCardClick = (path) => {
-        if (isCardsClickable.current) {
-            nav(path);
-        }
-    };
-
-    // 스크롤 위치 추적
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrollY(window.scrollY);
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    const handleCardClick = (path) => nav(path);
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
@@ -106,19 +90,6 @@ const MainCard = () => {
             },
         });
 
-        // con2 섹션에 들어가면 카드들을 숨김
-        ScrollTrigger.create({
-            trigger: '.main-card-con2',
-            start: 'top bottom',
-            end: 'bottom top',
-            onEnter: () => {
-                gsap.set('.main-card-cards', { opacity: 0, pointerEvents: 'none' });
-            },
-            onLeaveBack: () => {
-                gsap.set('.main-card-cards', { opacity: 0, pointerEvents: 'none' });
-            },
-        });
-
         // 세 번째 섹션 스크롤 트리거
         const con3Trigger = ScrollTrigger.create({
             trigger: '.main-card-con3',
@@ -126,14 +97,6 @@ const MainCard = () => {
             end: `+=${window.innerHeight * 4}px`,
             pin: true,
             pinSpacing: true,
-            onEnter: () => {
-                // 카드 클릭 가능하도록 설정
-                isCardsClickable.current = true;
-                gsap.set('.main-card-cards', {
-                    opacity: 1,
-                    pointerEvents: 'auto',
-                });
-            },
             onLeave: () => {
                 const con3Section = document.querySelector('.main-card-con3');
                 const con3Top = window.pageYOffset + con3Section.getBoundingClientRect().top;
@@ -144,21 +107,15 @@ const MainCard = () => {
                     left: 0,
                     width: '100vw',
                     height: '100vh',
-                    opacity: 0,
-                    pointerEvents: 'none',
                 });
             },
             onEnterBack: () => {
-                // 다시 con3에 들어오면 클릭 활성화
-                isCardsClickable.current = true;
                 gsap.set('.main-card-cards', {
-                    position: 'absolute',
+                    position: 'fixed',
                     top: 0,
                     left: 0,
                     width: '100vw',
                     height: '100vh',
-                    opacity: 1,
-                    pointerEvents: 'auto',
                 });
             },
         });
@@ -275,7 +232,7 @@ const MainCard = () => {
                     id={id}
                     ref={refCallback}
                     onClick={() => handleCardClick(card.path)}
-                    style={{ cursor: isMain ? 'pointer' : 'default' }}
+                    style={{ cursor: 'pointer' }}
                 >
                     <div className="main-card-card-wrapper">
                         <div className="main-card-flip-card-inner">
@@ -362,9 +319,9 @@ const MainCard = () => {
                 </div>
             </section>
 
-            <div className="main-card-cards" ref={cardsRef}>
+            <section className="main-card-cards" ref={cardsRef}>
                 <div className="main-card-cards-container">{renderCards('main')}</div>
-            </div>
+            </section>
         </div>
     );
 };
