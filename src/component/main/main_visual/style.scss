@@ -23,6 +23,7 @@ body.scroll-locked {
         position: absolute;
         left: 0;
         top: vw(-136);
+        z-index: 100;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -34,6 +35,7 @@ body.scroll-locked {
             align-items: center;
             gap: vw(40);
             position: absolute;
+            z-index: 100;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
