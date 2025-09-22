@@ -1,10 +1,13 @@
-@use "../../styled/utils" as *;
+@use '../../styled/utils' as *;
 .likemodal {
-  display: flex;
-  h2 {
-    @include font-16px-500();
-  }
-  .dropdown_toggle {
-    width: 150px;
-  }
+    display: flex;
+    h2 {
+        @include font-16px-500();
+    }
+    .dropdown_toggle {
+        width: 150px;
+    }
+    li {
+        margin-bottom: 5px;
+    }
 }
