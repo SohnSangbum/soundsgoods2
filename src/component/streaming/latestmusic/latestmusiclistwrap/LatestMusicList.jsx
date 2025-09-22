@@ -3,10 +3,12 @@ import LatestMusicItem from './LatestMusicItem';
 import usePaginationStore from '../../../../store/paginationSlice';
 import Pagination from '../../pagination/Pagination';
 import { useEffect } from 'react';
-
+import useUserStore from '../../../../store/userSlice';
+import { usePlaylistStore } from '../../../../store/albumSlice';
 const LatestMusicList = ({ data, selectedAll }) => {
     const { setData, getCurrentPageData, currentPage, perPage } = usePaginationStore();
-
+    const { isLoggedIn } = useUserStore();
+    const playlists = usePlaylistStore((state) => state.playlists);
     useEffect(() => {
         setData(data); // 초기 데이터 세팅
     }, [setData, data]);
@@ -43,7 +45,12 @@ const LatestMusicList = ({ data, selectedAll }) => {
                 </thead>
                 <tbody>
                     {currentData.map((item, index) => (
-                        <LatestMusicItem key={item.id} item={item} isSelected={selectedAll} />
+                        <LatestMusicItem
+                            key={item.id}
+                            item={item}
+                            isSelected={selectedAll}
+                            playlists={isLoggedIn ? playlists : []}
+                        />
                     ))}
                 </tbody>
             </table>

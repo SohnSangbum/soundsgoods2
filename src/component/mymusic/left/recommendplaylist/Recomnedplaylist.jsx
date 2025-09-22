@@ -1,14 +1,15 @@
 import React from 'react';
 import RecommendListItem from './RecommendListItem';
+import useArtistStore from '../../../../store/artistSlice';
 
 const Recomnedplaylist = () => {
+    const follow = useArtistStore((state) => state.followedArtists);
+
     return (
         <div className="Recomnedplaylist1">
-            <RecommendListItem />
-            <RecommendListItem />
-            <RecommendListItem />
-            <RecommendListItem />
-            <RecommendListItem />
+            {follow.map((artist) => (
+                <RecommendListItem key={artist.id} artist={artist} />
+            ))}
         </div>
     );
 };
