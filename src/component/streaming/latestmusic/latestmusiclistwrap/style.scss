@@ -95,10 +95,10 @@
                 width: 28%;
             }
             &.col-artist {
-                width: 16%;
+                width: 20%;
             }
             &.col-time {
-                width: 16%;
+                width: 14%;
             }
             &.col-release {
                 width: auto;
@@ -177,7 +177,7 @@
                 p {
                     align-items: center;
                     word-break: keep-all;
-                    padding-right: vw(40px);
+                    padding-right: vw(60px);
                     display: -webkit-box;
                     -webkit-line-clamp: 2; /* 2줄까지만 표시 */
                     -webkit-box-orient: vertical;

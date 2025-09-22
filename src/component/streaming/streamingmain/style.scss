@@ -346,13 +346,19 @@
                     width: vw(168px);
                     height: vw(168px);
                     margin-bottom: vw(20px);
+                    &:hover strong {
+                        opacity: 1;
+                        transition: 0.25s ease;
+                        top: vw(10);
+                    }
                     strong {
                         position: absolute;
-                        top: vw(10);
+                        top: vw(60);
                         left: vw(14);
                         @include font-32px-800;
                         line-height: 1;
                         z-index: 50;
+                        opacity: 0;
                     }
                     img {
                         width: 100%;
