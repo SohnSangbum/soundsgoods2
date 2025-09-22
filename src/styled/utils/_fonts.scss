@@ -267,3 +267,10 @@
     line-height: 130%;
     color: $m_color1;
 }
+@mixin font-120px-700 {
+    font-size: vw(120);
+    font-weight: 700;
+    letter-spacing: vw(0);
+    line-height: 130%;
+    color: #fff;
+}

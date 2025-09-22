@@ -1,31 +1,55 @@
 // style.scss
 @use '../../../styled/utils' as *;
 
+// 스크롤 잠금 클래스
+body.scroll-locked {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
 #main-visual {
     width: 100vw;
-    height: 100vh;
+    height: vw(944);
     background-color: $fff;
-    overflow: hidden;
     position: relative;
     perspective: 1200px;
+    // overflow: hidden;
 
     .visual_wrap {
-        width: 100%;
-        height: 100%;
-        position: relative;
+        width: 100vw;
+        height: vw(1080);
+        position: absolute;
+        left: 0;
+        top: vw(-136);
         display: flex;
         justify-content: center;
         align-items: center;
         transform-style: preserve-3d;
 
         .visual {
-            @include display_center();
-            // 이미지 간격 조절 - 값이 작을수록 더 겹침
-            gap: vw(2);
-            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: vw(40);
             position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
             will-change: transform, opacity;
             transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            cursor: pointer;
+
+            // 확대된 상태
+            &.expanded {
+                z-index: 100 !important;
+
+                .pic {
+                    z-index: 1000;
+                    position: fixed;
+                }
+            }
 
             .pic {
                 width: vw(699);
@@ -35,6 +59,7 @@
                 z-index: 2;
                 border-radius: 8px;
                 transform-style: preserve-3d;
+                transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 
                 img {
                     width: 100%;
@@ -45,52 +70,131 @@
                     border-radius: 8px;
                 }
             }
-
+            header.hidden {
+                display: none !important;
+                opacity: 0;
+                visibility: hidden;
+            }
             strong {
-                // 텍스트 크기 조절
                 @include font-200px-700();
                 position: relative;
                 z-index: 1;
                 will-change: transform, opacity;
                 transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
                 color: $m_color1;
-                // 텍스트 그림자 조절
                 text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.7);
 
                 &.right-text {
                     text-align: right;
-                    // 오른쪽 텍스트 위치 조정 - 값 변경으로 위치 조절
                     margin-right: vw(60);
                 }
 
                 &.left-text {
                     text-align: left;
-                    // 왼쪽 텍스트 위치 조정 - 값 변경으로 위치 조절
                     margin-left: vw(60);
                 }
             }
         }
     }
 
-    // 페이지 인디케이터
-    .page-indicator {
-        position: absolute;
-        // 하단 위치 조정
-        bottom: vw(40);
-        // 우측 위치 조정
-        right: vw(60);
-        color: $m_color1;
-        // 폰트 크기 조정
-        font-size: vw(18);
-        font-weight: 500;
-        z-index: 20;
-
-        .current {
-            font-weight: 700;
+    // 전체 화면 비디오
+    .video_fullscreen {
+        position: fixed;
+        z-index: 999999; // 매우 높은 z-index로 헤더 위에 표시
+        top: vw(-136);
+        left: 0;
+        width: vw(1920);
+        height: vw(1080);
+        background: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        .title_1 {
+            @include p_center_center();
+            @include font-120px-700();
+            z-index: 10;
+            opacity: 0;
+        }
+        .title_2 {
+            @include p_center_top();
+            left: vw(789);
+            @include font-120px-700();
+            z-index: 10;
+            opacity: 0;
+            white-space: nowrap;
+        }
+        .title_3 {
+            position: absolute;
+            top: vw(600);
+            left: vw(789);
+            @include font-200px-700();
+            color: #fff;
+            z-index: 10;
+            opacity: 0;
+        }
+        .title_4 {
+            position: absolute;
+            top: vw(350);
+            left: vw(835);
+            @include font-120px-700();
+            z-index: 10;
+            opacity: 0;
+        }
+        .title_5 {
+            position: absolute;
+            top: vw(470);
+            left: vw(835);
+            @include font-120px-700();
+            z-index: 10;
+            opacity: 0;
+        }
+        .title_6 {
+            position: absolute;
+            top: vw(590);
+            left: vw(835);
+            @include font-120px-700();
+            z-index: 10;
+            opacity: 0;
+        }
+        .title_7 {
+            @include p_center_top();
+            left: vw(240);
+            @include font-120px-700();
+            z-index: 10;
+            opacity: 0;
         }
 
-        .separator {
-            margin: 0 vw(5);
+        video {
+            width: vw(1920);
+            height: vw(1080);
+            @include p_center_center();
+            z-index: 1;
+        }
+
+        .close_btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000002; // 가장 위에 표시
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.3);
+                transform: scale(1.1);
+            }
         }
     }
 }
@@ -98,38 +202,48 @@
 @include tablet {
     #main-visual {
         .visual_wrap .visual {
-            // 모바일에서 이미지 간격
-            gap: vw(2, 393);
+            gap: vw(20, 393);
 
             .pic {
-                // 모바일에서 이미지 크기
                 width: vw(500, 393);
                 height: vw(280, 393);
             }
 
             strong {
-                // 모바일에서 텍스트 크기
                 font-size: vw(120, 393);
 
                 &.right-text {
-                    // 모바일에서 오른쪽 텍스트 위치
                     margin-right: vw(15, 393);
                 }
 
                 &.left-text {
-                    // 모바일에서 왼쪽 텍스트 위치
                     margin-left: vw(15, 393);
                 }
             }
         }
 
-        .page-indicator {
-            // 모바일에서 하단 위치
-            bottom: vw(30, 393);
-            // 모바일에서 우측 위치
-            right: vw(40, 393);
-            // 모바일에서 폰트 크기
-            font-size: vw(16, 393);
+        .video_fullscreen {
+            .close_btn {
+                top: 15px;
+                right: 15px;
+                width: 40px;
+                height: 40px;
+                font-size: 24px;
+            }
+        }
+    }
+}
+
+@include mobile {
+    #main-visual {
+        .video_fullscreen {
+            .close_btn {
+                top: 10px;
+                right: 10px;
+                width: 35px;
+                height: 35px;
+                font-size: 20px;
+            }
         }
     }
 }

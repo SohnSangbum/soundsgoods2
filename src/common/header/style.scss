@@ -12,6 +12,11 @@
     &.active {
         height: vw(456px);
     }
+    &.hidden {
+        display: none !important;
+        opacity: 0;
+        visibility: hidden;
+    }
     .inner {
         height: vw(88);
         width: 78.125vw;
