@@ -37,9 +37,9 @@
             margin-top: auto;
             padding-bottom: vw(20);
             li {
-                margin-bottom: vw(16);
+                margin-bottom: vw(12);
                 a {
-                    color: $grey777;
+                    color: $grey555 !important;
                     @include font-16px-400();
                     text-decoration: none;
                     cursor: pointer;
