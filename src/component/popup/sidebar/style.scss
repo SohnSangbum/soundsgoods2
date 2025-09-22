@@ -7,6 +7,7 @@
     left: 0;
     top: vw(136);
     // border: 1px solid #000;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
     padding: vw(40);
     z-index: 100;
@@ -48,6 +49,7 @@
                 border-radius: vw(50px);
                 border: 1px solid #d395f6;
                 white-space: nowrap;
+                font-family: 'pretendard';
                 @include font-12px-400();
                 line-height: 200%;
             }
@@ -164,6 +166,7 @@
     border-radius: vw(50);
     top: vw(332);
     button {
+        font-family: 'pretendard';
         @include font-16px-500();
         color: #fff;
     }

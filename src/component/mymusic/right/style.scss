@@ -1,106 +1,170 @@
-@use "../../../styled/utils" as *;
+@use '../../../styled/utils' as *;
 .Mymusic_right {
-  position: relative;
-  width: vw(440);
-  height: vw(730);
-  background-color: rgba(255, 255, 255, 0.6);
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  border-radius: vw(20);
-  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
-  .musicplayer {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: vw(385);
-    height: vw(130);
-    border-radius: vw(8);
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 0 vw(3) 0 rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(1.5783px);
-    z-index: 10;
-    .Mymusic_modal {
-      padding: vw(24) vw(35);
-      display: flex;
-      .modal_img {
-        width: vw(87);
-        height: vw(87);
+    position: relative;
+    width: vw(440);
+    height: vw(730);
+    background-color: rgba(255, 255, 255, 0.6);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: vw(20);
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+    .musicplayer {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: vw(385);
+        height: vw(130);
+        border-radius: vw(8);
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 0 vw(3) 0 rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(1.5783px);
+        z-index: 10;
+        .Mymusic_modal {
+            padding: vw(24) vw(35);
+            display: flex;
+            .modal_img {
+                width: vw(87);
+                height: vw(87);
 
-        img {
-          width: vw(87);
-          height: vw(87);
+                img {
+                    width: vw(87);
+                    height: vw(87);
+                }
+            }
+            .right_text {
+                display: flex;
+                flex-direction: column;
+                text-align: left;
+                margin-left: vw(20px);
+                h2 {
+                    font-size: vw(16);
+                    font-weight: 600;
+                }
+                p {
+                    font-size: vw(14);
+                    font-weight: 600;
+                }
+                .modalbtn {
+                    width: vw(223);
+                    display: flex;
+                    justify-content: space-between;
+                    img {
+                        object-fit: contain;
+                    }
+                }
+            }
         }
-      }
-      .right_text {
-        display: flex;
-        flex-direction: column;
-        text-align: left;
-        margin-left: vw(20px);
+    }
+    .Mymusic_title {
+        text-align: center;
         h2 {
-          font-size: vw(16);
-          font-weight: 600;
+            font-size: vw(24);
+            font-weight: 400;
+            margin-top: vw(20);
+            margin-bottom: vw(40);
         }
-        p {
-          font-size: vw(14);
-          font-weight: 600;
-        }
-        .modalbtn {
-          width: vw(223);
-          display: flex;
-          justify-content: space-between;
-          img {
-            object-fit: contain;
-          }
-        }
-      }
     }
-  }
-  .Mymusic_title {
-    text-align: center;
-    h2 {
-      font-size: 24px;
-      font-weight: 400;
-      margin-top: 20px;
-      margin-bottom: vw(40);
-    }
-  }
 }
 .Mymusic_right_List {
-  width: vw(380);
-  height: vw(620);
-  overflow-y: auto;
-  overflow-x: hidden;
-  text-align: center;
-  margin-left: 40px;
-  margin-bottom: 25px;
+    width: vw(380);
+    height: vw(620);
+    overflow-y: auto;
+    overflow-x: hidden;
+    text-align: center;
+    margin-left: 40px;
+    margin-bottom: 25px;
 }
 .Mymusic_right_Item {
-  display: flex;
-  width: 20.833vw;
-  height: 5.729vw;
-  margin-bottom: vw(20);
-  .right_img {
-    width: vw(111);
-    height: vw(111);
-    img {
-      width: vw(111);
-      height: vw(111);
-    }
-  }
-  .right_text {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: left;
-    margin-left: vw(20px);
-    h2 {
-      @include font-18px-400();
+    width: 20.833vw;
+    height: 5.729vw;
+    margin-bottom: vw(20);
+
+    .right_img {
+        position: relative;
+        width: vw(111);
+        height: vw(111);
+
+        .play-btn {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%; // 이미지 영역 전체
+            height: 100%; // 이미지 영역 전체
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background: none;
+            cursor: pointer;
+
+            display: flex; // 아이콘 중앙 정렬
+            align-items: center;
+            justify-content: center;
+
+            img {
+                width: vw(50);
+                height: vw(50);
+                object-fit: cover;
+            }
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        &:hover::after {
+            opacity: 1;
+        }
+
+        &:hover .play-btn {
+            opacity: 1;
+        }
+
+        img {
+            width: vw(111);
+            height: vw(111);
+            object-fit: cover;
+        }
     }
-    p {
-      @include font-16px-400();
+
+    .right_text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        text-align: left;
+        margin-left: vw(20px);
+        .title {
+            width: vw(200);
+            display: flex;
+            justify-content: space-between;
+            .xbutton {
+                cursor: pointer;
+            }
+            h2 {
+                @include font-20px-400();
+            }
+        }
+        .subtitle {
+            display: flex;
+            justify-content: left;
+        }
+
+        p {
+            @include font-16px-400();
+            margin-right: vw(40);
+        }
     }
-  }
 }

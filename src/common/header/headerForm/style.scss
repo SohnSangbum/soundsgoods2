@@ -22,9 +22,12 @@ form {
         box-sizing: border-box;
         @include display_al();
         padding: vw(15) vw(64) vw(15) vw(30);
+        @include font-16px-400();
+
         &::placeholder {
             @include display_al();
-            @include font-14px-700();
+            @include font-14px-500();
+            color: $grey777;
             vertical-align: middle;
         }
     }
@@ -32,10 +35,11 @@ form {
         @include p_center_top();
         left: vw(486);
         z-index: 10;
+        display: block;
         i {
             @include display_center();
             color: $m_color2;
-            font-size: vw(24px);
+            font-size: vw(22px) !important;
         }
     }
 }

@@ -16,7 +16,7 @@ const HeaderM = () => {
             </p>
             <h2 className="logo">
                 <Link>
-                    <img src="" alt="" />
+                    <img src="/images/header/logo_type1.png" alt="" />
                 </Link>
             </h2>
             <ul className="nav_list">

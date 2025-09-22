@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react';
 import './style.scss';
 import IveList from './leftIveList/IveList';
 import ivedata from '../../../assets/api/iveData';
+import { useNavigate } from 'react-router-dom';
 const IveSecret = () => {
+    const navigate = useNavigate();
+    const onGoMusic = () => {
+        navigate('/streaming/artistinfo/12');
+    };
     const [data, setData] = useState(ivedata);
     const [musicVedio, setMusicVedio] = useState(ivedata[0]);
     const today = new Date();
@@ -41,7 +46,9 @@ const IveSecret = () => {
                                     <button>
                                         <img src="/images/icons/white_next.png" alt="" />
                                     </button>
-                                    <span className="more_music-vedio">신곡 더 보러가기</span>
+                                    <span className="more_music-vedio" onClick={onGoMusic}>
+                                        신곡 더 보러가기
+                                    </span>
                                 </div>
                             )}
                             <div className="leftImg">

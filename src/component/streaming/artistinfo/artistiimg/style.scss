@@ -23,6 +23,40 @@
             font-family: 'Bricolage Grotesque', 'pretendard';
         }
     }
+    .follow-btn {
+        display: flex;
+        justify-content: left; // justify-content: center;랑 중복됨 → left로 정리
+        align-items: center;
+        gap: vw(10);
+        color: #fff;
+        button {
+            width: vw(120);
+            height: vw(37);
+            color: #fff;
+            font-family: Pretendard;
+            font-size: vw(16);
+            font-weight: 600;
+            line-height: 130%;
+            border-radius: vw(50);
+            border: vw(2) solid #fff;
+            cursor: pointer;
+            transition: all 0.3s ease; // hover 애니메이션 추가
+
+            &:hover {
+                opacity: 0.8; // 마우스 올리면 살짝 투명
+            }
+
+            &.following {
+                background: #fff;
+                color: #000;
+
+                &:hover {
+                    background: #fff;
+                    color: #000;
+                }
+            }
+        }
+    }
 }
 
 @include tablet {
