@@ -8,24 +8,7 @@ const GoodsDetail = () => {
     const { goodsID } = useParams();
     const goods = useGoodsStore((state) => state.goods);
     const data = goods.find((item) => item.id === Number(goodsID));
-    const {
-        id,
-        artist,
-        title,
-        category,
-        price,
-        release,
-        cpn,
-        imageM,
-        imgaeS,
-        remain,
-        quantity,
-        like,
-        modal,
-        chk,
-        bookmark,
-        count,
-    } = data;
+
     return (
         <div id="goods_detail">
             <div className="inner">

@@ -1,0 +1,18 @@
+@use '../../styled/utils' as *;
+#payment_card {
+    width: 100%;
+    position: relative;
+    padding-top: vw(60);
+    .inner {
+        width: vw(1410);
+        margin: auto;
+        position: relative;
+        box-sizing: border-box;
+        padding: 0 vw(60);
+        .title {
+            text-align: center;
+            margin-bottom: vw(40);
+            @include font-30px-600();
+        }
+    }
+}
