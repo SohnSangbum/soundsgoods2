@@ -26,13 +26,13 @@
         .logo {
             @include p_center_top();
             left: vw(66, 393);
-            width: vw(80, 393);
             height: vw(20, 393);
             background-color: $m_color2;
             a {
                 display: block;
                 width: 100%;
                 img {
+                    height: vw(20, 393);
                     width: 100%;
                 }
             }

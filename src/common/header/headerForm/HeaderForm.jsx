@@ -35,12 +35,14 @@ const HeaderForm = () => {
             <input
                 type="text"
                 id="searchInput"
-                placeholder="검색"
+                placeholder="음악과 굿즈 검색을 한 번에!"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
             />
             <button type="submit" className="search_header">
-                <IoMdSearch />
+                <i>
+                    <IoMdSearch />
+                </i>
             </button>
         </form>
     );

@@ -99,6 +99,9 @@
             h2 {
                 @include font-14px-700();
                 font-size: vw(22px, 393);
+                img {
+                    height: vw(40, 393);
+                }
             }
             .sns_icons {
                 @include display_ju();
