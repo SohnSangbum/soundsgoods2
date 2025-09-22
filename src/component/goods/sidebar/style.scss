@@ -6,7 +6,7 @@
     left: 0;
     width: vw(230);
     height: vw(920);
-    border-right: 0.3px solid rgba(0, 0, 0, 0.6);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
     background: rgba(255, 255, 255, 0.2);
     z-index: 800;
     box-sizing: border-box;
@@ -45,6 +45,7 @@
                     box-sizing: border-box;
                     @include display_center();
                     span {
+                        font-family: 'pretendard';
                         @include font-12px-400();
                         white-space: nowrap;
                     }
