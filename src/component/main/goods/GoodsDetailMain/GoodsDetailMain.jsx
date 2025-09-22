@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import './style.scss';
 import GoodsFilter from '../../../goods/goodsFilter/goodsFilter/GoodsFilter';
 import LimitedGoodsList from '../../../goods/imitGoods/limitGoodsList/LimitedGoodsList';
+import { useNavigate } from 'react-router-dom';
 
 const GoodsDetailMain = () => {
+    const navigate = useNavigate();
+    const onGo = () => {
+        navigate('/goods');
+    };
     const [width, setWidth] = useState(window.innerWidth);
     return (
         <section className="goods_product_filter">
@@ -22,7 +27,9 @@ const GoodsDetailMain = () => {
                         <button>
                             <img src="/images/icons/white_next.png" alt="" />
                         </button>
-                        <span className="more_goods">더 굿즈 찾아보기</span>
+                        <span className="more_goods" onClick={onGo}>
+                            더 굿즈 찾아보기
+                        </span>
                     </div>
                 )}
             </div>
