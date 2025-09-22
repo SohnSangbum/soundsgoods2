@@ -4,12 +4,12 @@
 .profile-box {
     border-top: vw(1) solid rgba(119, 119, 119, 0.5);
     display: flex;
-    width: vw(1500);
+    width: vw(1410);
     justify-content: space-between;
     align-items: center;
     justify-content: center;
-    margin-bottom: vw(60);
-
+    padding-bottom: vw(60);
+    margin: auto;
     .imgbox {
         display: flex;
         padding: vw(20) vw(50);
@@ -37,7 +37,7 @@
         margin-left: vw(48);
         h2 {
             color: var(--main1, #6680ff);
-            font-size: vw(20);
+            font-size: vw(26);
             font-weight: 700;
             line-height: 130%;
         }

@@ -2,6 +2,8 @@
 
 //앨범리스트
 .allbumList {
+    margin: auto;
+
     .allbumTitle {
         display: flex;
         justify-content: space-between;
@@ -23,6 +25,7 @@
             font-weight: 600;
             border-bottom: vw(1) solid #000;
             cursor: pointer;
+            display: none;
         }
     }
     //앨범

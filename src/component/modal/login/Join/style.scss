@@ -14,12 +14,14 @@
         display: block;
         position: absolute;
         right: 0;
+        font-size: vw(24);
+
         padding: vw(26px);
         cursor: pointer;
     }
     h1 {
         font-size: vw(26px);
-        margin: vw(42px) 0 vw(40px) 0;
+        margin: vw(55px) 0 vw(40px) 0;
         font-weight: 700;
     }
     .joinInput {
@@ -119,7 +121,9 @@
             width: vw(260px);
             height: vw(40px);
             font-size: vw(16px);
-            font-weight: 800;
+            font-weight: 600;
+            font-family: 'pretendard';
+            padding: 0;
         }
     }
 }

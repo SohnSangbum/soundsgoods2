@@ -23,13 +23,13 @@ const MusicModal = () => {
         playPrevious,
     } = usemainAlbumStore();
 
-    const [isPlay, setIsPlay] = useState(true);
+    // const [isPlay, setIsPlay] = useState(true);
     const [isExpanded, setIsExpanded] = useState(false); // 기본 축소형
 
     // 플레이어 상태 동기화
     useEffect(() => {
         if (musicModal && players[musicModal.id]) {
-            setIsPlay(true);
+            // setIsPlay(true);  ← 삭제
             setVolume(musicModal.id, currentVolume);
         }
     }, [musicModal, players, currentVolume, setVolume]);
