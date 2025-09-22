@@ -1,21 +1,18 @@
 // Con2Top100Item.jsx
-import { useState } from 'react';
 import { usemainAlbumStore } from '../../../store';
 
 const Con2Top100Item = ({ data, type }) => {
-    const { MStart, MStop } = usemainAlbumStore();
-    const [isPlaying, setIsPlaying] = useState(false);
+    const {
+        togglePlayPause, // MStart 대신 togglePlayPause 사용
+        isPlaying,
+        currentPlayerId,
+    } = usemainAlbumStore();
+
+    // 이 아이템이 현재 재생 중인지 확인
+    const isCurrentPlaying = isPlaying && currentPlayerId === data.id;
 
     const handleClick = () => {
-        if (isPlaying) {
-            // 재생 중이면 일시정지
-            MStop(data.id); // 필요 시 스토어에서 정지 함수 호출
-            setIsPlaying(false);
-        } else {
-            // 정지 상태면 재생
-            MStart(data.id, type); // type 전달로 topData / mainAlAtData 구분
-            setIsPlaying(true);
-        }
+        togglePlayPause(data.id, type); // 토글 함수 사용
     };
 
     return (
@@ -27,11 +24,11 @@ const Con2Top100Item = ({ data, type }) => {
                     <img
                         className="img"
                         src={
-                            isPlaying
+                            isCurrentPlaying
                                 ? '/images/streaming/mv-pause-icon.png'
                                 : '/images/streaming/mv-play-icon.png'
                         }
-                        alt={isPlaying ? 'Pause' : 'Play'}
+                        alt={isCurrentPlaying ? 'Pause' : 'Play'}
                         style={{ cursor: 'pointer' }}
                     />
                 </button>

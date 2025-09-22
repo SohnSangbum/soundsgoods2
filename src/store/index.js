@@ -31,6 +31,16 @@ export const usemainAlbumStore = create((set, get) => {
         currentTime: 0, // 현재 재생 시간
         duration: 0, // 현재 트랙 전체 재생 길이
         timeInterval: null, // 재생 시간 업데이트 Interval
+        currentVolume: 40, // 볼륨 상태
+
+        // ==================== 플레이리스트 관리 영역 ====================
+        currentPlaylist: [], // 현재 재생 목록
+        currentIndex: 0, // 현재 재생 중인 곡의 인덱스
+        currentPlaylistType: null, // 현재 플레이리스트 타입
+        isShuffled: false, // 셔플 모드
+        isRepeat: false, // 반복 모드
+        originalPlaylist: [], // 셔플 전 원본 플레이리스트
+        isPlaying: false, // 재생 상태
 
         // 초 단위를 mm:ss 포맷으로 변환
         formatTime: (time) => {
@@ -38,6 +48,153 @@ export const usemainAlbumStore = create((set, get) => {
             const minutes = Math.floor(time / 60);
             const seconds = Math.floor(time % 60);
             return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        },
+
+        // ==================== 플레이리스트 관리 기능 ====================
+        // 플레이리스트 설정
+        setPlaylist: (tracks, currentId, type) => {
+            const currentIndex = tracks.findIndex((track) => track.id === currentId);
+            set({
+                currentPlaylist: tracks,
+                originalPlaylist: [...tracks], // 원본 저장
+                currentIndex: Math.max(0, currentIndex),
+                currentPlaylistType: type,
+            });
+        },
+
+        // 재생/일시정지 토글 함수(Con2에서만)
+        togglePlayPause: (id, type) => {
+            const { players, currentPlayerId, isPlaying } = get();
+            const YT = getYT();
+
+            if (currentPlayerId === id && players[id]) {
+                // 같은 곡이 재생 중이면 토글
+                try {
+                    const player = players[id];
+                    const playerState = player.getPlayerState();
+
+                    if (playerState === YT.PlayerState.PLAYING) {
+                        player.pauseVideo();
+                        set({ isPlaying: false });
+                    } else {
+                        player.playVideo();
+                        set({ isPlaying: true });
+                    }
+                } catch (error) {
+                    console.error('Error toggling playback:', error);
+                }
+            } else {
+                // 다른 곡이면 새로 재생 (처음부터)
+                get().MStart(id, type);
+            }
+        },
+
+        // 타입별 전체 트랙 가져오기
+        getAllTracksByType: (type) => {
+            const state = get();
+            switch (type) {
+                case 'top':
+                    return state.topData;
+                case 'latest':
+                    return state.latestData;
+                case 'genre':
+                    return state.genreData.flatMap((genre) => genre.music);
+                case 'artistInfo':
+                    return state.artistData.flatMap((artist) => artist.album);
+                case 'main':
+                    return state.mainArtistData;
+                default:
+                    return [];
+            }
+        },
+
+        // 셔플 토글
+        toggleShuffle: () => {
+            const { isShuffled, currentPlaylist, originalPlaylist, musicModal, isRepeat } = get();
+
+            if (!isShuffled) {
+                // 셔플 켜기: 현재 곡을 제외하고 나머지 섞기
+                const currentTrack = musicModal;
+                const otherTracks = originalPlaylist.filter(
+                    (track) => track.id !== currentTrack.id
+                );
+                const shuffledTracks = [...otherTracks].sort(() => Math.random() - 0.5);
+                const newPlaylist = [currentTrack, ...shuffledTracks];
+
+                set({
+                    currentPlaylist: newPlaylist,
+                    currentIndex: 0,
+                    isShuffled: true,
+                    isRepeat: false, // 셔플 켜면 반복 끄기
+                });
+            } else {
+                // 셔플 끄기: 원본 플레이리스트로 복원
+                const currentTrack = musicModal;
+                const originalIndex = originalPlaylist.findIndex(
+                    (track) => track.id === currentTrack.id
+                );
+
+                set({
+                    currentPlaylist: originalPlaylist,
+                    currentIndex: originalIndex,
+                    isShuffled: false,
+                });
+            }
+        },
+
+        // 반복 모드 토글
+        toggleRepeat: () => {
+            const { isRepeat } = get();
+            set({
+                isRepeat: !isRepeat,
+                isShuffled: false, // 반복 켜면 셔플 끄기
+            });
+        },
+
+        // 다음곡 재생
+        playNext: () => {
+            const { currentPlaylist, currentIndex, currentPlaylistType, isRepeat } = get();
+            let nextIndex;
+
+            if (currentIndex < currentPlaylist.length - 1) {
+                nextIndex = currentIndex + 1;
+            } else if (isRepeat) {
+                // 반복 모드면 첫 번째 곡으로
+                nextIndex = 0;
+            } else {
+                // 마지막 곡이면 재생 중지
+                set({ isPlaying: false });
+                return;
+            }
+
+            const nextTrack = currentPlaylist[nextIndex];
+            get().MStart(nextTrack.id, currentPlaylistType);
+            set({ currentIndex: nextIndex });
+        },
+
+        // 이전곡 재생
+        playPrevious: () => {
+            const { currentPlaylist, currentIndex, currentPlaylistType, isRepeat } = get();
+            let prevIndex;
+
+            if (currentIndex > 0) {
+                prevIndex = currentIndex - 1;
+            } else if (isRepeat) {
+                // 반복 모드면 마지막 곡으로
+                prevIndex = currentPlaylist.length - 1;
+            } else {
+                // 첫 번째 곡이면 그대로 처음부터 재생
+                const currentTrack = currentPlaylist[0];
+                const { players } = get();
+                if (players[currentTrack.id]) {
+                    players[currentTrack.id].seekTo(0);
+                }
+                return;
+            }
+
+            const prevTrack = currentPlaylist[prevIndex];
+            get().MStart(prevTrack.id, currentPlaylistType);
+            set({ currentIndex: prevIndex });
         },
 
         // ==================== 트랙 찾기 기능 ====================
@@ -209,13 +366,24 @@ export const usemainAlbumStore = create((set, get) => {
                     console.log('Using existing player:', track.id);
                     try {
                         const player = players[track.id];
+
+                        // 처음부터 재생하도록 시간을 0으로 설정
+                        player.seekTo(0);
+
                         const playerState = player.getPlayerState();
                         if (playerState === YT.PlayerState.PLAYING) {
                             player.pauseVideo();
+                            // 잠시 후 다시 재생 (시간 초기화 적용을 위해)
+                            setTimeout(() => {
+                                player.seekTo(0);
+                                player.playVideo();
+                            }, 100);
                         } else {
+                            player.seekTo(0);
                             player.playVideo();
                         }
-                        set({ currentPlayerId: track.id });
+
+                        set({ currentPlayerId: track.id, currentTime: 0 }); // currentTime도 0으로 초기화
                         resolve(player);
                     } catch (error) {
                         console.error('Error with existing player:', error);
@@ -252,7 +420,15 @@ export const usemainAlbumStore = create((set, get) => {
                                 console.log(`Player ready: ${track.id}`);
                                 try {
                                     const duration = event.target.getDuration();
-                                    set({ duration, currentPlayerId: track.id });
+                                    const savedVolume = get().currentVolume; // 저장된 볼륨
+
+                                    // 새 플레이어에 기존 볼륨 적용
+                                    event.target.setVolume(savedVolume);
+
+                                    set({
+                                        duration,
+                                        currentPlayerId: track.id,
+                                    });
                                     resolve(event.target);
                                 } catch (error) {
                                     console.error('Error in onReady:', error);
@@ -268,7 +444,7 @@ export const usemainAlbumStore = create((set, get) => {
                                     event.data === YT.PlayerState.PLAYING &&
                                     currentPlayerId === track.id
                                 ) {
-                                    // 1초마다 재생 시간 업데이트
+                                    // 재생 시작
                                     const interval = setInterval(() => {
                                         const state = get();
                                         if (
@@ -288,17 +464,20 @@ export const usemainAlbumStore = create((set, get) => {
                                         }
                                     }, 1000);
 
-                                    set({ timeInterval: interval });
+                                    set({ timeInterval: interval, isPlaying: true });
                                 } else if (event.data === YT.PlayerState.ENDED) {
-                                    // 곡 끝났을 때 초기화
-                                    set({ currentPlayerId: null, currentTime: 0 });
+                                    // 곡이 끝나면 자동으로 다음곡 재생
+                                    set({ currentTime: 0, isPlaying: false });
                                     const { timeInterval } = get();
                                     if (timeInterval) {
                                         clearInterval(timeInterval);
                                         set({ timeInterval: null });
                                     }
+                                    // 다음곡 자동 재생
+                                    get().playNext();
                                 } else if (event.data === YT.PlayerState.PAUSED) {
-                                    // 일시정지 시 interval 제거
+                                    // 일시정지
+                                    set({ isPlaying: false });
                                     const { timeInterval } = get();
                                     if (timeInterval) {
                                         clearInterval(timeInterval);
@@ -352,8 +531,15 @@ export const usemainAlbumStore = create((set, get) => {
                     track.album_img = track.image;
                 }
 
+                // 플레이리스트가 설정되지 않았거나 다른 타입이면 새로 설정
+                const { currentPlaylistType } = get();
+                if (currentPlaylistType !== type) {
+                    const allTracks = get().getAllTracksByType(type);
+                    get().setPlaylist(allTracks, id, type);
+                }
+
                 // 음악 실행 상태 업데이트
-                set({ musicOn: true, musicModal: track });
+                set({ musicOn: true, musicModal: track, isPlaying: true });
 
                 // YouTube API 준비
                 const state = get();
@@ -399,7 +585,7 @@ export const usemainAlbumStore = create((set, get) => {
             if (players[id]) {
                 try {
                     players[id].pauseVideo();
-                    set({ currentPlayerId: null });
+                    set({ currentPlayerId: null, isPlaying: false });
                     if (timeInterval) {
                         clearInterval(timeInterval);
                         set({ timeInterval: null });
@@ -410,12 +596,32 @@ export const usemainAlbumStore = create((set, get) => {
             }
         },
 
+        // 실제 플레이어 볼륨 가져오기
+        getCurrentPlayerVolume: (id) => {
+            const { players } = get();
+            if (players[id] && typeof players[id].getVolume === 'function') {
+                try {
+                    return players[id].getVolume();
+                } catch (error) {
+                    console.error('Error getting volume:', error);
+                    return get().currentVolume;
+                }
+            }
+            return get().currentVolume;
+        },
+
+        // 볼륨 업데이트 함수
+        updateVolume: (volume) => {
+            set({ currentVolume: volume });
+        },
+
         // ==================== 볼륨 조절 ====================
         setVolume: (id, volume) => {
             const { players } = get();
             if (players[id] && typeof players[id].setVolume === 'function') {
                 try {
                     players[id].setVolume(volume);
+                    set({ currentVolume: volume }); // 상태도 함께 업데이트
                 } catch (error) {
                     console.error('Error setting volume:', error);
                 }
@@ -443,6 +649,7 @@ export const usemainAlbumStore = create((set, get) => {
                 currentPlayerId: null,
                 currentTime: 0,
                 timeInterval: null,
+                isPlaying: false,
             });
         },
 
@@ -467,6 +674,7 @@ export const usemainAlbumStore = create((set, get) => {
                 currentPlayerId: null,
                 currentTime: 0,
                 timeInterval: null,
+                isPlaying: false,
             });
         },
     };

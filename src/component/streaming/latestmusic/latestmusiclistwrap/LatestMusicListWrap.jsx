@@ -9,9 +9,7 @@ const LatestMusicListWrap = () => {
     const [sortedList, setSortedList] = useState([...(newData_51_100 || [])]);
     const [sortOpen, setSortOpen] = useState(false);
     const [selectedAll, setSelectedAll] = useState(false);
-
-    const latestData = usemainAlbumStore((state) => state.latestData); // Zustand에서 가져오기
-    const [isMobile, setIsMobile] = useState(false);
+    const { MStart, setPlaylist } = usemainAlbumStore();
 
     const handleSelectAll = () => {
         setSelectedAll((prev) => !prev);
@@ -31,6 +29,20 @@ const LatestMusicListWrap = () => {
         setSortedList(newList);
     }, [sortType]);
 
+    // 전체 재생 함수
+    const handlePlayAll = () => {
+        if (sortedList && sortedList.length > 0) {
+            // 첫 번째 곡부터 재생 시작
+            const firstTrack = sortedList[0];
+
+            // 플레이리스트 설정 (정렬된 목록으로)
+            setPlaylist(sortedList, firstTrack.id, 'latest');
+
+            // 첫 번째 곡 재생
+            MStart(firstTrack.id, 'latest');
+        }
+    };
+
     return (
         <section id="latest-music">
             <h2>최신 음악</h2>
@@ -39,7 +51,7 @@ const LatestMusicListWrap = () => {
                     <button onClick={handleSelectAll}>
                         {selectedAll ? '전체 해제' : '전체 선택'}
                     </button>
-                    <button>전체 재생</button>
+                    <button onClick={handlePlayAll}>전체 재생</button>
                 </div>
                 <div className="latest-music-sort">
                     {!sortOpen && (
