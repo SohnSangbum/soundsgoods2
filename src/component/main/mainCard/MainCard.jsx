@@ -1,9 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './style.scss';
 import { useNavigate } from 'react-router-dom';
-import cardList from '../../../assets/api/cardData'; // 별도 파일로 분리
+import cardList from '../../../assets/api/cardData';
 
 const MainCard = () => {
     const sectionRef = useRef(null);
@@ -15,8 +15,16 @@ const MainCard = () => {
     const svgRef = useRef(null);
     const textAnimationRef = useRef(null);
     const nav = useNavigate();
+    const [cardsClickable, setCardsClickable] = useState(false);
+    const [con1CardsClickable, setCon1CardsClickable] = useState(false);
 
-    const handleCardClick = (path) => nav(path);
+    const handleCardClick = (path, cardType) => {
+        // 카드 타입별 클릭 가능 상태 확인
+        if (cardType === 'con1' && !con1CardsClickable) return;
+        if ((cardType === 'main' || cardType === 'mobile') && !cardsClickable) return;
+
+        nav(`/${path}`);
+    };
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
@@ -50,6 +58,28 @@ const MainCard = () => {
         };
 
         setupSvgAnimation();
+
+        // con1 카드 클릭 가능 상태 제어
+        ScrollTrigger.create({
+            trigger: '.main-card-con1',
+            start: 'top center',
+            end: 'bottom center',
+            onEnter: () => setCon1CardsClickable(true),
+            onLeave: () => setCon1CardsClickable(false),
+            onEnterBack: () => setCon1CardsClickable(true),
+            onLeaveBack: () => setCon1CardsClickable(false),
+        });
+
+        // con3 카드 클릭 가능 상태 제어
+        ScrollTrigger.create({
+            trigger: '.main-card-con3',
+            start: 'top center',
+            end: 'bottom center',
+            onEnter: () => setCardsClickable(true),
+            onLeave: () => setCardsClickable(false),
+            onEnterBack: () => setCardsClickable(true),
+            onLeaveBack: () => setCardsClickable(false),
+        });
 
         // 첫 번째 섹션 스크롤 트리거
         ScrollTrigger.create({
@@ -208,7 +238,7 @@ const MainCard = () => {
         });
 
         return () => ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    }, []);
+    }, [cardsClickable, con1CardsClickable]);
 
     // 카드 렌더링 함수
     const renderCards = (type) => {
@@ -225,14 +255,32 @@ const MainCard = () => {
                 else if (isMobile) mobileCardRefs.current[index] = el;
             };
 
+            // 카드 타입별 클릭 가능 상태 결정
+            let isClickable = false;
+            let clickableClass = '';
+
+            if (isCon1) {
+                isClickable = con1CardsClickable;
+                clickableClass = con1CardsClickable ? 'con1-clickable' : '';
+            } else if (isMain || isMobile) {
+                isClickable = cardsClickable;
+                clickableClass = cardsClickable ? 'clickable' : '';
+            }
+
+            const cardClassName = `main-card-card ${
+                isMobile ? 'mobile-card' : ''
+            } ${clickableClass}`;
+
             return (
                 <div
                     key={card.id}
-                    className={`main-card-card ${isMobile ? 'mobile-card' : ''}`}
+                    className={cardClassName}
                     id={id}
                     ref={refCallback}
-                    onClick={() => handleCardClick(card.path)}
-                    style={{ cursor: 'pointer' }}
+                    onClick={() => handleCardClick(card.id, type)}
+                    style={{
+                        cursor: isClickable ? 'pointer' : 'default',
+                    }}
                 >
                     <div className="main-card-card-wrapper">
                         <div className="main-card-flip-card-inner">
@@ -248,7 +296,7 @@ const MainCard = () => {
                                     }`}
                                 >
                                     <div className="pic">
-                                        {/* <img src={card.img} alt={`Card ${card.id}`} /> */}
+                                        <img src={card.backImg} alt={`Card ${card.id}`} />
                                     </div>
                                 </div>
                                 <div className="main-card-card-title"></div>

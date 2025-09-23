@@ -1,1 +1,14 @@
 @use '../../styled/utils' as *;
+#card_detail {
+    padding-top: vw(60);
+    padding-bottom: vw(231);
+    position: relative;
+    width: 100vw;
+    .inner {
+        width: vw(1410) !important;
+        box-sizing: border-box;
+        padding: vw(0) vw(60);
+        margin: auto;
+        position: relative;
+    }
+}

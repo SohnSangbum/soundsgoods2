@@ -19,6 +19,13 @@ const Top100MusicList = ({ data, selectedAll }) => {
         window.scrollTo(0, 0);
     }, [currentPage]);
 
+
+    // const currentData = getCurrentPageData(); // slice 없이 바로 데이터 가져오기
+
+    // useEffect(() => {
+    //     window.scrollTo(0, 0);
+    // }, [currentPage]);
+
     return (
         <>
             <table>

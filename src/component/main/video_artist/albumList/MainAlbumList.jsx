@@ -1,4 +1,3 @@
-import React from 'react';
 import { usemainAlbumStore } from '../../../../store';
 import MainAlbumItem from './MainAlbumItem';
 import './style.scss';

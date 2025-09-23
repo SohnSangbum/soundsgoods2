@@ -43,13 +43,15 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        z-index: 10;
+        z-index: 1000;
+        pointer-events: auto;
 
         .logo span,
         .menu-btn span {
             font-size: vw(12.8);
             padding: vw(12);
             border-radius: vw(4);
+            pointer-events: auto;
         }
 
         .logo span {
@@ -69,6 +71,11 @@
         height: 100svh;
         padding: vw(32);
         overflow: hidden;
+        pointer-events: auto;
+
+        * {
+            pointer-events: auto;
+        }
     }
 
     .main-card-con1 {
@@ -190,6 +197,22 @@
         justify-content: center;
         gap: vw(16);
         z-index: 3;
+
+        // con1 카드들은 기본적으로 클릭 불가
+        pointer-events: none;
+
+        // 하지만 con1-clickable 클래스가 있으면 클릭 가능
+        .main-card-card.con1-clickable {
+            pointer-events: auto;
+            z-index: 10;
+            cursor: pointer;
+
+            &:hover {
+                transform: translateZ(10px) scale(1.05);
+                transition: transform 0.3s ease;
+                filter: brightness(1.1);
+            }
+        }
     }
 
     .main-card-con1-cards .main-card-card {
@@ -201,6 +224,8 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        pointer-events: none; // 기본적으로 클릭 불가
+        transition: transform 0.3s ease, filter 0.3s ease;
     }
 
     .main-card-card-title {
@@ -267,8 +292,8 @@
         height: 100svh;
         display: flex;
         justify-content: center;
-        z-index: 1;
-        background-color: var(--light);
+        z-index: 5;
+        pointer-events: none; // 컨테이너는 클릭 불가
     }
 
     .main-card-cards-container {
@@ -280,6 +305,7 @@
         justify-content: center;
         align-items: center;
         gap: vw(64);
+        pointer-events: none; // 컨테이너는 클릭 불가
     }
 
     .main-card-cards-container .main-card-card {
@@ -287,6 +313,22 @@
         position: relative;
         aspect-ratio: 5/7;
         perspective: vw(1000);
+        pointer-events: none; // 기본적으로 클릭 불가
+
+        // 클릭 가능 상태일 때만 스타일 변경
+        &.clickable {
+            pointer-events: auto;
+            cursor: pointer;
+            z-index: 10;
+
+            .main-card-card-wrapper {
+                &:hover {
+                    filter: brightness(1.1);
+                    transform: translate(-50%, -50%) scale(1.05);
+                    transition: transform 0.3s ease, filter 0.3s ease;
+                }
+            }
+        }
     }
 
     .main-card-cards-container .main-card-card .main-card-card-wrapper {
@@ -297,6 +339,8 @@
         width: 100%;
         height: 100%;
         animation: main-card-floating 2s infinite ease-in-out;
+        pointer-events: none; // 래퍼는 기본적으로 클릭 불가
+        transition: transform 0.3s ease, filter 0.3s ease;
     }
 
     @keyframes main-card-floating {
@@ -323,6 +367,7 @@
         width: 100%;
         height: 100%;
         transform-style: preserve-3d;
+        pointer-events: none;
     }
 
     .main-card-flip-card-front,
@@ -333,6 +378,7 @@
         border-radius: vw(16);
         backface-visibility: hidden;
         overflow: hidden;
+        pointer-events: none;
     }
 
     .main-card-flip-card-front {
@@ -348,7 +394,6 @@
         .main-card-cards-container .main-card-card:nth-child(#{$i}) .main-card-flip-card-front {
             @include bg();
             background-image: url('./images/main/main_card_0#{$i}.jpg');
-            cursor: pointer;
         }
     }
 
@@ -366,17 +411,18 @@
         width: 100%;
         height: 100%;
         @include display_center();
-
         .pic {
             width: 100%;
             height: 100%;
             background-color: #6680ff;
             border-radius: vw(20);
-
+            overflow: hidden;
+            @include display_center();
             img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+                border-radius: vw(20);
             }
         }
     }
@@ -398,6 +444,34 @@
 
     .main-card-mobile-cards {
         display: none;
+
+        @media (max-width: 768px) {
+            display: block;
+            margin-top: vw(32);
+            pointer-events: auto;
+
+            .main-card-cards-container {
+                flex-direction: column;
+                align-items: center;
+                gap: vw(32);
+                pointer-events: none;
+            }
+
+            .main-card-card {
+                width: 80%;
+                pointer-events: none;
+
+                &.clickable {
+                    pointer-events: auto;
+                    cursor: pointer;
+
+                    &:hover {
+                        transform: scale(1.05);
+                        transition: transform 0.3s ease;
+                    }
+                }
+            }
+        }
     }
 
     // 애니메이션 키프레임
@@ -480,21 +554,6 @@
         .svg-animation-container {
             width: 95%;
             top: 40%;
-        }
-
-        .main-card-mobile-cards {
-            display: block;
-            margin-top: vw(32);
-
-            .main-card-cards-container {
-                flex-direction: column;
-                align-items: center;
-                gap: vw(32);
-            }
-
-            .main-card-card {
-                width: 80%;
-            }
         }
     }
 }

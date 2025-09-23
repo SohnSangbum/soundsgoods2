@@ -3,18 +3,21 @@ import { useGoodsStore } from '../../store';
 import './style.scss';
 import useUserStore from '../../store/userSlice';
 import { useNavigate } from 'react-router-dom';
-const Complete = () => {
+
+const CompleteCard = () => {
     const user = useUserStore((state) => state.user);
-    const complete = useGoodsStore((state) => state.complete);
+    const completeCard = useGoodsStore((state) => state.completeCard);
     const [lastCom, setLastCom] = useState(null);
     const nav = useNavigate();
+
     useEffect(() => {
-        if (complete.length > 0) {
+        if (completeCard.length > 0) {
             // 가장 최근 주문 (마지막 요소) 가져오기
-            const latest = complete[complete.length - 1];
+            const latest = completeCard[completeCard.length - 1];
             setLastCom(latest);
         }
-    }, [complete]);
+    }, [completeCard]);
+
     if (!lastCom) {
         return (
             <div id="complete">
@@ -24,8 +27,10 @@ const Complete = () => {
             </div>
         );
     }
+
     const { recipient, phone, zipcode, address, detailAddress, memo } = lastCom.formData;
     const { id, artist, bookmark, chk, price, totalPrice } = lastCom.items;
+
     return (
         <div id="complete">
             <div className="inner">
@@ -39,7 +44,7 @@ const Complete = () => {
                         <strong>배송 수령인 정보</strong>
                         <p className="cocon">
                             <span>{phone}</span>
-                            <span>홍길동</span>
+                            <span>{user.name}</span>
                         </p>
                     </div>
                     <div className="del del_memo">
@@ -82,4 +87,4 @@ const Complete = () => {
     );
 };
 
-export default Complete;
+export default CompleteCard;

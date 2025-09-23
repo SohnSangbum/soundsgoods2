@@ -41,7 +41,7 @@ const Header = () => {
                             <li>{userInfo?.name}님</li>
                             <li onClick={logout}>로그아웃</li>
                             <li onClick={() => nav('/cart')}>장바구니</li>
-                            <li>내 예약</li>
+                            <li onClick={() => nav('myReservation')}>내 예약</li>
                         </>
                     )}
                 </ul>

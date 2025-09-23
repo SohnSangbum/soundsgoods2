@@ -5,6 +5,7 @@ import newData_51_100 from '../assets/api/musicComponents/newData_51_100';
 import genre from '../assets/api/genre';
 import artist_info from '../assets/api/artist_info';
 import main_Artist_data from '../assets/api/main_Artist_data';
+import cardData from '../assets/api/cardData';
 
 // ✅ YouTube API 객체 가져오기 (SSR 환경 고려)
 const getYT = () => {
@@ -520,9 +521,12 @@ export const usemainAlbumStore = create((set, get) => {
         // ==================== 트랙 재생 시작 ====================
         MStart: async (id, type) => {
             try {
+                console.log(`MStart called: id=${id}, type=${type}`); // 디버깅용 로그
+
                 const track = get().findTrack(id, type);
                 if (!track) {
                     console.error(`Track not found: id=${id}, type=${type}`);
+                    console.log('Available types:', Object.keys(get())); // 스토어 구조 확인
                     return;
                 }
 
@@ -534,16 +538,27 @@ export const usemainAlbumStore = create((set, get) => {
                 // 플레이리스트가 설정되지 않았거나 다른 타입이면 새로 설정
                 const { currentPlaylistType } = get();
                 if (currentPlaylistType !== type) {
+                    console.log(`Setting new playlist: ${type}`);
                     const allTracks = get().getAllTracksByType(type);
+                    if (!allTracks || allTracks.length === 0) {
+                        console.error(`No tracks found for type: ${type}`);
+                        return;
+                    }
                     get().setPlaylist(allTracks, id, type);
                 }
 
                 // 음악 실행 상태 업데이트
-                set({ musicOn: true, musicModal: track, isPlaying: true });
+                set({
+                    musicOn: true,
+                    musicModal: track,
+                    isPlaying: true,
+                    currentPlayerId: id,
+                });
 
                 // YouTube API 준비
                 const state = get();
                 if (!state.ytReady) {
+                    console.log('Initializing YouTube API...');
                     const isReady = await state.initYouTube();
                     if (!isReady) {
                         console.error('YouTube API failed to initialize');
@@ -554,14 +569,20 @@ export const usemainAlbumStore = create((set, get) => {
                 const { currentPlayerId, players } = get();
                 const YT = getYT();
 
+                console.log(`Current player ID: ${currentPlayerId}, Target ID: ${id}`);
+
                 if (currentPlayerId === id && players[id]) {
                     // 같은 트랙 재생 중이면 토글
                     try {
                         const playerState = players[id].getPlayerState();
+                        console.log(`Current player state: ${playerState}`);
+
                         if (playerState === YT.PlayerState.PLAYING) {
                             players[id].pauseVideo();
+                            set({ isPlaying: false });
                         } else {
                             players[id].playVideo();
+                            set({ isPlaying: true });
                         }
                     } catch (error) {
                         console.error('Error controlling existing player:', error);
@@ -569,6 +590,7 @@ export const usemainAlbumStore = create((set, get) => {
                     }
                 } else {
                     // 새로운 트랙이면 새 플레이어 생성
+                    console.log('Creating new player for track:', track);
                     await get().createPlayer(track);
                 }
 
@@ -702,7 +724,13 @@ export const useGoodsStore = create((set, get) => {
         goodspush: localStorage.getItem('goodspush')
             ? JSON.parse(localStorage.getItem('goodspush'))
             : [],
-
+        card: localStorage.getItem('card') ? JSON.parse(localStorage.getItem('card')) : cardData,
+        completeCard: localStorage.getItem('completeCard')
+            ? JSON.parse(localStorage.getItem('completeCard'))
+            : [],
+        paymentCard: localStorage.getItem('paymentCard')
+            ? JSON.parse(localStorage.getItem('paymentCard'))
+            : [],
         wish: localStorage.getItem('wish') ? JSON.parse(localStorage.getItem('wish')) : [],
 
         // 상태로 변경
@@ -788,6 +816,31 @@ export const useGoodsStore = create((set, get) => {
             const updataItem = [item];
             localStorage.setItem('payment', JSON.stringify(updataItem));
             set({ payment: updataItem });
+        },
+        CardPush: (x) => {
+            const { card, paymentCard } = get();
+            const id = x.id;
+            const item = card.find((item) => item.id === id);
+            const updataItem = [item];
+            localStorage.setItem('paymentCard', JSON.stringify(updataItem));
+            set({ paymentCard: updataItem });
+        },
+        completeAdd: (orderData) => {
+            const { completeCard } = get();
+            const newComplete = [...completeCard, orderData];
+            localStorage.setItem('completeCard', JSON.stringify(newComplete));
+            set({ completeCard: newComplete });
+            localStorage.setItem('paymentCard', JSON.stringify([]));
+            set({ paymentCard: [] });
+        },
+        comDel: (x) => {
+            const { completeCard } = get();
+            const item = completeCard.filter((item) => {
+                const hasItem = item.items.some((card) => card.id === x);
+                return !hasItem;
+            });
+            localStorage.setItem('completeCard', JSON.stringify(item));
+            set({ completeCard: item });
         },
         filterCD: (x) => {
             set((state) => ({
