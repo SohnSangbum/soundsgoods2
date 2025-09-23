@@ -4,7 +4,6 @@ import './style.scss';
 
 const Main_visual = () => {
     const teamMembers = [{ name: 'G-DRAGON' }, { name: 'IU' }, { name: 'DEMON HUNTERS' }];
-
     const teamVideos = [
         'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/videos/main_visual_too.mov',
         'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/videos/main_visual_tooo.MOV',
@@ -14,19 +13,12 @@ const Main_visual = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
     const [isFullscreen, setIsFullscreen] = useState(false);
-    const [videosLoaded, setVideosLoaded] = useState(Array(teamMembers.length).fill(false));
     const videoRefs = useRef([]);
     const cardRefs = useRef([]);
     const fullscreenOverlayRef = useRef(null);
-
-    // 비디오 로드 상태 업데이트
-    const handleVideoLoad = (index) => {
-        setVideosLoaded((prev) => {
-            const newLoaded = [...prev];
-            newLoaded[index] = true;
-            return newLoaded;
-        });
-    };
+    const cloneRef = useRef(null);
+    const tlTextRef = useRef([]);
+    const textAnimationRef = useRef(null);
 
     const updateCarousel = (newIndex) => {
         if (isAnimating || isFullscreen) return;
@@ -37,16 +29,11 @@ const Main_visual = () => {
 
         setTimeout(() => {
             setIsAnimating(false);
-        }, 800);
+        }, 600); // 타이밍 단축
     };
 
-    const handlePrevious = () => {
-        updateCarousel(currentIndex - 1);
-    };
-
-    const handleNext = () => {
-        updateCarousel(currentIndex + 1);
-    };
+    const handlePrevious = () => updateCarousel(currentIndex - 1);
+    const handleNext = () => updateCarousel(currentIndex + 1);
 
     const handleCardClick = (index) => {
         if (isFullscreen) {
@@ -61,157 +48,306 @@ const Main_visual = () => {
         }
     };
 
-    // 전체 화면 모드 진입
-    const enterFullscreen = (index) => {
-        if (isFullscreen) return;
+    // 텍스트 애니메이션 실행 (더 빠르게)
+    const runTextAnimation = () => {
+        if (textAnimationRef.current) {
+            textAnimationRef.current.kill();
+        }
 
+        textAnimationRef.current = gsap.timeline();
+
+        // 더 빠른 타이밍으로 수정
+        textAnimationRef.current
+            .fromTo(
+                tlTextRef.current[0],
+                { opacity: 0, scale: 0.8 },
+                {
+                    duration: 0.4, // 단축
+                    opacity: 1,
+                    scale: 1,
+                    ease: 'power2.out',
+                }
+            )
+            .to(
+                tlTextRef.current[0],
+                {
+                    duration: 0.6, // 단축
+                    x: -200,
+                    scale: 0.7,
+                    ease: 'power2.inOut',
+                },
+                0.2 // 더 빠른 시작
+            )
+            .fromTo(
+                tlTextRef.current[1],
+                { opacity: 0, x: 300 },
+                {
+                    duration: 0.6, // 단축
+                    opacity: 1,
+                    x: 0,
+                    ease: 'power2.out',
+                },
+                0.2 // 더 빠른 시작
+            )
+            // 나머지 텍스트들도 순차적으로 나타나도록 추가
+            .fromTo(
+                '.tl_3',
+                { opacity: 0, y: 50 },
+                {
+                    duration: 0.4,
+                    opacity: 1,
+                    y: 0,
+                    ease: 'power2.out',
+                },
+                0.4
+            )
+            .fromTo(
+                '.tl_4',
+                { opacity: 0, y: 50 },
+                {
+                    duration: 0.4,
+                    opacity: 1,
+                    y: 0,
+                    ease: 'power2.out',
+                },
+                0.5
+            )
+            .fromTo(
+                '.tl_5',
+                { opacity: 0, y: 50 },
+                {
+                    duration: 0.4,
+                    opacity: 1,
+                    y: 0,
+                    ease: 'power2.out',
+                },
+                0.6
+            )
+            .fromTo(
+                '.tl_6',
+                { opacity: 0, y: 50 },
+                {
+                    duration: 0.4,
+                    opacity: 1,
+                    y: 0,
+                    ease: 'power2.out',
+                },
+                0.7
+            )
+            .fromTo(
+                '.tl_7',
+                { opacity: 0, scale: 0.8 },
+                {
+                    duration: 0.5,
+                    opacity: 1,
+                    scale: 1,
+                    ease: 'back.out(1.7)',
+                },
+                0.8
+            );
+
+        return textAnimationRef.current;
+    };
+
+    // 전체 화면 모드 진입 (더 빠르게)
+    const enterFullscreen = (index) => {
+        if (isAnimating || isFullscreen) return;
+
+        setIsAnimating(true);
         setIsFullscreen(true);
-        const card = cardRefs.current[index];
+
+        const originalCard = cardRefs.current[index];
         const video = videoRefs.current[index];
 
-        if (!card || !video) return;
+        if (!originalCard || !video) return;
 
-        // 전체 화면 오버레이 표시
-        gsap.set(fullscreenOverlayRef.current, { display: 'block', opacity: 0 });
+        originalCard.style.visibility = 'hidden';
 
-        // 카드의 원래 스타일 저장
-        const originalStyle = {
-            position: card.style.position,
-            top: card.style.top,
-            left: card.style.left,
-            width: card.style.width,
-            height: card.style.height,
-            zIndex: card.style.zIndex,
-        };
+        const rect = originalCard.getBoundingClientRect();
+        const clone = originalCard.cloneNode(true);
+        clone.classList.add('fullscreen-clone');
 
-        card.dataset.originalStyle = JSON.stringify(originalStyle);
+        const memberInfo = clone.querySelector('.member-info');
+        if (memberInfo) {
+            memberInfo.style.display = 'none';
+        }
 
-        // 카드 애니메이션
-        const rect = card.getBoundingClientRect();
-        const scaleX = window.innerWidth / rect.width;
-        const scaleY = window.innerHeight / rect.height;
-        const scale = Math.max(scaleX, scaleY);
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const screenCenterX = window.innerWidth / 2;
+        const screenCenterY = window.innerHeight / 2;
 
-        // 전체 화면을 위한 스타일 설정
-        gsap.set(card, {
+        Object.assign(clone.style, {
             position: 'fixed',
-            top: '50%',
-            left: '50%',
-            zIndex: 1000,
+            top: `${rect.top}px`,
+            left: `${rect.left}px`,
+            width: `${rect.width}px`,
+            height: `${rect.height}px`,
+            margin: '0',
+            transform: 'none',
+            transformOrigin: 'center center',
+            zIndex: '1000',
+            visibility: 'visible',
         });
 
-        gsap.to(card, {
-            duration: 0.8,
+        document.body.appendChild(clone);
+        cloneRef.current = clone;
+
+        const cloneVideo = clone.querySelector('video');
+        if (cloneVideo) {
+            cloneVideo.src = video.src;
+            cloneVideo.muted = true;
+            cloneVideo.playsInline = true;
+        }
+
+        const targetScale =
+            Math.max(window.innerWidth / rect.width, window.innerHeight / rect.height) * 1.02;
+        const moveX = screenCenterX - centerX;
+        const moveY = screenCenterY - centerY;
+
+        // 오버레이 설정
+        gsap.set(fullscreenOverlayRef.current, {
+            display: 'block',
+            opacity: 0,
+            pointerEvents: 'auto',
+        });
+
+        // 텍스트 초기 위치 조정 (더 세련된 위치로)
+        gsap.set(tlTextRef.current, {
+            opacity: 0,
             x: 0,
             y: 0,
-            scale: scale,
-            borderRadius: 0,
-            ease: 'power3.inOut',
+            scale: 1,
+            display: 'block',
+            zIndex: 1001,
+        });
+
+        gsap.set(tlTextRef.current[1], { x: 300 });
+        gsap.set('.tl_3', { opacity: 0, y: 50 });
+        gsap.set('.tl_4', { opacity: 0, y: 50 });
+        gsap.set('.tl_5', { opacity: 0, y: 50 });
+        gsap.set('.tl_6', { opacity: 0, y: 50 });
+        gsap.set('.tl_7', { opacity: 0, scale: 0.8 });
+
+        gsap.set(clone, {
+            x: 0,
+            y: 0,
+            scale: 1,
+            borderRadius: 20,
+        });
+
+        const masterTimeline = gsap.timeline({
             onComplete: () => {
                 video.play().catch(console.error);
+                if (cloneVideo) cloneVideo.play().catch(console.error);
+                setIsAnimating(false);
             },
         });
 
-        // 오버레이 페이드 인
-        gsap.to(fullscreenOverlayRef.current, {
-            duration: 0.5,
-            opacity: 1,
-            ease: 'power2.out',
+        // 더 빠른 애니메이션
+        masterTimeline.to(clone, {
+            duration: 0.5, // 단축
+            x: moveX,
+            y: moveY,
+            scale: targetScale,
+            borderRadius: 0,
+            ease: 'power3.inOut',
         });
+
+        masterTimeline.to(
+            fullscreenOverlayRef.current,
+            {
+                duration: 0.2, // 단축
+                opacity: 1,
+                ease: 'power2.out',
+            },
+            0.1
+        );
+
+        masterTimeline.add(runTextAnimation(), 0.1); // 더 빠른 시작
     };
 
-    // 전체 화면 모드 종료 - 수정된 버전
+    // 전체 화면 모드 종료 (더 빠르게)
     const exitFullscreen = () => {
-        if (!isFullscreen) return;
+        if (isAnimating || !isFullscreen) return;
 
-        const card = cardRefs.current[currentIndex];
+        setIsAnimating(true);
+
+        const originalCard = cardRefs.current[currentIndex];
         const video = videoRefs.current[currentIndex];
+        const clone = cloneRef.current;
 
-        if (!card || !video) return;
+        if (!clone || !video) return;
 
-        // 비디오 정지 및 초기화
         video.pause();
         video.currentTime = 0;
 
-        // 카드 원래 위치로 복원
-        gsap.to(card, {
-            duration: 0.8,
+        const cloneVideo = clone.querySelector('video');
+        if (cloneVideo) {
+            cloneVideo.pause();
+            cloneVideo.currentTime = 0;
+        }
+
+        if (textAnimationRef.current) {
+            textAnimationRef.current.kill();
+        }
+
+        // 텍스트 빠르게 사라지게
+        gsap.to([tlTextRef.current, '.tl_3', '.tl_4', '.tl_5', '.tl_6', '.tl_7'], {
+            duration: 0.15,
+            opacity: 0,
+            ease: 'power2.in',
+        });
+
+        // 더 빠른 복원 애니메이션
+        gsap.to(clone, {
+            duration: 0.5, // 단축
             x: 0,
             y: 0,
             scale: 1,
             borderRadius: 20,
             ease: 'power3.inOut',
             onComplete: () => {
-                // 원래 스타일 복원
-                if (card.dataset.originalStyle) {
-                    const originalStyle = JSON.parse(card.dataset.originalStyle);
-                    gsap.set(card, {
-                        clearProps: 'all', // 모든 GSAP 속성 제거
-                    });
+                if (clone.parentNode) {
+                    clone.parentNode.removeChild(clone);
+                }
+                cloneRef.current = null;
 
-                    // CSS 스타일 복원
-                    Object.keys(originalStyle).forEach((key) => {
-                        card.style[key] = originalStyle[key];
-                    });
-
-                    // 데이터 속성 정리
-                    delete card.dataset.originalStyle;
+                if (originalCard) {
+                    originalCard.style.visibility = 'visible';
                 }
 
-                // 오버레이 페이드 아웃
                 gsap.to(fullscreenOverlayRef.current, {
-                    duration: 0.5,
+                    duration: 0.15, // 단축
                     opacity: 0,
-                    ease: 'power2.out',
                     onComplete: () => {
-                        gsap.set(fullscreenOverlayRef.current, { display: 'none' });
+                        gsap.set(fullscreenOverlayRef.current, {
+                            display: 'none',
+                            pointerEvents: 'none',
+                        });
                         setIsFullscreen(false);
-
-                        // 카드 위치 강제 재설정을 위한 slight delay
-                        setTimeout(() => {
-                            // 현재 카드의 위치를 CSS 클래스로 강제 업데이트
-                            cardRefs.current.forEach((card, index) => {
-                                if (card) {
-                                    // CSS 클래스 재적용을 위해 강제 리플로우
-                                    card.classList.remove('center', 'right-1', 'left-1');
-                                    void card.offsetWidth; // 리플로우 강제 실행
-
-                                    const offset =
-                                        (index - currentIndex + teamMembers.length) %
-                                        teamMembers.length;
-                                    if (offset === 0) {
-                                        card.classList.add('center');
-                                    } else if (offset === 1) {
-                                        card.classList.add('right-1');
-                                    } else if (offset === teamMembers.length - 1) {
-                                        card.classList.add('left-1');
-                                    }
-                                }
-                            });
-                        }, 50);
+                        setIsAnimating(false);
                     },
                 });
             },
         });
     };
 
-    // ESC 키로 전체 화면 종료
+    // ESC 키 처리
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.key === 'Escape' && isFullscreen) {
                 exitFullscreen();
-            } else if (e.key === 'ArrowLeft' && !isFullscreen) {
+            } else if (e.key === 'ArrowLeft' && !isFullscreen && !isAnimating) {
                 handlePrevious();
-            } else if (e.key === 'ArrowRight' && !isFullscreen) {
+            } else if (e.key === 'ArrowRight' && !isFullscreen && !isAnimating) {
                 handleNext();
             }
         };
 
         document.addEventListener('keydown', handleKeyDown);
-        return () => {
-            document.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [currentIndex, isFullscreen]);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, [currentIndex, isFullscreen, isAnimating]);
 
     // 모든 비디오 정지
     const pauseAllVideos = () => {
@@ -223,66 +359,48 @@ const Main_visual = () => {
         });
     };
 
-    // 컴포넌트 마운트 시 모든 비디오 정지
     useEffect(() => {
         pauseAllVideos();
     }, []);
 
-    // 현재 인덱스 변경 시에도 모든 비디오 정지 유지
     useEffect(() => {
         if (!isFullscreen) {
             pauseAllVideos();
         }
     }, [currentIndex, isFullscreen]);
 
-    // 터치 이벤트 처리 (전체 화면 모드에서는 비활성화)
+    // 터치 이벤트
     useEffect(() => {
-        if (isFullscreen) return;
+        if (isFullscreen || isAnimating) return;
 
         let touchStartX = 0;
-        let touchEndX = 0;
-
         const handleTouchStart = (e) => {
             touchStartX = e.changedTouches[0].screenX;
         };
-
         const handleTouchEnd = (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        };
-
-        const handleSwipe = () => {
-            const swipeThreshold = 50;
+            const touchEndX = e.changedTouches[0].screenX;
             const diff = touchStartX - touchEndX;
-
-            if (Math.abs(diff) > swipeThreshold) {
-                if (diff > 0) {
-                    handleNext();
-                } else {
-                    handlePrevious();
-                }
+            if (Math.abs(diff) > 50) {
+                diff > 0 ? handleNext() : handlePrevious();
             }
         };
 
         document.addEventListener('touchstart', handleTouchStart);
         document.addEventListener('touchend', handleTouchEnd);
-
         return () => {
             document.removeEventListener('touchstart', handleTouchStart);
             document.removeEventListener('touchend', handleTouchEnd);
         };
-    }, [currentIndex, isFullscreen]);
+    }, [currentIndex, isFullscreen, isAnimating]);
 
-    // 카드 클래스 계산 함수
+    // 카드 클래스 계산
     const getCardClass = (index) => {
-        if (isFullscreen && index === currentIndex) return 'center fullscreen';
+        if (isFullscreen && index === currentIndex) return 'center';
 
         const offset = (index - currentIndex + teamMembers.length) % teamMembers.length;
-
         if (offset === 0) return 'center';
         if (offset === 1) return 'right-1';
         if (offset === teamMembers.length - 1) return 'left-1';
-
         return 'hidden';
     };
 
@@ -293,9 +411,13 @@ const Main_visual = () => {
                     <button
                         className="nav-arrow left"
                         onClick={handlePrevious}
-                        style={{ display: isFullscreen ? 'none' : 'flex' }}
+                        disabled={isAnimating || isFullscreen}
+                        style={{
+                            display: isFullscreen ? 'none' : 'flex',
+                            opacity: isAnimating ? 0.5 : 1,
+                        }}
                     >
-                        <img src="/images/icons/big_right.png" alt="" />
+                        <img src="/images/icons/big_right.png" alt="Previous" />
                     </button>
 
                     <div className="carousel-track">
@@ -311,12 +433,8 @@ const Main_visual = () => {
                                     src={teamVideos[index]}
                                     muted
                                     playsInline
-                                    preload="metadata"
+                                    preload="auto"
                                     className="video-content"
-                                    onLoadedData={() => handleVideoLoad(index)}
-                                    onError={(e) => {
-                                        console.error('Video load error:', e);
-                                    }}
                                 >
                                     Your browser does not support the video tag.
                                 </video>
@@ -330,14 +448,17 @@ const Main_visual = () => {
                     <button
                         className="nav-arrow right"
                         onClick={handleNext}
-                        style={{ display: isFullscreen ? 'none' : 'flex' }}
+                        disabled={isAnimating || isFullscreen}
+                        style={{
+                            display: isFullscreen ? 'none' : 'flex',
+                            opacity: isAnimating ? 0.5 : 1,
+                        }}
                     >
-                        <img src="/images/icons/big_left.png" alt="" />
+                        <img src="/images/icons/big_left.png" alt="Next" />
                     </button>
                 </div>
             </div>
 
-            {/* 전체 화면 오버레이 */}
             <div
                 ref={fullscreenOverlayRef}
                 className="fullscreen-overlay"
@@ -347,6 +468,17 @@ const Main_visual = () => {
                 <button className="close-fullscreen">
                     <span>×</span>
                 </button>
+                <strong ref={(el) => (tlTextRef.current[0] = el)} className="tl tl_1">
+                    당신의 playlist가
+                </strong>
+                <strong ref={(el) => (tlTextRef.current[1] = el)} className="tl tl_2">
+                    아티스트와 연결되는
+                </strong>
+                <strong className="tl tl_3">순간</strong>
+                <strong className="tl tl_4">Good People,</strong>
+                <strong className="tl tl_5">Good Music,</strong>
+                <strong className="tl tl_6">Good Moments.</strong>
+                <strong className="tl tl_7">sounds goods</strong>
             </div>
 
             <div className="big_text_bg">SOUNDS GOODS</div>
