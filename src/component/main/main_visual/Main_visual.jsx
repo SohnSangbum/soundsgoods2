@@ -2,22 +2,23 @@ import './style.scss';
 import { useRef, useState, useEffect } from 'react';
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-// GSAP 플러그인 등록
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Autoplay, Mousewheel, EffectCreative } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/effect-creative';
 
 const vis = [
     {
         id: 1,
-        video: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/videos/main_visual_to.mp4',
-        right: 'Play',
+        video: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/videos/main_visual_tooo.MOV',
+        right: 'Love',
         left: 'It',
-        class: 'first',
+        class: 'third',
     },
     {
         id: 2,
-        video: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/videos/main_visual_to.mp4',
+        video: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/videos/main_visual_too.mov',
         right: 'Feel',
         left: 'It',
         class: 'second',
@@ -25,9 +26,9 @@ const vis = [
     {
         id: 3,
         video: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/videos/main_visual_to.mp4',
-        right: 'Love',
+        right: 'Play',
         left: 'It',
-        class: 'third',
+        class: 'first',
     },
 ];
 
@@ -40,8 +41,6 @@ const Main_visual = ({ onVideoPlay }) => {
     const titleRef6 = useRef();
     const titleRef7 = useRef();
     const sectionRef = useRef(null);
-    const containerRef = useRef(null);
-    const [currentSlide, setCurrentSlide] = useState(0);
     const [isExpanded, setIsExpanded] = useState(false);
     const [showVideo, setShowVideo] = useState(false);
     const originalSizes = useRef({
@@ -51,10 +50,9 @@ const Main_visual = ({ onVideoPlay }) => {
         top: 0,
         scrollY: 0,
     });
-    const scrollTriggerRef = useRef(null);
     const videoRefs = useRef([]);
     const fullscreenVideoRef = useRef(null);
-    const isScrollLocked = useRef(false);
+    const swiperRef = useRef(null);
 
     // 비디오 ref 초기화
     useEffect(() => {
@@ -64,7 +62,6 @@ const Main_visual = ({ onVideoPlay }) => {
     // 비디오 상태 관리
     useEffect(() => {
         if (!showVideo && fullscreenVideoRef.current) {
-            // 전체 화면 비디오가 닫힐 때 완전히 정지
             fullscreenVideoRef.current.pause();
             fullscreenVideoRef.current.currentTime = 0;
         }
@@ -81,9 +78,7 @@ const Main_visual = ({ onVideoPlay }) => {
     }, [isExpanded]);
 
     const handleVideoClick = (item, index) => {
-        // 3번째 비디오만 확대 효과 적용
         if (item.id === 3 && !isExpanded) {
-            // 비디오 재생 상태 알림
             if (onVideoPlay) {
                 onVideoPlay(true);
             }
@@ -92,7 +87,6 @@ const Main_visual = ({ onVideoPlay }) => {
             originalSizes.current.scrollY = scrollY;
 
             setIsExpanded(true);
-            isScrollLocked.current = true;
 
             const visualElement = document.querySelector(`.${item.class}_visual`);
             const videoContainer = visualElement.querySelector('.video-container');
@@ -107,10 +101,6 @@ const Main_visual = ({ onVideoPlay }) => {
                 left: rect.left,
                 top: rect.top,
             };
-
-            if (scrollTriggerRef.current) {
-                scrollTriggerRef.current.disable();
-            }
 
             document.body.classList.add('scroll-locked');
             document.documentElement.style.scrollBehavior = 'auto';
@@ -184,7 +174,7 @@ const Main_visual = ({ onVideoPlay }) => {
     const handleCloseVideo = () => {
         if (fullscreenVideoRef.current) {
             fullscreenVideoRef.current.pause();
-            fullscreenVideoRef.current.currentTime = 0; // 현재 시간 초기화
+            fullscreenVideoRef.current.currentTime = 0;
         }
 
         setShowVideo(false);
@@ -231,12 +221,12 @@ const Main_visual = ({ onVideoPlay }) => {
                     });
                 });
 
-                // 썸네일 비디오 복구 - 현재 시간을 0.1로 설정하고 정지
+                // 썸네일 비디오 복구
                 const thumbnailVideo = videoRefs.current[2];
                 if (thumbnailVideo) {
-                    thumbnailVideo.currentTime = 0.1; // 첫 프레임으로 설정
+                    thumbnailVideo.currentTime = 0.1;
                     setTimeout(() => {
-                        thumbnailVideo.pause(); // 정지
+                        thumbnailVideo.pause();
                     }, 100);
                 }
 
@@ -245,15 +235,7 @@ const Main_visual = ({ onVideoPlay }) => {
 
                 window.scrollTo(0, originalSizes.current.scrollY);
 
-                if (scrollTriggerRef.current) {
-                    scrollTriggerRef.current.enable();
-                    setTimeout(() => {
-                        ScrollTrigger.refresh();
-                    }, 100);
-                }
-
                 setIsExpanded(false);
-                isScrollLocked.current = false;
             },
         });
     };
@@ -432,131 +414,8 @@ const Main_visual = ({ onVideoPlay }) => {
         }
     }, [showVideo]);
 
-    const initScrollTrigger = () => {
-        ScrollTrigger.getAll().forEach((trigger) => {
-            if (trigger.trigger === sectionRef.current) {
-                trigger.kill();
-            }
-        });
-
-        const visuals = gsap.utils.toArray('.visual');
-        const totalSlides = visuals.length;
-        const slideHeight = window.innerHeight;
-
-        gsap.set(visuals, {
-            zIndex: (i) => (i === 0 ? 10 : 5 - i),
-        });
-
-        gsap.set(visuals[0], {
-            opacity: 1,
-            scale: 1,
-            y: 0,
-            z: 0,
-        });
-
-        gsap.set(visuals[1], {
-            opacity: 0.8,
-            scale: 0.9,
-            y: -slideHeight * 0.2,
-            z: -150,
-        });
-
-        gsap.set(visuals[2], {
-            opacity: 0.8,
-            scale: 0.9,
-            y: slideHeight * 0.2,
-            z: -300,
-        });
-
-        gsap.set('.visual strong', {
-            opacity: 0,
-            y: 15,
-        });
-
-        gsap.set(visuals[0].querySelectorAll('strong'), {
-            opacity: 1,
-            y: 0,
-        });
-
-        scrollTriggerRef.current = ScrollTrigger.create({
-            trigger: sectionRef.current,
-            start: 'top +=150',
-            end: () => `+=${slideHeight * (totalSlides - 1)}`,
-            pin: true,
-            scrub: 1,
-            markers: false,
-            onUpdate: (self) => {
-                if (isScrollLocked.current) {
-                    return;
-                }
-
-                const progress = Math.min(Math.max(self.progress, 0), 1);
-                const activeIndex = Math.min(Math.floor(progress * totalSlides), totalSlides - 1);
-                setCurrentSlide(activeIndex);
-
-                visuals.forEach((visual, i) => {
-                    let targetY = 0;
-                    let targetZ = 0;
-                    let targetOpacity = 0.8;
-                    let targetScale = 0.9;
-                    let textOpacity = 0;
-
-                    if (i === activeIndex) {
-                        targetY = 0;
-                        targetZ = 0;
-                        targetOpacity = 1;
-                        targetScale = 1;
-                        textOpacity = 1;
-                    } else if (i === (activeIndex + 1) % totalSlides) {
-                        targetY = -slideHeight * 0.2;
-                        targetZ = -150;
-                    } else {
-                        targetY = slideHeight * 0.2;
-                        targetZ = -300;
-                    }
-
-                    gsap.to(visual, {
-                        y: targetY,
-                        z: targetZ,
-                        opacity: targetOpacity,
-                        scale: targetScale,
-                        duration: 0.5,
-                    });
-
-                    gsap.to(visual.querySelectorAll('strong'), {
-                        opacity: textOpacity,
-                        y: textOpacity ? 0 : 15,
-                        duration: 0.3,
-                    });
-
-                    gsap.set(visual, {
-                        zIndex: i === activeIndex ? 10 : 5 - Math.abs(i - activeIndex),
-                    });
-                });
-            },
-        });
-    };
-
-    useGSAP(
-        () => {
-            if (isExpanded) return;
-            initScrollTrigger();
-
-            const handleResize = () => {
-                if (!isExpanded) {
-                    initScrollTrigger();
-                }
-            };
-
-            window.addEventListener('resize', handleResize);
-            return () => window.removeEventListener('resize', handleResize);
-        },
-        { scope: sectionRef, dependencies: [isExpanded] }
-    );
-
     useEffect(() => {
         return () => {
-            ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
             document.body.classList.remove('scroll-locked');
             document.documentElement.style.scrollBehavior = '';
 
@@ -569,7 +428,6 @@ const Main_visual = ({ onVideoPlay }) => {
                 onVideoPlay(false);
             }
 
-            // 컴포넌트 언마운트 시 모든 비디오 정지
             videoRefs.current.forEach((video) => {
                 if (video) {
                     video.pause();
@@ -586,40 +444,115 @@ const Main_visual = ({ onVideoPlay }) => {
 
     return (
         <section id="main-visual" ref={sectionRef}>
-            <div className="visual_wrap" ref={containerRef}>
+            {/* Swiper에 중앙 확대 효과 적용 */}
+            <Swiper
+                ref={swiperRef}
+                modules={[Navigation, Autoplay, Mousewheel]}
+                centeredSlides={true}
+                loop={true}
+                speed={500}
+                slidesPerView={1.5}
+                spaceBetween={40}
+                autoplay={{
+                    delay: 3000,
+                    disableOnInteraction: false,
+                }}
+                navigation={{
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                }}
+                mousewheel={true}
+                breakpoints={{
+                    640: {
+                        slidesPerView: 2.5,
+                    },
+                    768: {
+                        slidesPerView: 2.75,
+                    },
+                    1080: {
+                        slidesPerView: 3.25,
+                    },
+                    1280: {
+                        slidesPerView: 3.75,
+                    },
+                }}
+                className="swiper-visual"
+                onSlideChangeTransitionStart={(swiper) => {
+                    // 슬라이드 전환 시작 시 효과 적용
+                    const slides = document.querySelectorAll('.swiper-slide');
+                    slides.forEach((slide, index) => {
+                        if (index === swiper.activeIndex) {
+                            // 활성 슬라이드 확대
+                            gsap.to(slide, {
+                                scale: 1.5,
+                                opacity: 1,
+                                zIndex: 1,
+                                duration: 0.7,
+                                ease: 'power2.out',
+                            });
+                        } else {
+                            // 비활성 슬라이드 축소
+                            gsap.to(slide, {
+                                scale: 1,
+                                opacity: 0.4,
+                                zIndex: 0,
+                                duration: 0.7,
+                                ease: 'power2.out',
+                            });
+                        }
+                    });
+                }}
+                onInit={(swiper) => {
+                    // 초기화 시 활성 슬라이드에 효과 적용
+                    const activeSlide = document.querySelector('.swiper-slide-active');
+                    if (activeSlide) {
+                        gsap.set(activeSlide, {
+                            scale: 1.5,
+                            opacity: 1,
+                            zIndex: 1,
+                        });
+                    }
+                }}
+            >
                 {vis.map((item, index) => (
-                    <div
-                        className={`visual ${item.class}_visual ${
-                            isExpanded && item.id === 3 ? 'expanded' : ''
-                        }`}
-                        key={item.id}
-                        onClick={() => handleVideoClick(item, index)}
-                    >
-                        <strong className="right-text">{item.right}</strong>
-                        <div className="video-container">
-                            <video
-                                ref={(el) => (videoRefs.current[index] = el)}
-                                src={item.video}
-                                muted
-                                playsInline
-                                preload="metadata"
-                                onLoadedData={(e) => {
-                                    e.target.currentTime = 0.1;
-                                    setTimeout(() => e.target.pause(), 100);
-                                }}
-                                onPlay={(e) => {
-                                    // 확대 상태가 아닐 때는 자동 재생 방지
-                                    if (!isExpanded && e.target !== fullscreenVideoRef.current) {
-                                        e.target.pause();
+                    <SwiperSlide key={item.id}>
+                        <div
+                            className={`visual ${item.class}_visual ${
+                                isExpanded && item.id === 3 ? 'expanded' : ''
+                            }`}
+                            onClick={() => handleVideoClick(item, index)}
+                        >
+                            <div className="video-container">
+                                <video
+                                    ref={(el) => (videoRefs.current[index] = el)}
+                                    src={item.video}
+                                    muted
+                                    playsInline
+                                    preload="metadata"
+                                    onLoadedData={(e) => {
                                         e.target.currentTime = 0.1;
-                                    }
-                                }}
-                            />
+                                        setTimeout(() => e.target.pause(), 100);
+                                    }}
+                                    onPlay={(e) => {
+                                        if (
+                                            !isExpanded &&
+                                            e.target !== fullscreenVideoRef.current
+                                        ) {
+                                            e.target.pause();
+                                            e.target.currentTime = 0.1;
+                                        }
+                                    }}
+                                />
+                            </div>
+                            <strong className="right-text">{item.right}</strong>
+                            <strong className="left-text">{item.left}</strong>
                         </div>
-                        <strong className="left-text">{item.left}</strong>
-                    </div>
+                    </SwiperSlide>
                 ))}
-            </div>
+                {/* 네비게이션 버튼 추가 */}
+                <div className="swiper-button-next"></div>
+                <div className="swiper-button-prev"></div>
+            </Swiper>
 
             {showVideo && (
                 <div className="video_fullscreen" onClick={handleCloseVideo}>

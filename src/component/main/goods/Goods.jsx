@@ -111,7 +111,7 @@ const Goods = () => {
             <div className="sidebar" ref={sidebarRef}>
                 <div className="sidebar-item">
                     <p className="main-pop">
-                        Kategorie <br /> collection
+                        Category <br /> collection
                     </p>
                     <p className="bg-artists_goods">Artists goods</p>
                 </div>
