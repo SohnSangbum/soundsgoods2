@@ -6,7 +6,13 @@ import { useNavigate } from 'react-router-dom';
 const HeaderForm = () => {
     const [text, setText] = useState('');
     const [fade, setFade] = useState(true);
-    const [word, setWord] = useState(['아이유', '빅뱅', '프로미스나인', 'BTS', '아이브']);
+    const [word, setWord] = useState([
+        '아이유',
+        '빅뱅',
+        '프로미스나인',
+        'BTS',
+        '아이브',
+    ]);
     const [current, setCurrent] = useState(0);
 
     useEffect(() => {
@@ -30,7 +36,7 @@ const HeaderForm = () => {
     return (
         <form onSubmit={onSearch}>
             <label htmlFor="searchInput" onClick={onClick}>
-                {word[current]}
+                #{word[current]}
             </label>
             <input
                 type="text"
