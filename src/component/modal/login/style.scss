@@ -15,14 +15,15 @@
         display: block;
         position: absolute;
         right: 0;
-        width: vw(24);
-        height: vw(24);
+        // width: vw(24);
+        // height: vw(24);
+        font-size: vw(24);
         padding: vw(26px);
         cursor: pointer;
     }
     h1 {
         font-size: vw(26px);
-        margin: vw(42px) 0 vw(40px) 0;
+        margin: vw(55px) 0 vw(40px) 0;
     }
 
     .loginInput {
@@ -57,11 +58,12 @@
             background-color: #697de3;
             border-radius: vw(50px);
             color: #fff;
-
             width: 260px;
             height: 40px;
             font-size: 16px;
-            font-weight: 800;
+            font-weight: 600;
+            font-family: 'pretendard';
+            padding: 0;
         }
     }
     ul {

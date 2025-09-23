@@ -2,8 +2,9 @@
 
 //팝업
 .popupList {
-    margin-top: vw(94);
-    margin-bottom: vw(100);
+    padding-top: vw(94);
+    padding-bottom: vw(100);
+    margin: auto;
     .popupTitle {
         display: flex;
         justify-content: space-between;
@@ -29,6 +30,7 @@
             font-weight: 600;
             cursor: pointer;
             border-bottom: vw(1) solid #000;
+            display: none;
         }
     }
 }

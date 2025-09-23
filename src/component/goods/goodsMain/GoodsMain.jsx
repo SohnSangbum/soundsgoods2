@@ -7,7 +7,9 @@ const GoodsMain = () => {
             <h2 className="goods_page_main_title">굿즈</h2>
             <div className="goods_banner">
                 <div className="banner_pic">
-                    <img src="/images/goods/goods_banner.png" alt="" />
+                    <img src="/images/goods/goods_banner1.png" alt="" />
+                    <p>아이브(IVE) 4TH EP ALBUM</p>
+                    <h3>[IVE SECRET] 발매 기념 팬사인회 이벤트 안내</h3>
                 </div>
                 <ul className="goods_list">
                     {bannerData.map((ive) => (

@@ -1,7 +1,9 @@
 @use '../../styled/utils' as *;
 .inner {
-    width: vw(1400);
+    width: vw(1410) !important;
+    margin: auto;
     .search {
+        width: vw(1410);
         display: flex;
         flex-direction: column;
         align-items: flex-start;
