@@ -14,24 +14,37 @@
         cursor: pointer;
         &.active {
             .album_pic {
+                width: 15.625vw;
+                height: 15.625vw;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 img {
+                    width: 15.625vw;
+                    height: 15.625vw; // 정사각형으로 만들어 원형 효과
+                    object-fit: cover;
                     border-radius: 100%;
                     animation: spin 3s linear infinite;
                 }
+                @keyframes spin {
+                    from {
+                        transform: rotate(0deg);
+                    }
+                    to {
+                        transform: rotate(360deg);
+                    }
+                }
             }
         }
-        @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
+
         .album_pic {
             width: 15.625vw;
             height: vw(300px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: 1s;
+
             img {
                 width: 15.625vw;
                 transition: 0.3s;
