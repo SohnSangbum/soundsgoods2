@@ -30,8 +30,10 @@ const Footer = () => {
                     <li>이메일 주소 무단 수집 거부</li>
                 </ul>
                 <ul className="footer_con con2">
-                    <li>(주) SoundsGoods | 서울특별시 강남구 -- --- ---- N동, 9,10층</li>
-                    <li> 대표이사 : 000</li>
+                    <li>
+                        (주) SoundsGoods | 서울특별시 서초구 서초대로77길 41 디디2빌딩 9층, 10층
+                    </li>
+                    <li> 대표이사 : 송태민</li>
                     <li>사업자 등록번호 : 220-88-02594</li>
                     <li>통신판매업신고번호 : 2018-성남분당B-0004</li>
                 </ul>

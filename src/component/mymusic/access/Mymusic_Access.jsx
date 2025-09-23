@@ -1,20 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './style.scss';
 import { FaChevronRight } from 'react-icons/fa';
 import Login from '../../../page/login';
 import { useNavigate } from 'react-router-dom';
 import Join from '../../../page/join';
+import useAuthStore from '../../../store/authSlice'; // 경로는 실제 위치에 맞게 수정해주세요
+
 const Mymusic_Access = () => {
     const navigate = useNavigate();
     const [isLoginOpen, setIsLoginOpen] = useState(false);
-    const toggleLogin = () => setIsLoginOpen((prev) => !prev);
     const [isJoinOpen, setIsJoinOpen] = useState(false);
+
+    const { authed, user, login, logout, signup, kakaoLogin, initialize } = useAuthStore();
+
+    // 컴포넌트 마운트 시 스토어 초기화
+    useEffect(() => {
+        initialize();
+    }, [initialize]);
+
+    const toggleLogin = () => setIsLoginOpen((prev) => !prev);
     const toggleJoin = () => setIsJoinOpen((prev) => !prev);
 
-    const onLogin = () => {
+    const handleLogin = () => {
         toggleLogin();
         navigate('/');
     };
+
+    const handleJoin = () => {
+        toggleJoin();
+        navigate('/');
+    };
+
     return (
         <div className="inner">
             <div className="access">
@@ -36,8 +52,20 @@ const Mymusic_Access = () => {
                     회원가입
                 </button>
             </div>
-            {isLoginOpen && <Login onClose={onLogin} />}
-            {isJoinOpen && <Join onClose={toggleJoin} />}
+
+            {/* Login 컴포넌트에 스토어 함수 전달 */}
+            {isLoginOpen && (
+                <Login
+                    onClose={handleLogin}
+                    onLogin={login}
+                    onKakaoLogin={kakaoLogin}
+                    authed={authed}
+                    user={user}
+                />
+            )}
+
+            {/* Join 컴포넌트에 스토어 함수 전달 */}
+            {isJoinOpen && <Join onClose={handleJoin} onSignup={signup} />}
         </div>
     );
 };

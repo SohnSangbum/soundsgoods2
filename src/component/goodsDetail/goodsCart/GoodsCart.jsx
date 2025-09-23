@@ -5,43 +5,84 @@ import { useGoodsStore } from '../../../store';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../../../store/authSlice';
+import { useState, useEffect } from 'react';
+
 const GoodsCart = ({ data }) => {
     const { artist, title, price, release, cpn, quantity, id, totalPrice } = data;
     const { upCountGoods, downCountGoods, cartPush, wishPush, payPush } = useGoodsStore();
     const { authed } = useAuthStore();
     const nav = useNavigate();
+
+    // 체크박스 상태 관리
+    const [checkboxes, setCheckboxes] = useState({
+        chk1: false,
+        chk2: false,
+        chk3: false,
+        chk4: false,
+    });
+
+    // 전체 체크박스 상태 동기화
+    useEffect(() => {
+        const allChecked = checkboxes.chk1 && checkboxes.chk2 && checkboxes.chk3;
+        setCheckboxes((prev) => ({
+            ...prev,
+            chk4: allChecked,
+        }));
+    }, [checkboxes.chk1, checkboxes.chk2, checkboxes.chk3]);
+
+    // 개별 체크박스 핸들러
+    const handleCheckboxChange = (name) => {
+        setCheckboxes((prev) => ({
+            ...prev,
+            [name]: !prev[name],
+        }));
+    };
+
+    // 전체 체크박스 핸들러
+    const handleAllCheck = () => {
+        const newValue = !checkboxes.chk4;
+        setCheckboxes({
+            chk1: newValue,
+            chk2: newValue,
+            chk3: newValue,
+            chk4: newValue,
+        });
+    };
+
     const addCart = (x) => {
+        if (!checkboxes.chk4) {
+            toast('안내 사항을 모두 확인해주세요.');
+            return;
+        }
         cartPush(x);
         toast('장바구니 담기 성공');
     };
+
     const addWish = (x) => {
+        if (!checkboxes.chk4) {
+            toast('안내 사항을 모두 확인해주세요.');
+            return;
+        }
         wishPush(x);
         toast('관심상품 등록');
     };
+
     const next = (x) => {
+        if (!checkboxes.chk4) {
+            toast('안내 사항을 모두 확인해주세요.');
+            return;
+        }
+
         if (authed) {
             payPush(x);
             setTimeout(() => {
                 nav('/pay');
             });
         } else {
-            Swal.fire({
-                title: '정말 예약을 취소하겠습니까?',
-
-                showCancelButton: true,
-
-                confirmButtonText: '예약취소',
-                cancelButtonText: '×',
-                customClass: {
-                    popup: 'custom-swal-popup',
-                    cancelButton: 'cancel-btn-with-icon',
-                },
-            }).then((result) => {
-                if (result.isConfirmed) {
-                }
-            });
+            toast('제품 구매를 위해서는 로그인이 필요합니다');
         }
     };
+
     return (
         <div className="goods_cart">
             <div className="cart_inner">
@@ -62,23 +103,47 @@ const GoodsCart = ({ data }) => {
                 {/* price_cart */}
                 <div className="cart_form_chk">
                     <div className="form_con form_con1">
-                        <input type="checkbox" name="chk1" id="chk1" />
+                        <input
+                            type="checkbox"
+                            name="chk1"
+                            id="chk1"
+                            checked={checkboxes.chk1}
+                            onChange={() => handleCheckboxChange('chk1')}
+                        />
                         <label htmlFor="chk1"></label>
                         <span>상세페이지 및 배송 일정 확인 후 구매 부탁드립니다</span>
                     </div>
 
                     <div className="form_con form_con2">
-                        <input type="checkbox" name="chk2" id="chk2" />
+                        <input
+                            type="checkbox"
+                            name="chk2"
+                            id="chk2"
+                            checked={checkboxes.chk2}
+                            onChange={() => handleCheckboxChange('chk2')}
+                        />
                         <label htmlFor="chk2"></label>
                         <span>준비된 수량 소진 시 품절 될 수 있습니다.</span>
                     </div>
                     <div className="form_con form_con3">
-                        <input type="checkbox" name="chk3" id="chk3" />
-                        <label htmlFor="chk3" for="chk3"></label>
+                        <input
+                            type="checkbox"
+                            name="chk3"
+                            id="chk3"
+                            checked={checkboxes.chk3}
+                            onChange={() => handleCheckboxChange('chk3')}
+                        />
+                        <label htmlFor="chk3"></label>
                         <span>해당 상품의 원활한 배송을 위하여 단독 구매 부탁드립니다.</span>
                     </div>
                     <div className="form_con form_con4 all_chk">
-                        <input type="checkbox" name="chk4" id="chk4" />
+                        <input
+                            type="checkbox"
+                            name="chk4"
+                            id="chk4"
+                            checked={checkboxes.chk4}
+                            onChange={handleAllCheck}
+                        />
                         <label htmlFor="chk4"></label>
                         <span>안내 사항을 모두 확인했습니다</span>
                     </div>

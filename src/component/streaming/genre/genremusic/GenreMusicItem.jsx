@@ -8,7 +8,7 @@ import Likemodal from '../../../likemodal/Likemodal';
 const GenreMusicItem = ({ item, isSelected, playlists }) => {
     const [minute, setMinute] = useState(0);
     const [like, setLike] = useState(false);
-    const [fav, setFav] = useState(false);
+    const [favorited, setFavorited] = useState(false);
     const addSongToPlaylist = usePlaylistStore((state) => state.addSongToPlaylist);
     const addToMyMusicList = usePlaylistStore((state) => state.addToMyMusicList);
     const addPlaylist = usePlaylistStore((state) => state.addPlaylist);
@@ -58,38 +58,39 @@ const GenreMusicItem = ({ item, isSelected, playlists }) => {
                         onClick={() => setLike(!like)}
                     />
                 </td>
-                <td className="col-fav-td icon">
-                    <img
-                        src={
-                            fav
-                                ? '/images/streaming/icon_star_on.png'
-                                : '/images/streaming/icon_star.png'
-                        }
-                        alt="찜하기"
-                        onClick={() => {
-                            setFav(!fav);
-                            setDropdownOpen((prev) => !prev);
-                        }}
-                    />
+                <td
+                    className="col-fav-td icon"
+                    onClick={() => {
+                        setDropdownOpen((prev) => !prev);
+                        setFavorited((prev) => !prev);
+                    }}
+                >
+                    <div className="fav-wrapper">
+                        <img
+                            src={
+                                favorited
+                                    ? '/images/streaming/icon_star_on.png'
+                                    : '/images/streaming/icon_star.png'
+                            }
+                            alt="favorite"
+                        />
+                        {dropdownOpen && (
+                            <div className="likemodal-wrapper">
+                                <Likemodal
+                                    playlists={isLoggedIn ? playlists : []}
+                                    onSelect={(pl) => {
+                                        selectPlaylist(pl);
+                                        addSongToPlaylist(pl.id, item);
+                                        setDropdownOpen(false);
+                                    }}
+                                    onAddPlaylist={(name) => addPlaylist(name)}
+                                    onConfirm={() => setDropdownOpen(false)}
+                                />
+                            </div>
+                        )}
+                    </div>
                 </td>
             </tr>
-
-            {dropdownOpen && (
-                <tr className="dropdown-row">
-                    <td colSpan={9}>
-                        <Likemodal
-                            playlists={isLoggedIn ? playlists : []}
-                            onSelect={(pl) => {
-                                selectPlaylist(pl);
-                                addSongToPlaylist(pl.id, item);
-                                setDropdownOpen(false);
-                            }}
-                            onAddPlaylist={(name) => addPlaylist(name)}
-                            onConfirm={() => setDropdownOpen(false)}
-                        />
-                    </td>
-                </tr>
-            )}
         </>
     );
 };

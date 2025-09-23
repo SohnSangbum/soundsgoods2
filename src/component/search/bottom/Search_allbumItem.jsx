@@ -16,20 +16,18 @@ const Search_allbumItem = ({ item }) => {
     }, []);
 
     return (
-        <div className="allbumItem">
+        <div className="allbumItem" onClick={onClick}>
             <img src={item.image} alt="" />
-            <div className="allbunInfo">
+            <div className="allbumInfo">
                 <div className="allbumtitle">
-                    <h2>
-                        {item.title} <br />
-                        {item.album}
-                    </h2>
+                    <h2>{item.album}</h2>
                 </div>
-                <div className="allbumDate" onClick={onClick}>
-                    <h3>
-                        {item.release} | {liked ? <FaHeart color="red" /> : <FaRegHeart />}
+                <div className="allbumDate">
+                    <h3>{item.release}</h3>
+                    <h4>
+                        {liked ? <FaHeart color="red" /> : <FaRegHeart />}
                         {heart.toLocaleString()}
-                    </h3>
+                    </h4>
                 </div>
                 <div className="allbumListen">
                     <p>앨범 듣기</p>

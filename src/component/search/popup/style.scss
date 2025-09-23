@@ -2,8 +2,7 @@
 
 //팝업
 .popupList {
-    padding-top: vw(94);
-    padding-bottom: vw(100);
+    padding-top: vw(100);
     margin: auto;
     .popupTitle {
         display: flex;
@@ -11,6 +10,7 @@
         align-items: flex-start;
         gap: vw(40);
         width: vw(1410);
+        margin-bottom: vw(40);
         h2 {
             color: #000;
             font-size: vw(30);
@@ -19,10 +19,6 @@
             width: vw(256);
             justify-content: space-between;
             align-items: center;
-
-            span {
-                display: block;
-            }
         }
         h3 {
             color: #000;
@@ -37,9 +33,7 @@
 
 .popup {
     width: vw(1410);
-    margin-top: vw(51);
     display: flex;
-    height: vw(303);
     justify-content: space-between;
     align-items: flex-start;
     .popupItem {
@@ -48,27 +42,20 @@
         justify-content: center;
         align-items: center;
         gap: vw(20);
-        width: vw(180);
-        height: vw(297);
-        h2 {
-            width: vw(160);
-            height: vw(45);
-        }
+        width: vw(260);
         img {
-            width: vw(180);
-            height: vw(180);
+            width: vw(260);
+            height: vw(260);
+            border-radius: vw(20);
             object-fit: cover;
         }
         .popupInfo {
             display: flex;
-            padding: 0 vw(10);
             flex-direction: column;
-            justify-content: center;
             align-items: flex-start;
             gap: vw(6);
-
+            width: 100%;
             .popuptitle {
-                height: 45px;
                 align-self: stretch;
                 h2 {
                     overflow: hidden;
@@ -78,14 +65,11 @@
                     font-size: vw(18);
                     font-weight: 500;
                 }
-                h3 {
-                }
             }
             .popupDate {
-                margin: vw(6) 0;
                 h3 {
                     color: rgba(0, 0, 0, 0.6);
-                    font-size: vw(14);
+                    font-size: vw(16);
                     font-weight: 500;
                     line-height: 160%;
                 }
@@ -94,14 +78,9 @@
         .popupListen {
             color: rgba(0, 0, 0, 0.8);
             font-family: Pretendard;
-            font-size: 14px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: 130%; /* 18.2px */
-
             p {
                 color: rgba(0, 0, 0, 0.8);
-                font-size: vw(14);
+                font-size: vw(16);
                 font-style: normal;
                 font-weight: 600;
                 line-height: 130%;

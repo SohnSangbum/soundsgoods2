@@ -75,7 +75,7 @@ const Goods = () => {
         const handleWheel = (e) => {
             if (sliderWrapperRef.current) {
                 const maxScroll = sliderWrapperRef.current.offsetWidth - window.innerWidth;
-                targetRef.current += e.deltaY;
+                targetRef.current -= e.deltaY;
                 targetRef.current = Math.max(0, targetRef.current);
                 targetRef.current = Math.min(maxScroll, targetRef.current);
             }
@@ -112,7 +112,7 @@ const Goods = () => {
             <div className="sidebar" ref={sidebarRef}>
                 <div className="sidebar-item">
                     <p className="main-pop">
-                        Kategorie <br /> collection
+                        Category <br /> collection
                     </p>
                     <p className="bg-artists_goods">Artists goods</p>
                 </div>
