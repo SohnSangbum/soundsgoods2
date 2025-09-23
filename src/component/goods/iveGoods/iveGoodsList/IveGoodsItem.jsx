@@ -1,8 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const IveGoodsItem = ({ title, imageM, price }) => {
+const IveGoodsItem = ({ title, imageM, price, id }) => {
+    const nav = useNavigate();
     return (
-        <li>
+        <li onClick={() => nav(`/goods/${id}`)}>
             <div className="ive_pic">
                 <img src={imageM} alt="" />
             </div>

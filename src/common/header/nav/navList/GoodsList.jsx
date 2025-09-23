@@ -8,7 +8,7 @@ const GoodsList = ({ data }) => {
         <div className="GoodsList">
             <div className="goods_item">
                 <div className="left">
-                    <img src="/images/magazine/magazine01.jpg" alt="" />
+                    <img src="/images/header/header_visual.jpg" alt="" />
                     <div className="goods_text">
                         <h2>
                             [ Dirty Work ] OFFICIAL MD <br />

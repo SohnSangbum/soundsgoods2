@@ -353,7 +353,7 @@ const MainCard = () => {
                 <h1 className="ho">PICK YOUR DAY</h1>
                 <p className="co">내가 원하는 날, 맞춤 예약 배송</p>
                 <div className="pic">
-                    <img src="" alt="" />
+                    <img src="/images/main/Pick_Your_Day.png" alt="" />
                 </div>
             </section>
 

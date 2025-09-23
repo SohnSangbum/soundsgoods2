@@ -140,7 +140,7 @@
 
     .main-card-con2 {
         width: vw(1920);
-        height: vw(1080);
+        height: vw(800);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -148,41 +148,45 @@
         position: relative;
         color: #fff;
         z-index: 10;
-
         .po {
-            font-size: vw(50);
+            font-size: vw(24);
             font-weight: 600;
             position: absolute;
-            top: vw(392);
+            top: vw(289);
             left: vw(120);
+            line-height: 160%;
+            height: vw(38);
         }
-
         .co {
-            font-size: vw(60);
+            font-size: vw(40);
             font-weight: 600;
             position: absolute;
-            top: vw(642);
+            top: vw(447);
             left: vw(120);
+            line-height: 100%;
+            height: vw(80);
         }
-
         .ho {
             @include font-120px-700();
+            font-size: vw(80);
             position: absolute;
-            top: vw(462);
+            top: vw(320);
             left: vw(120);
+            line-height: 160%;
+            height: vw(64);
         }
 
         .pic {
-            position: absolute;
-            top: vw(326);
-            right: vw(120);
+            @include p_center_top();
+            @include display_center();
+
+            right: vw(400);
             width: vw(380);
             height: vw(412);
-            background-color: #fff;
             border-radius: vw(20);
-
             img {
-                width: vw(380);
+                width: vw(1900);
+                height: vw(700);
             }
         }
     }

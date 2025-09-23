@@ -11,7 +11,7 @@ const ReservationList = () => {
                     key={idx}
                     item={card.items[0]}
                     form={card.formData}
-                    orderDate={card.orderDate}
+                    deliveryDate={card.deliveryDate}
                 />
             ))}
         </ul>

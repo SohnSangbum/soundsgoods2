@@ -22,7 +22,10 @@ const VideoArtist = () => {
     return (
         <section id="video_artist">
             <div className="inner">
-                <h2>지금 뜨고있는 Video</h2>
+                <div className="title_box">
+                    <span>Popular chart</span>
+                    <h2>MUSIC Streaming</h2>
+                </div>
                 {width > 1024 ? <MainAlbumList /> : <MainAlbumMobileList />}
             </div>
         </section>
