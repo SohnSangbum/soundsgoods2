@@ -93,7 +93,7 @@ const GoodsItem = ({ goods }) => {
                     <button>
                         <img src="images/icons/white_next.png" alt="" />
                     </button>
-                    <span>카드에 넣기</span>
+                    <span>카트에 넣기</span>
                 </div>
                 <div className="btn2" onClick={() => payadd(goods)}>
                     <button>

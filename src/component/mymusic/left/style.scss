@@ -12,6 +12,7 @@
             box-shadow: 0 0 vw(4) 0 rgba(0, 0, 0, 0.25);
             backdrop-filter: blur(25px);
             display: flex;
+            margin-bottom: vw(20);
 
             .profile {
                 display: flex;
@@ -22,6 +23,7 @@
                     margin-bottom: vw(40);
                     h2 {
                         font-size: vw(24);
+                        margin-bottom: vw(14);
                     }
                     p {
                         font-size: vw(14);
@@ -44,11 +46,17 @@
                     .profile_following {
                         text-align: center;
                         margin-left: vw(40);
+                        display: flex;
+                        align-items: center;
                         h2 {
                             font-size: vw(18);
+                            margin-right: vw(20);
                         }
                         p {
-                            font-size: vw(16);
+                            font-size: vw(20);
+                            color: $m_color1;
+                            text-align: left;
+                            font-weight: 700;
                         }
                     }
                 }
@@ -56,13 +64,16 @@
                     h2 {
                         font-size: vw(14);
                         display: flex;
+                        margin-bottom: vw(8);
                         strong {
                             font-size: vw(12);
                             margin-left: vw(30);
+                            color: $grey555;
                         }
                     }
                     p {
                         font-size: vw(18);
+                        color: $grey555;
                     }
                 }
                 // 이미지

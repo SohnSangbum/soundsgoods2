@@ -114,7 +114,7 @@ const LoginModal = ({ onClose, onJoin }) => {
                     <input
                         type="text"
                         name="loginEmail"
-                        placeholder="아이디"
+                        placeholder="이메일주소 ex)000@naver.com"
                         value={loginForm.loginEmail}
                         onChange={handleChange}
                         onKeyPress={handleKeyPress}
