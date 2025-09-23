@@ -52,11 +52,22 @@
                 .pic_pp {
                     &::after {
                         content: '';
-                        background-image: url('/images/icons/play_album.png');
+                        background-image: url('/images/streaming/mv-play-icon.png');
                         @include bg();
                         width: vw(50);
                         height: vw(50);
                         @include p_center_center();
+                        z-index: 3;
+                    }
+                    &::before {
+                        content: '';
+                        background-color: rgba(0, 0, 0, 0.4);
+                        width: vw(50);
+                        height: vw(50);
+                        @include p_center_center();
+                        border-radius: 100%;
+                        display: block;
+                        z-index: 2;
                     }
                     img {
                         width: vw(230);

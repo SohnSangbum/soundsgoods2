@@ -12,7 +12,7 @@ $transition-timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
 .main_visual {
     width: vw(1920);
-    height: vw(944);
+    height: vw(764);
     box-sizing: border-box;
     padding-top: vw(40);
     .team-carousel-wrapper-visual {
@@ -54,6 +54,7 @@ $transition-timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
         transition: all 0.8s $transition-timing;
         cursor: pointer;
         @include display_center();
+
         .member-info {
             .member-name {
                 left: vw(40);
@@ -83,13 +84,35 @@ $transition-timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
                     color: #fff;
                 }
             }
+            &:hover {
+                &::after {
+                    content: '';
+                    width: vw(124);
+                    height: vw(124);
+                    background-color: #6680ffcc;
+                    position: absolute;
+                    right: vw(48);
+                    bottom: vw(48);
+                    border-radius: 100%;
+                }
+                &::before {
+                    content: '';
+                    width: vw(95);
+                    height: vw(30);
+                    @include bg();
+                    background-image: url('/images/icons/click.png');
+                    position: absolute;
+                    right: vw(62);
+                    bottom: vw(95);
+                    z-index: 2;
+                }
+            }
         }
         &.left-1 {
             z-index: 5;
             transform: translateX(-550px) scale(0.7) translateZ(-70px);
             opacity: 0.9;
             .video-content {
-                filter: grayscale(100%);
             }
             .member-info {
                 .member-name {
@@ -103,7 +126,6 @@ $transition-timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
             transform: translateX(550px) scale(0.7) translateZ(-70px);
             opacity: 0.9;
             .video-content {
-                filter: grayscale(100%);
             }
             .member-info {
                 .member-name {
