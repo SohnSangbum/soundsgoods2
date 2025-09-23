@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { usePlaylistStore } from '../../store/albumSlice';
 import './style.scss';
+import { IoCloseOutline } from 'react-icons/io5';
 
 const Likemodal = ({ onSelect, onAddPlaylist, onConfirm }) => {
     const playlists = usePlaylistStore((state) => state.playlists);
@@ -44,7 +45,15 @@ const Likemodal = ({ onSelect, onAddPlaylist, onConfirm }) => {
                     )}
                 </ul>
                 <button onClick={handleAdd}>+ 새 플레이리스트</button>
-                <button onClick={onConfirm}>닫기</button>
+                <button
+                    className="close"
+                    onClick={() => {
+                        setIsOpen(false);
+                        onConfirm();
+                    }}
+                >
+                    <IoCloseOutline />
+                </button>
             </div>
         )
     );

@@ -2,8 +2,7 @@
 
 //굿즈리스트
 .goodsList {
-    padding-top: vw(94);
-    padding-bottom: vw(100);
+    padding-top: vw(100);
     margin: auto;
     .goodsTitle {
         display: flex;
@@ -11,7 +10,6 @@
         align-items: flex-start;
         gap: vw(40);
         width: vw(1410);
-
         h2 {
             color: #000;
             font-size: vw(30);
@@ -20,7 +18,6 @@
             width: vw(353);
             justify-content: space-between;
             align-items: center;
-
             span {
                 display: block;
             }
@@ -37,41 +34,55 @@
 
     .goods {
         width: vw(1410);
-        margin-top: vw(51);
+        margin-top: vw(40);
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        gap: vw(50);
         align-self: stretch;
         .GoodsItem {
             position: relative;
-            width: vw(230);
-            height: vw(300);
+            width: vw(260);
             cursor: pointer;
-            .heartbox {
-                position: absolute;
-                top: vw(9.59);
-                right: vw(8);
-                display: flex;
-                width: vw(20);
-                height: vw(20);
-                padding: vw(4) vw(10);
-                align-items: center;
-                gap: vw(10);
-                border-radius: vw(500);
-                background: rgba(0, 0, 0, 0.6);
-                img {
-                    width: vw(20);
-                    height: vw(20);
-                }
-            }
             img {
-                width: vw(230);
-                height: vw(300);
+                width: vw(260);
+                height: vw(260);
+                border-radius: vw(20);
+                object-fit: contain;
+            }
+            .wish-box {
+                position: absolute;
+                top: vw(10);
+                right: vw(10);
+                gap: vw(8);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: rgba($fc, 0.6);
+                border-radius: vw(500);
+                padding: vw(4) vw(10) vw(5);
+                .icon {
+                    img {
+                        width: vw(20);
+                        height: vw(20);
+                        @include display_center();
+                    }
+                }
+                .count {
+                    display: none;
+                    @include font-16px-400();
+                    vertical-align: middle;
+                }
+                &:hover {
+                    .count {
+                        display: block;
+                        color: $fff;
+                    }
+                }
             }
             .GoodsInfo {
                 display: flex;
-                width: vw(230);
+                width: vw(260);
                 padding: vw(7) 0;
                 justify-content: center;
                 align-items: center;
@@ -79,8 +90,7 @@
                 background: rgba(255, 255, 255, 0.6);
                 .GoodsPrice {
                     display: flex;
-                    width: vw(230);
-                    padding: 0 vw(20);
+                    width: vw(260);
                     flex-direction: column;
                     justify-content: center;
                     align-items: flex-start;
@@ -94,14 +104,12 @@
                         overflow: hidden;
                         color: #000;
                         text-overflow: ellipsis;
-                        font-size: vw(16);
-                        font-weight: 500;
+                        white-space: nowrap;
+                        @include font-18px-600();
                         text-transform: uppercase;
                         p {
-                            color: #000;
                             text-align: right;
-                            font-size: vw(14);
-                            font-weight: 500;
+                            @include font-18px-400();
                             text-transform: uppercase;
                         }
                     }

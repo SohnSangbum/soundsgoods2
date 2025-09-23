@@ -193,6 +193,22 @@
                     cursor: pointer;
                 }
             }
+            .col-fav-td {
+                position: relative;
+
+                .fav-wrapper {
+                    position: relative;
+                    display: inline-block;
+                }
+
+                .likemodal-wrapper {
+                    position: absolute;
+                    top: vw(35);
+                    right: 0;
+                    z-index: 20;
+                    width: vw(400);
+                }
+            }
         }
     }
 }
@@ -321,6 +337,12 @@
                 .icon {
                     img {
                         width: vw(22, 393);
+                    }
+                }
+                .col-fav-td {
+                    .likemodal-wrapper {
+                        top: vw(145);
+                        width: vw(300, 393);
                     }
                 }
             }
