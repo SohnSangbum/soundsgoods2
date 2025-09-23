@@ -22,9 +22,12 @@
             }
             h3 {
                 @include font-16px-700();
-                margin-bottom: vw(5);
-                line-height: 1;
-                word-break: keep-all;
+                margin-bottom: vw(8) !important;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: block;
+                max-width: 100%;
             }
             h4 {
                 @include font-14px-400();
