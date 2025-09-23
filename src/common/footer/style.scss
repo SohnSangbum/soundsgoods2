@@ -23,6 +23,7 @@
             margin-top: vw(20px);
             margin-bottom: vw(60px);
             li {
+                cursor: pointer;
                 width: 1.875vw;
                 height: vw(36px);
                 img {
@@ -58,6 +59,7 @@
             gap: vw(24px);
             margin-bottom: vw(10px);
             li {
+                cursor: pointer;
                 @include font-14px-400();
                 position: relative;
                 &::after {

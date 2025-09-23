@@ -5,7 +5,7 @@ const Search_allbumList = ({ data }) => {
     return (
         <div className="allbumList">
             <div className="allbumTitle">
-                <h2>앨범</h2>
+                <h2>앨범 검색결과</h2>
                 <h3>더보기</h3>
             </div>
             <div className="allbum">

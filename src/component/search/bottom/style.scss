@@ -3,7 +3,7 @@
 //앨범리스트
 .allbumList {
     margin: auto;
-
+    padding-top: vw(100);
     .allbumTitle {
         display: flex;
         justify-content: space-between;
@@ -31,24 +31,26 @@
     //앨범
     .allbum {
         width: vw(1410);
-        margin-top: vw(51);
+        margin-top: vw(40);
         display: flex;
-        height: vw(303);
-        justify-content: space-between;
+        // justify-content: space-between;
         align-items: flex-start;
+        gap: vw(35);
         .allbumItem {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            // display: flex;
+            // flex-direction: column;
+            // justify-content: center;
             align-items: center;
             gap: vw(20);
+            width: vw(180);
             img {
                 width: vw(180);
                 height: vw(180);
+                border-radius: vw(20);
             }
             .allbumInfo {
+                padding-top: vw(10);
                 display: flex;
-                padding: 0 vw(10);
                 flex-direction: column;
                 justify-content: center;
                 align-items: flex-start;
@@ -62,29 +64,32 @@
                         color: rgba(0, 0, 0, 0.8);
                         text-overflow: ellipsis;
                         white-space: nowrap;
-                        font-size: vw(18);
+                        font-size: vw(18) !important;
                         font-style: normal;
                         font-weight: 600;
-                        line-height: 130%;
-                    }
-                    h3 {
                     }
                 }
                 .allbumDate {
-                    margin: vw(6) 0;
+                    line-height: 160%;
                     h3 {
-                        color: rgba(0, 0, 0, 0.6);
-
-                        font-size: vw(14);
+                        color: $grey777;
+                        font-size: vw(16);
                         font-style: normal;
                         font-weight: 500;
-                        line-height: 160%;
+                    }
+                    h4 {
+                        color: $grey777;
+                        font-size: vw(16);
+                        display: flex;
+                        align-items: center;
+                        gap: 6px;
                     }
                 }
             }
             .allbumListen {
                 margin-top: vw(9);
-                display: flex;
+                display: none;
+                // display: flex;
                 width: vw(60);
                 padding: vw(3) 0;
                 justify-content: left;
