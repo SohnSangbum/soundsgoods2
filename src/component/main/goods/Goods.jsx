@@ -75,7 +75,7 @@ const Goods = () => {
         const handleWheel = (e) => {
             if (sliderWrapperRef.current) {
                 const maxScroll = sliderWrapperRef.current.offsetWidth - window.innerWidth;
-                targetRef.current += e.deltaY;
+                targetRef.current -= e.deltaY;
                 targetRef.current = Math.max(0, targetRef.current);
                 targetRef.current = Math.min(maxScroll, targetRef.current);
             }
@@ -95,7 +95,7 @@ const Goods = () => {
             const totalScrollDistance = sliderWrapperRef.current.offsetWidth - window.innerWidth;
             ScrollTrigger.create({
                 trigger: mainGoodsRef.current,
-                start: 'top 25%',
+                start: 'top 70%',
                 end: `+=${totalScrollDistance * 0.2}`, // 슬라이더가 끝날 때까지
                 pin: mainGoodsRef.current, // main-goods 전체를 핀 고정
                 pinSpacing: true,

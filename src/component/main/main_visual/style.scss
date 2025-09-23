@@ -1,7 +1,5 @@
-// style.scss
 @use '../../../styled/utils' as *;
 
-// 스크롤 잠금 클래스
 body.scroll-locked {
     overflow: hidden;
     position: fixed;
@@ -15,7 +13,8 @@ body.scroll-locked {
     background-color: $fff;
     position: relative;
     perspective: 1200px;
-    // overflow: hidden;
+    overflow: hidden;
+    touch-action: pan-y; // 수직 스크롤만 허용
 
     .visual_wrap {
         width: 100vw;
@@ -36,22 +35,22 @@ body.scroll-locked {
             position: absolute;
             left: 50%;
             top: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%) translateX(0);
             will-change: transform, opacity;
             transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             cursor: pointer;
+            transform-style: preserve-3d;
 
-            // 확대된 상태
             &.expanded {
                 z-index: 100 !important;
 
-                .pic {
+                .video-container {
                     z-index: 1000;
                     position: fixed;
                 }
             }
 
-            .pic {
+            .video-container {
                 width: vw(699);
                 height: vw(393);
                 overflow: hidden;
@@ -61,20 +60,23 @@ body.scroll-locked {
                 transform-style: preserve-3d;
                 transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 
-                img {
+                video {
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
                     will-change: transform;
                     transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
                     border-radius: 8px;
+                    background: #000;
                 }
             }
+
             header.hidden {
                 display: none !important;
                 opacity: 0;
                 visibility: hidden;
             }
+
             strong {
                 @include font-200px-700();
                 position: relative;
@@ -97,10 +99,9 @@ body.scroll-locked {
         }
     }
 
-    // 전체 화면 비디오
     .video_fullscreen {
         position: fixed;
-        z-index: 999999; // 매우 높은 z-index로 헤더 위에 표시
+        z-index: 999999;
         top: vw(-136);
         left: 0;
         width: vw(1920);
@@ -110,6 +111,7 @@ body.scroll-locked {
         justify-content: center;
         align-items: center;
         cursor: pointer;
+
         .title_1 {
             @include p_center_center();
             @include font-120px-700();
@@ -173,29 +175,29 @@ body.scroll-locked {
             top: vw(-136);
             z-index: 1;
         }
+    }
 
-        .close_btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 30px;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000002; // 가장 위에 표시
-            backdrop-filter: blur(5px);
-            transition: all 0.3s ease;
+    // Swipe 안내 표시기
+    .swipe-indicator {
+        position: absolute;
+        bottom: vw(50);
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 20;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: vw(16);
+        background: rgba(0, 0, 0, 0.5);
+        padding: vw(10) vw(20);
+        border-radius: vw(20);
+        animation: fadeInOut 2s infinite;
 
-            &:hover {
-                background: rgba(255, 255, 255, 0.3);
-                transform: scale(1.1);
+        @keyframes fadeInOut {
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
             }
         }
     }
@@ -206,7 +208,7 @@ body.scroll-locked {
         .visual_wrap .visual {
             gap: vw(20, 393);
 
-            .pic {
+            .video-container {
                 width: vw(500, 393);
                 height: vw(280, 393);
             }
@@ -224,14 +226,10 @@ body.scroll-locked {
             }
         }
 
-        .video_fullscreen {
-            .close_btn {
-                top: 15px;
-                right: 15px;
-                width: 40px;
-                height: 40px;
-                font-size: 24px;
-            }
+        .swipe-indicator {
+            bottom: vw(30, 393);
+            font-size: vw(14, 393);
+            padding: vw(8, 393) vw(16, 393);
         }
     }
 }
@@ -246,6 +244,12 @@ body.scroll-locked {
                 height: 35px;
                 font-size: 20px;
             }
+        }
+
+        .swipe-indicator {
+            bottom: 20px;
+            font-size: 12px;
+            padding: 6px 12px;
         }
     }
 }

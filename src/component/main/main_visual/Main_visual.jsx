@@ -10,21 +10,21 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 const vis = [
     {
         id: 1,
-        img: '/images/main/visual00.jpg',
+        video: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/videos/main_visual_to.mp4',
         right: 'Play',
         left: 'It',
         class: 'first',
     },
     {
         id: 2,
-        img: '/images/main/visual02.jpg',
+        video: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/videos/main_visual_to.mp4',
         right: 'Feel',
         left: 'It',
         class: 'second',
     },
     {
         id: 3,
-        img: '/images/main/visual03.jpg',
+        video: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/videos/main_visual_to.mp4',
         right: 'Love',
         left: 'It',
         class: 'third',
@@ -52,18 +52,42 @@ const Main_visual = ({ onVideoPlay }) => {
         scrollY: 0,
     });
     const scrollTriggerRef = useRef(null);
-    const videoRef = useRef(null);
+    const videoRefs = useRef([]);
+    const fullscreenVideoRef = useRef(null);
     const isScrollLocked = useRef(false);
 
-    const handleImageClick = (item) => {
-        // 3번째 이미지만 확대 효과 적용
+    // 비디오 ref 초기화
+    useEffect(() => {
+        videoRefs.current = videoRefs.current.slice(0, vis.length);
+    }, []);
+
+    // 비디오 상태 관리
+    useEffect(() => {
+        if (!showVideo && fullscreenVideoRef.current) {
+            // 전체 화면 비디오가 닫힐 때 완전히 정지
+            fullscreenVideoRef.current.pause();
+            fullscreenVideoRef.current.currentTime = 0;
+        }
+    }, [showVideo]);
+
+    // 썸네일 비디오 자동 재생 방지
+    useEffect(() => {
+        videoRefs.current.forEach((video, index) => {
+            if (video && !isExpanded) {
+                video.pause();
+                video.currentTime = 0.1;
+            }
+        });
+    }, [isExpanded]);
+
+    const handleVideoClick = (item, index) => {
+        // 3번째 비디오만 확대 효과 적용
         if (item.id === 3 && !isExpanded) {
             // 비디오 재생 상태 알림
             if (onVideoPlay) {
                 onVideoPlay(true);
             }
 
-            // 현재 스크롤 위치 저장
             const scrollY = window.scrollY;
             originalSizes.current.scrollY = scrollY;
 
@@ -71,13 +95,11 @@ const Main_visual = ({ onVideoPlay }) => {
             isScrollLocked.current = true;
 
             const visualElement = document.querySelector(`.${item.class}_visual`);
-            const picElement = visualElement.querySelector('.pic');
+            const videoContainer = visualElement.querySelector('.video-container');
             const textElements = visualElement.querySelectorAll('strong');
 
-            // 뷰포트와 요소의 중앙 계산
-            const rect = picElement.getBoundingClientRect();
+            const rect = videoContainer.getBoundingClientRect();
 
-            // 요소의 현재 위치와 크기 저장
             originalSizes.current = {
                 ...originalSizes.current,
                 width: rect.width,
@@ -86,16 +108,13 @@ const Main_visual = ({ onVideoPlay }) => {
                 top: rect.top,
             };
 
-            // 스크롤 트리거 일시 중지 (kill 대신 disable 사용)
             if (scrollTriggerRef.current) {
                 scrollTriggerRef.current.disable();
             }
 
-            // 스크롤 잠금 (body에 클래스 추가 방식으로 변경)
             document.body.classList.add('scroll-locked');
             document.documentElement.style.scrollBehavior = 'auto';
 
-            // 헤더 숨기기
             const header = document.querySelector('header');
             if (header) {
                 header.classList.add('hidden');
@@ -117,15 +136,19 @@ const Main_visual = ({ onVideoPlay }) => {
                 duration: 0.5,
             });
 
-            // 부모 컨테이너의 transform 초기화
+            // 현재 썸네일 비디오 일시정지
+            if (videoRefs.current[index]) {
+                videoRefs.current[index].pause();
+                videoRefs.current[index].currentTime = 0.1;
+            }
+
             gsap.set(visualElement, {
                 x: 0,
                 y: 0,
                 scale: 1,
             });
 
-            // 이미지를 절대 위치로 변경하여 전체 화면에서 중앙 정렬
-            gsap.set(picElement, {
+            gsap.set(videoContainer, {
                 position: 'fixed',
                 left: rect.left,
                 top: rect.top,
@@ -134,8 +157,7 @@ const Main_visual = ({ onVideoPlay }) => {
                 zIndex: 1000,
             });
 
-            // 이미지 확대 및 중앙 정렬
-            gsap.to(picElement, {
+            gsap.to(videoContainer, {
                 left: '50%',
                 top: '50%',
                 x: '-50%',
@@ -145,13 +167,11 @@ const Main_visual = ({ onVideoPlay }) => {
                 borderRadius: 0,
                 duration: 1,
                 onComplete: () => {
-                    // 비디오 표시 및 재생
                     setShowVideo(true);
-
-                    // 비디오 자동 재생
                     setTimeout(() => {
-                        if (videoRef.current) {
-                            videoRef.current
+                        if (fullscreenVideoRef.current) {
+                            fullscreenVideoRef.current.currentTime = 0;
+                            fullscreenVideoRef.current
                                 .play()
                                 .catch((e) => console.log('Autoplay prevented:', e));
                         }
@@ -162,30 +182,27 @@ const Main_visual = ({ onVideoPlay }) => {
     };
 
     const handleCloseVideo = () => {
-        // 비디오 일시정지
-        if (videoRef.current) {
-            videoRef.current.pause();
+        if (fullscreenVideoRef.current) {
+            fullscreenVideoRef.current.pause();
+            fullscreenVideoRef.current.currentTime = 0; // 현재 시간 초기화
         }
 
         setShowVideo(false);
 
-        // 비디오 재생 종료 상태 알림
         if (onVideoPlay) {
             onVideoPlay(false);
         }
 
-        // 헤더 다시 표시
         const header = document.querySelector('header');
         if (header) {
             header.classList.remove('hidden');
         }
 
         const visualElement = document.querySelector('.third_visual');
-        const picElement = visualElement.querySelector('.pic');
+        const videoContainer = visualElement.querySelector('.video-container');
         const textElements = visualElement.querySelectorAll('strong');
 
-        // 이미지 원래 위치와 크기로 복구
-        gsap.to(picElement, {
+        gsap.to(videoContainer, {
             left: originalSizes.current.left,
             top: originalSizes.current.top,
             width: originalSizes.current.width,
@@ -193,8 +210,7 @@ const Main_visual = ({ onVideoPlay }) => {
             borderRadius: 8,
             duration: 0.8,
             onComplete: () => {
-                // 원래 상태로 복구
-                gsap.set(picElement, {
+                gsap.set(videoContainer, {
                     position: 'relative',
                     left: 'auto',
                     top: 'auto',
@@ -203,13 +219,11 @@ const Main_visual = ({ onVideoPlay }) => {
                     zIndex: 2,
                 });
 
-                // 텍스트 다시 표시
                 gsap.to(textElements, {
                     opacity: 1,
                     duration: 0.5,
                 });
 
-                // 모든 visual 요소 다시 표시
                 gsap.utils.toArray('.visual').forEach((visual) => {
                     gsap.to(visual, {
                         opacity: 1,
@@ -217,17 +231,22 @@ const Main_visual = ({ onVideoPlay }) => {
                     });
                 });
 
-                // 스크롤 잠금 해제
+                // 썸네일 비디오 복구 - 현재 시간을 0.1로 설정하고 정지
+                const thumbnailVideo = videoRefs.current[2];
+                if (thumbnailVideo) {
+                    thumbnailVideo.currentTime = 0.1; // 첫 프레임으로 설정
+                    setTimeout(() => {
+                        thumbnailVideo.pause(); // 정지
+                    }, 100);
+                }
+
                 document.body.classList.remove('scroll-locked');
                 document.documentElement.style.scrollBehavior = '';
 
-                // 원래 스크롤 위치로 복원
                 window.scrollTo(0, originalSizes.current.scrollY);
 
-                // 스크롤 트리거 다시 활성화
                 if (scrollTriggerRef.current) {
                     scrollTriggerRef.current.enable();
-                    // 스크롤 트리거 새로고침
                     setTimeout(() => {
                         ScrollTrigger.refresh();
                     }, 100);
@@ -240,24 +259,19 @@ const Main_visual = ({ onVideoPlay }) => {
     };
 
     // 비디오 재생 시 텍스트 애니메이션
-    // 비디오 재생 시 텍스트 애니메이션
-    // 비디오 재생 시 텍스트 애니메이션
-    // 비디오 재생 시 텍스트 애니메이션
     useEffect(() => {
         if (showVideo) {
             const tl = gsap.timeline();
 
-            // title_1이 먼저 나타남
             tl.to(titleRef.current, {
                 opacity: 1,
                 duration: 0.8,
                 ease: 'power2.out',
             })
-                // title_2가 오른쪽에서 나타나고, title_1이 왼쪽로 이동하며 크기 줄어듦
                 .to(
                     titleRef.current,
                     {
-                        x: '-140%',
+                        x: '-95%',
                         fontSize: 80,
                         duration: 1,
                         ease: 'power2.out',
@@ -279,7 +293,6 @@ const Main_visual = ({ onVideoPlay }) => {
                     },
                     '<'
                 )
-                // 0.4초 뒤에 title_3가 아래에서 나타남
                 .to(
                     titleRef2.current,
                     {
@@ -302,7 +315,6 @@ const Main_visual = ({ onVideoPlay }) => {
                     },
                     '<'
                 )
-                // 0.5초 뒤에 title_1 사라지고, title_2와 title_3가 세로로 바뀌며 왼쪽으로 이동
                 .to(
                     titleRef.current,
                     {
@@ -334,7 +346,6 @@ const Main_visual = ({ onVideoPlay }) => {
                     },
                     '<'
                 )
-                // title_4,5,6가 오른쪽에서 나타남
                 .fromTo(
                     titleRef4.current,
                     {
@@ -377,7 +388,6 @@ const Main_visual = ({ onVideoPlay }) => {
                     },
                     '>'
                 )
-                // title_6까지 다 나타나면 title_2, title_3 사라짐
                 .to(
                     [titleRef2.current, titleRef3.current],
                     {
@@ -387,7 +397,6 @@ const Main_visual = ({ onVideoPlay }) => {
                     },
                     '>'
                 )
-                // title_2, title_3 사라지는게 끝나면 title_4,5,6이 왼쪽으로 이동
                 .to(
                     [titleRef4.current, titleRef5.current, titleRef6.current],
                     {
@@ -397,7 +406,6 @@ const Main_visual = ({ onVideoPlay }) => {
                     },
                     '>'
                 )
-                // 0.2초 뒤에 title_4,5,6 사라짐
                 .to(
                     [titleRef4.current, titleRef5.current, titleRef6.current],
                     {
@@ -407,7 +415,6 @@ const Main_visual = ({ onVideoPlay }) => {
                     },
                     '>0.2'
                 )
-                // title_4,5,6 사라진 후 title_7가 왼쪽에서 나타남
                 .fromTo(
                     titleRef7.current,
                     {
@@ -426,7 +433,6 @@ const Main_visual = ({ onVideoPlay }) => {
     }, [showVideo]);
 
     const initScrollTrigger = () => {
-        // 기존 스크롤 트리거 모두 제거
         ScrollTrigger.getAll().forEach((trigger) => {
             if (trigger.trigger === sectionRef.current) {
                 trigger.kill();
@@ -437,12 +443,10 @@ const Main_visual = ({ onVideoPlay }) => {
         const totalSlides = visuals.length;
         const slideHeight = window.innerHeight;
 
-        // 초기 상태 설정
         gsap.set(visuals, {
             zIndex: (i) => (i === 0 ? 10 : 5 - i),
         });
 
-        // 첫 번째 슬라이드 (센터)
         gsap.set(visuals[0], {
             opacity: 1,
             scale: 1,
@@ -450,7 +454,6 @@ const Main_visual = ({ onVideoPlay }) => {
             z: 0,
         });
 
-        // 두 번째 슬라이드 (위)
         gsap.set(visuals[1], {
             opacity: 0.8,
             scale: 0.9,
@@ -458,7 +461,6 @@ const Main_visual = ({ onVideoPlay }) => {
             z: -150,
         });
 
-        // 세 번째 슬라이드 (아래)
         gsap.set(visuals[2], {
             opacity: 0.8,
             scale: 0.9,
@@ -466,19 +468,16 @@ const Main_visual = ({ onVideoPlay }) => {
             z: -300,
         });
 
-        // 텍스트 초기 상태
         gsap.set('.visual strong', {
             opacity: 0,
             y: 15,
         });
 
-        // 중앙 슬라이드 텍스트만 보이게
         gsap.set(visuals[0].querySelectorAll('strong'), {
             opacity: 1,
             y: 0,
         });
 
-        // 스크롤 트리거 설정
         scrollTriggerRef.current = ScrollTrigger.create({
             trigger: sectionRef.current,
             start: 'top +=150',
@@ -543,7 +542,6 @@ const Main_visual = ({ onVideoPlay }) => {
             if (isExpanded) return;
             initScrollTrigger();
 
-            // 창 크기 변경 시 스크롤 트리거 갱신
             const handleResize = () => {
                 if (!isExpanded) {
                     initScrollTrigger();
@@ -556,22 +554,32 @@ const Main_visual = ({ onVideoPlay }) => {
         { scope: sectionRef, dependencies: [isExpanded] }
     );
 
-    // 컴포넌트 언마운트 시 스크롤 트리거 정리
     useEffect(() => {
         return () => {
             ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
             document.body.classList.remove('scroll-locked');
             document.documentElement.style.scrollBehavior = '';
 
-            // 헤더 다시 표시
             const header = document.querySelector('header');
             if (header && header.classList.contains('hidden')) {
                 header.classList.remove('hidden');
             }
 
-            // 비디오 재생 종료 상태 알림
             if (onVideoPlay) {
                 onVideoPlay(false);
+            }
+
+            // 컴포넌트 언마운트 시 모든 비디오 정지
+            videoRefs.current.forEach((video) => {
+                if (video) {
+                    video.pause();
+                    video.currentTime = 0;
+                }
+            });
+
+            if (fullscreenVideoRef.current) {
+                fullscreenVideoRef.current.pause();
+                fullscreenVideoRef.current.currentTime = 0;
             }
         };
     }, []);
@@ -579,17 +587,34 @@ const Main_visual = ({ onVideoPlay }) => {
     return (
         <section id="main-visual" ref={sectionRef}>
             <div className="visual_wrap" ref={containerRef}>
-                {vis.map((item) => (
+                {vis.map((item, index) => (
                     <div
                         className={`visual ${item.class}_visual ${
                             isExpanded && item.id === 3 ? 'expanded' : ''
                         }`}
                         key={item.id}
-                        onClick={() => handleImageClick(item)}
+                        onClick={() => handleVideoClick(item, index)}
                     >
                         <strong className="right-text">{item.right}</strong>
-                        <div className="pic">
-                            <img src={item.img} alt={item.right} />
+                        <div className="video-container">
+                            <video
+                                ref={(el) => (videoRefs.current[index] = el)}
+                                src={item.video}
+                                muted
+                                playsInline
+                                preload="metadata"
+                                onLoadedData={(e) => {
+                                    e.target.currentTime = 0.1;
+                                    setTimeout(() => e.target.pause(), 100);
+                                }}
+                                onPlay={(e) => {
+                                    // 확대 상태가 아닐 때는 자동 재생 방지
+                                    if (!isExpanded && e.target !== fullscreenVideoRef.current) {
+                                        e.target.pause();
+                                        e.target.currentTime = 0.1;
+                                    }
+                                }}
+                            />
                         </div>
                         <strong className="left-text">{item.left}</strong>
                     </div>
@@ -620,13 +645,13 @@ const Main_visual = ({ onVideoPlay }) => {
                         SOUNDS GOODS
                     </strong>
                     <video
-                        ref={videoRef}
+                        ref={fullscreenVideoRef}
                         src="https://github.com/SongTam-tam/SoundsGoods_image/raw/main/videos/main_visual_to.mp4"
                         autoPlay
                         muted
                         loop
                         playsInline
-                    ></video>
+                    />
                 </div>
             )}
         </section>

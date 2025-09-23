@@ -4,6 +4,7 @@ import { LuMinus } from 'react-icons/lu';
 import { useGoodsStore } from '../../../../store';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import useAuthStore from '../../../../store/authSlice';
 const GoodsItem = ({ goods }) => {
     const {
         id,
@@ -24,15 +25,19 @@ const GoodsItem = ({ goods }) => {
         count,
         totalPrice,
     } = goods;
-    const { cartPush, downCountGoods, upCountGoods ,payPush} = useGoodsStore();
+    const { cartPush, downCountGoods, upCountGoods, payPush } = useGoodsStore();
+    const { authed } = useAuthStore();
     const nav = useNavigate();
     const payadd = (x) => {
-        payPush(x)
-        setTimeout(()=>{
-            nav('/pay')
-        },50)
-    
-    }
+        if (authed) {
+            payPush(x);
+            setTimeout(() => {
+                nav('/pay');
+            }, 50);
+        } else {
+            toast('제품 구매를 위해 로그인이 필요합니다');
+        }
+    };
     const notify = (x) => {
         cartPush(x);
         toast('장바구니의 담기 성공');
@@ -90,7 +95,7 @@ const GoodsItem = ({ goods }) => {
                     </button>
                     <span>카드에 넣기</span>
                 </div>
-                <div className="btn2" onClick={()=>payadd(goods)}>
+                <div className="btn2" onClick={() => payadd(goods)}>
                     <button>
                         <img src="images/icons/white_next.png" alt="" />
                     </button>
