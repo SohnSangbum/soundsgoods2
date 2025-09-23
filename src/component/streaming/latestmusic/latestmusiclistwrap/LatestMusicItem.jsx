@@ -52,7 +52,6 @@ const LatestMusicItem = ({ item, isSelected, playlists }) => {
                     />
                 </td>
 
-                {/* 별 아이콘 */}
                 <td
                     className="col-fav-td icon"
                     onClick={() => {
@@ -60,32 +59,32 @@ const LatestMusicItem = ({ item, isSelected, playlists }) => {
                         setFavorited((prev) => !prev);
                     }}
                 >
-                    <img
-                        src={
-                            favorited
-                                ? '/images/streaming/icon_star_on.png'
-                                : '/images/streaming/icon_star.png'
-                        }
-                        alt="favorite"
-                    />
+                    <div className="fav-wrapper">
+                        <img
+                            src={
+                                favorited
+                                    ? '/images/streaming/icon_star_on.png'
+                                    : '/images/streaming/icon_star.png'
+                            }
+                            alt="favorite"
+                        />
+                        {dropdownOpen && (
+                            <div className="likemodal-wrapper">
+                                <Likemodal
+                                    playlists={isLoggedIn ? playlists : []}
+                                    onSelect={(pl) => {
+                                        selectPlaylist(pl);
+                                        addSongToPlaylist(pl.id, item);
+                                        setDropdownOpen(false);
+                                    }}
+                                    onAddPlaylist={(name) => addPlaylist(name)}
+                                    onConfirm={() => setDropdownOpen(false)}
+                                />
+                            </div>
+                        )}
+                    </div>
                 </td>
             </tr>
-            {dropdownOpen && (
-                <tr className="dropdown-row">
-                    <td colSpan={9}>
-                        <Likemodal
-                            playlists={isLoggedIn ? playlists : []}
-                            onSelect={(pl) => {
-                                selectPlaylist(pl);
-                                addSongToPlaylist(pl.id, item);
-                                setDropdownOpen(false);
-                            }}
-                            onAddPlaylist={(name) => addPlaylist(name)}
-                            onConfirm={() => setDropdownOpen(false)}
-                        />
-                    </td>
-                </tr>
-            )}
         </>
     );
 };
