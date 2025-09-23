@@ -39,7 +39,7 @@ const Top100Music = () => {
     return (
         <section id="top100-music">
             <div className="space">&nbsp;</div>
-            <div>
+            <div className="top100-music-wrap">
                 <h2>인기 차트 TOP 50</h2>
                 <div className="top100-music-top">
                     <div className="top100-music-btn">
@@ -55,7 +55,10 @@ const Top100Music = () => {
                             </div>
                         )}
                         <ul className={`sorting-list ${sortOpen ? 'on' : ''}`}>
-                            <li className="sorting-title" onClick={() => setSortOpen(false)}>
+                            <li
+                                className="sorting-title"
+                                onClick={() => setSortOpen(false)}
+                            >
                                 정렬
                             </li>
                             {['최신순', '인기순', '이름순'].map((type) => (

@@ -13,11 +13,11 @@ const Top100MusicList = ({ data, selectedAll }) => {
     useEffect(() => {
         setData(data); // 초기 데이터 세팅
     }, [setData, data]);
-
     const currentData = getCurrentPageData(); // slice 없이 바로 데이터 가져오기
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [currentPage]);
+
 
 
     // const currentData = getCurrentPageData(); // slice 없이 바로 데이터 가져오기
@@ -25,6 +25,7 @@ const Top100MusicList = ({ data, selectedAll }) => {
     // useEffect(() => {
     //     window.scrollTo(0, 0);
     // }, [currentPage]);
+
 
     return (
         <>

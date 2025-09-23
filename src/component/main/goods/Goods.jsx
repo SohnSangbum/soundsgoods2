@@ -15,18 +15,18 @@ const Goods = () => {
     const currentRef = useRef(0);
     const ease = 0.075;
     const slideImages = [
-        '../../../public/images/main/maingoods/main_goods01.jpg',
-        '../../../public/images/main/maingoods/main_goods03.jpg',
-        '../../../public/images/main/maingoods/main_goods04.jpg',
-        '../../../public/images/main/maingoods/main_goods05.jpg',
-        '../../../public/images/main/maingoods/main_goods06.jpg',
-        '../../../public/images/main/maingoods/main_goods07.jpg',
-        '../../../public/images/main/maingoods/main_goods08.jpg',
-        '../../../public/images/main/maingoods/main_goods09.jpg',
-        '../../../public/images/main/maingoods/main_goods10.jpg',
-        '../../../public/images/main/maingoods/main_goods11.jpg',
-        '../../../public/images/main/maingoods/main_goods12.jpg',
-        '../../../public/images/main/maingoods/main_goods13.jpg',
+        '/images/main/maingoods/main_goods01.jpg',
+        '/images/main/maingoods/main_goods03.jpg',
+        '/images/main/maingoods/main_goods04.jpg',
+        '/images/main/maingoods/main_goods05.jpg',
+        '/images/main/maingoods/main_goods06.jpg',
+        '/images/main/maingoods/main_goods07.jpg',
+        '/images/main/maingoods/main_goods08.jpg',
+        '/images/main/maingoods/main_goods09.jpg',
+        '/images/main/maingoods/main_goods10.jpg',
+        '/images/main/maingoods/main_goods11.jpg',
+        '/images/main/maingoods/main_goods12.jpg',
+        '/images/main/maingoods/main_goods13.jpg',
     ];
     const lerp = (start, end, factor) => start + (end - start) * factor;
     const updateScaleAndPosition = () => {
@@ -99,7 +99,6 @@ const Goods = () => {
                 end: `+=${totalScrollDistance * 0.2}`, // 슬라이더가 끝날 때까지
                 pin: mainGoodsRef.current, // main-goods 전체를 핀 고정
                 pinSpacing: true,
-           
             });
         }
         return () => {

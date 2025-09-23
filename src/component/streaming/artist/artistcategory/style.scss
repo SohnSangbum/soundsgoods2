@@ -126,6 +126,11 @@
             }
             h3 {
                 @include font-24px-600();
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: block;
+                max-width: 100%;
             }
         }
     }
@@ -167,6 +172,7 @@
         .artist-category-list {
             .artist-category-item {
                 width: vw(100, 393);
+                margin-bottom: vw(20, 393);
                 p {
                     img {
                         width: vw(100, 393);
