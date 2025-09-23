@@ -26,8 +26,8 @@ form {
 
         &::placeholder {
             @include display_al();
-            @include font-14px-500();
-            color: $grey777;
+            @include font-14px-400();
+            color: $grey999;
             vertical-align: middle;
         }
     }

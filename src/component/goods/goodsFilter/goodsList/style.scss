@@ -119,35 +119,41 @@
             }
         }
         .quantity_count {
-            width: vw(98);
             height: vw(39);
             @include display_center();
             margin-left: vw(373);
             .down {
+                box-sizing: border-box;
                 border: 1px solid rgba(0, 0, 0, 0.6);
-                width: vw(28);
+                width: vw(39);
                 height: vw(39);
                 @include display_center();
+                display: block;
+                padding: 0;
                 i {
                     @include display_center();
-                    font-size: vw(8);
+                    font-size: vw(16);
                 }
             }
             .quantity {
                 @include display_center();
                 width: vw(39);
-                height: vw(37);
+                height: vw(39);
+                padding: 0;
+                box-sizing: border-box;
                 border-bottom: 1px solid rgba(0, 0, 0, 0.6);
                 border-top: 1px solid rgba(0, 0, 0, 0.6);
             }
             .up {
                 border: 1px solid rgba(0, 0, 0, 0.6);
-                width: vw(31);
+                width: vw(39);
                 height: vw(39);
                 @include display_center();
+                display: block;
+                padding: 0;
                 i {
                     @include display_center();
-                    font-size: vw(8);
+                    font-size: vw(16);
                 }
             }
         }
@@ -156,9 +162,15 @@
             .btn1 {
                 @include button();
                 margin-bottom: vw(20);
+                span {
+                    text-indent: vw(8);
+                }
             }
             .btn2 {
                 @include button();
+                span {
+                    text-indent: vw(8);
+                }
             }
         }
     }

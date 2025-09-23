@@ -4,11 +4,13 @@ const getLocalPlaylists = () => JSON.parse(localStorage.getItem('playlists')) ||
 const getLocalSelected = () => JSON.parse(localStorage.getItem('selectedPlaylist')) || null;
 const getLocalSelectedItem = () => JSON.parse(localStorage.getItem('selectedItem')) || null;
 
+
 // const getLocalPlaylists = () => JSON.parse(localStorage.getItem('playlists')) || [];
 
 // const getLocalSelected = () => JSON.parse(localStorage.getItem('selectedPlaylist')) || null;
 
 // const getLocalSelectedItem = () => JSON.parse(localStorage.getItem('selectedItem')) || null;
+
 
 export const usePlaylistStore = create((set, get) => ({
     playlists: getLocalPlaylists(),
