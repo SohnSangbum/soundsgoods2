@@ -9,13 +9,13 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import useUserStore from '../../store/userSlice';
 import Login from '../../page/login';
 import Join from '../../page/join';
 import GoodsList from './nav/navList/GoodsList';
+import useAuthStore from '../../store/authSlice';
 
 const Header = () => {
-    const { isLoggedIn, userInfo, logout } = useUserStore();
+    const { authed, user, logout } = useAuthStore(); // userStore 제거하고 authStore만 사용
     const [show, setShow] = useState(false);
     const [data, setData] = useState(headerData);
     const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -25,23 +25,32 @@ const Header = () => {
     const swiperRef = useRef();
     const nav = useNavigate();
     const onHome = () => {
-        nav('/'); // 홈으로 이동
+        nav('/');
     };
+    const headerOn = (x) => {
+        setData(
+            data.map((item) => (item.id === x ? { ...item, isOn: true } : { ...item, isOn: false }))
+        );
+    };
+    // 디버깅을 위한 콘솔 로그
+    console.log('authed 상태:', authed);
+    console.log('user 정보:', user);
+
     return (
         <header id="header" className={show ? 'active' : ''} onMouseLeave={() => setShow(false)}>
             <div className="header_top_menu">
                 <ul>
-                    {!isLoggedIn ? (
+                    {!authed ? (
                         <>
                             <li onClick={toggleLogin}>로그인</li>
                             <li onClick={toggleJoin}>회원가입</li>
                         </>
                     ) : (
                         <>
-                            <li>{userInfo?.name}님</li>
+                            <li>{user?.name}님</li>
                             <li onClick={logout}>로그아웃</li>
                             <li onClick={() => nav('/cart')}>장바구니</li>
-                            <li onClick={() => nav('myReservation')}>내 예약</li>
+                            <li onClick={() => nav('/myReservation')}>내 예약</li>
                         </>
                     )}
                 </ul>
@@ -54,7 +63,7 @@ const Header = () => {
                     </Link>
                 </h1>
                 <HeaderForm />
-                <Nav data={data} setShow={setShow} />
+                <Nav data={data} setShow={setShow} headerOn={headerOn} />
             </div>
             {data[2].isOn && (
                 <div className="header_content">

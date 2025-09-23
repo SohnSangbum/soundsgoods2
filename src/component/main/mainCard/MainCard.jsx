@@ -294,6 +294,7 @@ const MainCard = () => {
                                     className={`main-card-card-copy ${
                                         isMain || isMobile ? card.className : ''
                                     }`}
+                                    onClick={() => nav(`/${card.id}`)}
                                 >
                                     <div className="pic">
                                         <img src={card.backImg} alt={`Card ${card.id}`} />

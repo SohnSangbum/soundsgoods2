@@ -30,7 +30,7 @@ const ReservationItem = ({ item, form, orderDate }) => {
             showCancelButton: true,
 
             confirmButtonText: '예약취소',
-            cancelButtonText: 'x',
+            cancelButtonText: '×',
             customClass: {
                 popup: 'custom-swal-popup',
                 cancelButton: 'cancel-btn-with-icon',

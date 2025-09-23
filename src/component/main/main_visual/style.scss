@@ -168,7 +168,9 @@ body.scroll-locked {
         video {
             width: vw(1920);
             height: vw(1080);
-            @include p_center_center();
+            position: absolute;
+            left: 0;
+            top: vw(-136);
             z-index: 1;
         }
 

@@ -86,9 +86,21 @@
         }
     }
     .snslogin {
-        text-align: center;
-        justify-self: center;
-        display: flex;
+        @include display_ju();
         gap: 0 vw(20px);
+        box-sizing: border-box;
+        p {
+            background-color: #fee502;
+            @include display_center();
+            gap: vw(20);
+            width: vw(260);
+            height: vw(40);
+            img {
+                width: vw(32);
+                height: vw(32);
+            }
+            span {
+            }
+        }
     }
 }

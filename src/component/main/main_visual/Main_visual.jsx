@@ -481,7 +481,7 @@ const Main_visual = ({ onVideoPlay }) => {
         // 스크롤 트리거 설정
         scrollTriggerRef.current = ScrollTrigger.create({
             trigger: sectionRef.current,
-            start: 'top top',
+            start: 'top +=150',
             end: () => `+=${slideHeight * (totalSlides - 1)}`,
             pin: true,
             scrub: 1,
@@ -621,7 +621,7 @@ const Main_visual = ({ onVideoPlay }) => {
                     </strong>
                     <video
                         ref={videoRef}
-                        src="https://github.com/SongTam-tam/SoundsGoods_image/raw/main/videos/main_visual.mp4"
+                        src="https://github.com/SongTam-tam/SoundsGoods_image/raw/main/videos/main_visual_to.mp4"
                         autoPlay
                         muted
                         loop

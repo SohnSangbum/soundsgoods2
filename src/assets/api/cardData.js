@@ -5,7 +5,7 @@ export default [
         cpn: '스타쉽엔터테인먼트',
         artist: '아이브(IVE) ',
         artist2: '장원영',
-        img: '/images/main/main_card_01.jpg',
+        img: `/images/main/main_card_01.jpg`,
         className: 'coco1',
         con1Id: 'main-card-con1-card-1',
         cardId: 'main-card-card-1',

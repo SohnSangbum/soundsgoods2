@@ -36,6 +36,12 @@ const App = () => {
     useEffect(() => {
         initialize();
     }, []);
+    useEffect(() => {
+        if (window.Kakao && !window.Kakao.isInitialized()) {
+            window.Kakao.init(import.meta.env.VITE_JS_KEY); // ✅ JavaScript 키 사용
+            console.log('✅ Kakao SDK Initialized:', window.Kakao.isInitialized());
+        }
+    }, []);
     return (
         <>
             <ToastContainer className="toast_custom" toastClassName="toast_custom_div" />

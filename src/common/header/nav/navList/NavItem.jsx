@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const NavItem = ({ title, path }) => {
+const NavItem = ({ title, path, headerOn, id }) => {
     const navigate = useNavigate();
 
     return (
@@ -9,6 +9,7 @@ const NavItem = ({ title, path }) => {
             onClick={() => {
                 navigate(path);
             }}
+            onMouseEnter={() => headerOn(id)}
         >
             {title}
         </li>

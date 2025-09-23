@@ -147,7 +147,7 @@
         background-color: #6680ff;
         position: relative;
         color: #fff;
-        z-index: 3;
+        z-index: 10;
 
         .po {
             font-size: vw(50);
@@ -242,7 +242,7 @@
     @each $index, $card in (1, 2, 3) {
         .main-card-con1-cards .main-card-card:nth-child(#{$index}) {
             @include bg();
-            background-image: url('./images/main/main_card_0#{$index}.jpg');
+            background-image: url('/images/main/main_card_0#{$index}.jpg');
 
             @if $index == 1 {
                 transform-origin: top right;
@@ -393,7 +393,7 @@
     @for $i from 1 through 3 {
         .main-card-cards-container .main-card-card:nth-child(#{$i}) .main-card-flip-card-front {
             @include bg();
-            background-image: url('./images/main/main_card_0#{$i}.jpg');
+            background-image: url('/images/main/main_card_0#{$i}.jpg');
         }
     }
 
@@ -403,24 +403,24 @@
         flex-direction: column;
         justify-content: space-between;
         gap: vw(32);
-        background-color: #fff;
         transform: rotateY(180deg);
     }
 
     .main-card-card-copy {
         width: 100%;
         height: 100%;
+        border-radius: vw(20);
         @include display_center();
+        overflow: hidden;
+        cursor: pointer;
         .pic {
             width: 100%;
             height: 100%;
-            background-color: #6680ff;
             border-radius: vw(20);
             overflow: hidden;
             @include display_center();
             img {
-                width: 100%;
-                height: 100%;
+                height: vw(590);
                 object-fit: cover;
                 border-radius: vw(20);
             }

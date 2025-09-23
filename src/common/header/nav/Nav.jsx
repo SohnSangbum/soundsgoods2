@@ -3,7 +3,7 @@ import NavList from './navList/NavList';
 import './navStyle.scss';
 import useUserStore from '../../../store/userSlice';
 
-const Nav = ({ data, setShow }) => {
+const Nav = ({ data, setShow, headerOn }) => {
     const { isLoggedIn } = useUserStore();
     const navigate = useNavigate();
 
@@ -16,7 +16,7 @@ const Nav = ({ data, setShow }) => {
 
     return (
         <nav id="nav">
-            <NavList data={data} setShow={setShow} />
+            <NavList data={data} setShow={setShow} headerOn={headerOn} />
             {isLoggedIn ? <p onClick={goMymusic}>마이뮤직</p> : <p onClick={goAccess}>마이뮤직</p>}
         </nav>
     );
