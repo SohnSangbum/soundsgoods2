@@ -215,7 +215,7 @@ export const usemainAlbumStore = create((set, get) => {
                     const artistAlbums = state.artistData.flatMap((artist) => artist.album);
                     return artistAlbums.find((albumItem) => albumItem.id === id);
                 case 'main':
-                    return state.mainArtistData.find((item) => item.id === id);
+                    return state.mainArtistData.find((al) => al.id === id);
                 default:
                     console.warn(`Unknown track type: ${type}`);
                     return null;
@@ -263,8 +263,8 @@ export const usemainAlbumStore = create((set, get) => {
                         };
                     case 'main':
                         return {
-                            mainArtistData: state.mainArtistData.map((item) =>
-                                item.id === id ? { ...item, actv: true } : { ...item, actv: false }
+                            mainArtistData: state.mainArtistData.map((al) =>
+                                al.id === id ? { ...al, actv: true } : { ...al, actv: false }
                             ),
                         };
                     default:
@@ -665,6 +665,9 @@ export const usemainAlbumStore = create((set, get) => {
                 clearInterval(timeInterval);
             }
 
+            // actv 상태 초기화
+            get().updateActiveTracks(null, 'main'); // id=null로 모든 actv false 처리
+
             set({
                 musicOn: false,
                 musicModal: null,
@@ -672,6 +675,45 @@ export const usemainAlbumStore = create((set, get) => {
                 currentTime: 0,
                 timeInterval: null,
                 isPlaying: false,
+            });
+        },
+
+        // ==================== 업데이트 액티브 ====================
+        updateActiveTracks: (id = null, type) => {
+            set((state) => {
+                const resetActive = (arr) =>
+                    arr.map((item) =>
+                        id === null
+                            ? { ...item, actv: false }
+                            : item.id === id
+                            ? { ...item, actv: true }
+                            : { ...item, actv: false }
+                    );
+
+                switch (type) {
+                    case 'top':
+                        return { topData: resetActive(state.topData) };
+                    case 'latest':
+                        return { latestData: resetActive(state.latestData) };
+                    case 'genre':
+                        return {
+                            genreData: state.genreData.map((genre) => ({
+                                ...genre,
+                                music: resetActive(genre.music),
+                            })),
+                        };
+                    case 'artistInfo':
+                        return {
+                            artistData: state.artistData.map((artist) => ({
+                                ...artist,
+                                album: resetActive(artist.album),
+                            })),
+                        };
+                    case 'main':
+                        return { mainArtistData: resetActive(state.mainArtistData) };
+                    default:
+                        return state;
+                }
             });
         },
 
