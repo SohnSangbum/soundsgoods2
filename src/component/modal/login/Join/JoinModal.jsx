@@ -60,10 +60,23 @@ const JoinModal = ({ onClose }) => {
             alert('서비스 약관 동의가 필요합니다.');
             return;
         }
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-        users.push(form);
-        localStorage.setItem('users', JSON.stringify(users));
-        signup({
+
+        // const users = JSON.parse(localStorage.getItem('users')) || [];
+        // users.push(form);
+        // localStorage.setItem('users', JSON.stringify(users));
+        // signup({
+        //     loginId: form.email,
+        //     name: form.name,
+        //     password: form.password,
+        //     paschk: form.paschk,
+        //     agreeAll: form.agreeAll,
+        //     agreeService: form.agreeService,
+        //     agreeMarketing: form.agreeMarketing,
+        // });
+        // login({ name: form.name, id: form.email });
+        // onClose();
+        // alert(`${users.name}님, 오신 걸 환영합니다.`);
+        const { success, user } = signup({
             loginId: form.email,
             name: form.name,
             password: form.password,
@@ -72,9 +85,13 @@ const JoinModal = ({ onClose }) => {
             agreeService: form.agreeService,
             agreeMarketing: form.agreeMarketing,
         });
-        login({ name: form.name, id: form.email });
-        onClose();
-        alert(`${users.name}님, 오신 걸 환영합니다.`);
+
+        if (success) {
+            onClose();
+            alert(`${user.name}님, 오신 걸 환영합니다.`);
+        } else {
+            alert('회원가입에 실패했습니다.');
+        }
     };
     return (
         <div className="join">
@@ -107,7 +124,7 @@ const JoinModal = ({ onClose }) => {
                         type="password"
                         name="password"
                         value={form.password}
-                        placeholder="비밀번호 ( 문자, 숫자, 특수문자 포함 8 ~ 20자 )"
+                        placeholder="비밀번호를 입력하세요."
                         onChange={onChange}
                     />
                 </p>
@@ -116,7 +133,7 @@ const JoinModal = ({ onClose }) => {
                         type="password"
                         name="paschk"
                         value={form.paschk}
-                        placeholder="비밀번호"
+                        placeholder="비밀번호를 한 번 더 입력하세요."
                         onChange={onChange}
                     />
                 </p>

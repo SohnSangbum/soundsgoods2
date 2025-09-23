@@ -152,15 +152,15 @@ const useAuthStore = create((set, get) => ({
         const newMember = {
             ...payload,
             id: Math.max(...members.map((m) => m.id), 0) + 1,
-            // signup 시 loginId 필드 명시적으로 설정
             loginId: payload.loginId || payload.userid,
+            // ✅ undefined, null, "", 공백까지 다 걸러서 기본값 설정
+            name: payload.name && payload.name.trim() !== '' ? payload.name : '사용자',
         };
         const updatedMembers = [...members, newMember];
 
         localStorage.setItem('members', JSON.stringify(updatedMembers));
         set({ members: updatedMembers });
 
-        // 회원가입 후 바로 로그인 처리
         localStorage.setItem('authed', JSON.stringify(true));
         localStorage.setItem('user', JSON.stringify(newMember));
         set({ authed: true, user: newMember });
