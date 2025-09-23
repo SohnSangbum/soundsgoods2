@@ -1,0 +1,204 @@
+@use '../../styled/utils' as *;
+.reservation_list {
+    width: vw(1410);
+    display: flex;
+    flex-direction: column;
+    gap: vw(10);
+    .li {
+        width: vw(1410);
+        height: vw(190);
+        box-sizing: border-box;
+        padding: 0 vw(60) vw(30) vw(60);
+        @include display_al();
+        border-bottom: 1px solid var(--sub, #dcdcdc);
+        .heart_icons {
+            @include display_center();
+            width: vw(24);
+            height: vw(24);
+            i {
+                @include display_center();
+                width: vw(24);
+                height: vw(24);
+                color: #ff5837;
+                font-size: vw(16);
+            }
+        }
+        ////////// heart_icons
+        //////////////////////////////////////
+        .wish_pic {
+            width: vw(97);
+            height: vw(150px);
+            overflow: hidden;
+            margin-left: vw(31);
+            margin-right: vw(92);
+            @include display_center();
+            border-radius: vw(10);
+            img {
+                width: 120%;
+                height: 100%;
+            }
+        }
+        ////////// wish_pic
+        //////////////////////////////////////
+        .wish_list_text {
+            @include display_ju();
+            flex-direction: column;
+            width: vw(630);
+            > strong {
+                @include font-20px-600();
+            }
+            ////////// strong
+            //////////////////////////////////////
+            .con_text {
+                @include display_al();
+                gap: vw(40);
+                margin-top: vw(10);
+                margin-bottom: vw(20);
+                .co {
+                    @include display_al();
+                    gap: vw(15);
+
+                    li {
+                        @include font-16px-400();
+                        position: relative;
+                        &:first-child {
+                            &::after {
+                                content: '';
+                                background-color: #000;
+                                width: vw(1);
+                                height: vw(15);
+                                @include p_center_top();
+                                right: vw(-8);
+                            }
+                        }
+                    }
+                }
+            }
+            ////////// con_text
+            //////////////////////////////////////
+            .wish_price {
+                @include font-20px-500();
+            }
+            ////////// wish_price
+            //////////////////////////////////////
+            .con_text2 {
+                @include display_al();
+                gap: vw(20);
+                margin-top: vw(10);
+                margin-bottom: vw(20);
+                .co {
+                    @include display_al();
+                    gap: vw(15);
+
+                    li {
+                        @include font-16px-400();
+                        position: relative;
+                        &:first-child {
+                            &::after {
+                                content: '';
+                                background-color: #000;
+                                width: vw(1);
+                                height: vw(15);
+                                @include p_center_top();
+                                right: vw(-8);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        ////////// wish_list_text
+        //////////////////////////////////////
+        .data_text {
+            white-space: nowrap;
+            text-align: center;
+            width: vw(276);
+            height: vw(24);
+            @include font-18px-400();
+            color: $m_color2;
+        }
+        .btn_close {
+            @include display_al();
+            justify-content: space-between;
+            width: vw(164);
+            height: vw(100);
+            // margin-left: vw(260);
+            .ppp {
+                button {
+                    width: vw(120);
+                    height: vw(40);
+                    @include display_center();
+                    border-radius: vw(50px);
+                    border: 1px solid var(--main2, #d395f6);
+                    color: $m_color2;
+                }
+            }
+            .close {
+                width: vw(24);
+                height: vw(24);
+                @include display_center();
+                i {
+                    @include display_center();
+                    @include font-20px-400();
+                    font-size: vw(24);
+                }
+            }
+        }
+        ////////// btn_close
+        //////////////////////////////////////
+    }
+}
+.custom-swal-popup {
+    width: vw(380);
+    height: vw(160);
+    @include display_al();
+    flex-direction: column;
+    border-radius: vw(20);
+}
+.swal2-actions {
+    margin: 0;
+
+    .swal2-confirm {
+        width: vw(260);
+        height: vw(40);
+        box-sizing: border-box;
+        @include display_center();
+        margin-top: vw(0);
+        background-color: $m_color1;
+        border-radius: vw(50);
+        line-height: 160%;
+        color: #fff;
+        &:hover {
+            background-color: $m_color1;
+        }
+    }
+}
+.swal2-title {
+    @include font-14px-500();
+    color: #777;
+}
+
+.cancel-btn-with-icon {
+    background-color: transparent;
+    color: #000;
+    width: vw(24);
+    height: vw(24);
+    @include display_center();
+    @include font-18px-400();
+    position: absolute;
+    right: vw(10);
+    top: vw(0);
+    &::after {
+        content: '';
+        background-image: url(./images/main/close2.png);
+        background-position: 0 0;
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: vw(24);
+        height: vw(24);
+        @include p_center_center();
+    }
+    &:hover {
+        background-color: transparent;
+    }
+}

@@ -1,3 +1,4 @@
+// data.js (데이터 파일)
 export default [
     {
         id: 1,
@@ -9,6 +10,7 @@ export default [
         album_img: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/images/dance/196.jpg',
         yid: '9_bTl2vvYQg',
         actv: false,
+        type: 'topData', // type 필드 추가
     },
     {
         id: 2,
@@ -21,6 +23,7 @@ export default [
         isLike: false,
         yid: 'RUKqwwyAiEU',
         actv: false,
+        type: 'topData', // type 필드 추가
     },
     {
         id: 3,
@@ -33,6 +36,7 @@ export default [
         isLike: false,
         yid: 'VjvzYjU1mY0',
         actv: false,
+        type: 'topData', // type 필드 추가
     },
     {
         id: 4,
@@ -45,6 +49,7 @@ export default [
         isLike: false,
         yid: 'v39uoOIoOhI',
         actv: false,
+        type: 'topData', // type 필드 추가
     },
     {
         id: 5,
@@ -57,6 +62,7 @@ export default [
         isLike: false,
         yid: 'B1ShLiq3EVc',
         actv: false,
+        type: 'topData', // type 필드 추가
     },
     {
         id: 6,
@@ -69,6 +75,7 @@ export default [
         isLike: false,
         yid: 'gdZLi9oWNZg',
         actv: false,
+        type: 'topData', // type 필드 추가
     },
     {
         id: 7,
@@ -81,6 +88,7 @@ export default [
         isLike: false,
         yid: 'kTJczUoc26U',
         actv: false,
+        type: 'topData', // type 필드 추가
     },
     {
         id: 8,
@@ -93,6 +101,7 @@ export default [
         isLike: false,
         yid: '',
         actv: false,
+        type: 'topData', // type 필드 추가
     },
     {
         id: 9,
@@ -101,11 +110,11 @@ export default [
         album: 'Different',
         artist_img:
             'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/images/artist/itzy.png',
-        album_img:
-            '/https://github.com/SongTam-tam/SoundsGoods_image/raw/main/images/dance/579.jpg',
+        album_img: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/images/dance/579.jpg',
         isLike: false,
         yid: '',
         actv: false,
+        type: 'topData', // type 필드 추가
     },
     {
         id: 10,
@@ -118,6 +127,7 @@ export default [
         isLike: false,
         yid: '',
         actv: false,
+        type: 'topData', // type 필드 추가
     },
     {
         id: 11,
@@ -129,5 +139,6 @@ export default [
         isLike: false,
         yid: '',
         actv: false,
+        type: 'topData', // type 필드 추가
     },
 ];

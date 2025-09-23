@@ -17,3 +17,6 @@ export { default as Popup } from './popup';
 export { default as Pay } from './pay';
 export { default as Complete } from './complete';
 export { default as CardDetail } from './cardDetail';
+export { default as PaymentCard } from './paymentCard';
+export { default as CompleteCard } from './completeCard';
+export { default as MyReservation } from './myReservation';

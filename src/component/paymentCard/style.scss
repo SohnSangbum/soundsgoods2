@@ -1,0 +1,185 @@
+@use '../../styled/utils' as *;
+
+.payment_cart_style {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    &::after {
+        content: '';
+        position: absolute;
+        right: vw(520);
+        top: 0;
+        background-color: #000;
+        width: vw(1);
+        height: 100%;
+    }
+    .pay_list_content {
+        width: vw(700);
+        .title_box_con {
+            margin-bottom: vw(40);
+            box-sizing: border-box;
+            padding-bottom: vw(20);
+            border-bottom: 1px solid #000;
+            height: vw(44);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            .pay_title_con {
+                @include font-18px-600();
+            }
+            img {
+                width: vw(24);
+                height: vw(24);
+            }
+        }
+        .delivery_addr {
+            @include font-18px-600();
+            width: 100%;
+            height: vw(41);
+            border-bottom: 1px solid #ababab;
+            margin-bottom: vw(20);
+        }
+    }
+
+    .total_price_box {
+        width: vw(520);
+        height: 100%;
+        padding: vw(0) vw(40) vw(85) vw(40);
+        box-sizing: border-box;
+        h3 {
+            @include font-26px-600();
+            margin-bottom: vw(40);
+        }
+        .price_cnt {
+            display: flex;
+            flex-direction: column;
+            gap: vw(20);
+            width: 100%;
+            position: relative;
+            margin-bottom: vw(70);
+            &::after {
+                content: '';
+                background-color: #000;
+                @include p_center_left();
+                height: vw(1);
+                width: 100%;
+                bottom: vw(-35);
+            }
+            li {
+                @include display_al();
+                justify-content: space-between;
+                padding-left: vw(20);
+                span {
+                    @include font-18px-600();
+                    color: #999;
+                }
+                strong {
+                    @include font-18px-500();
+                }
+            }
+        }
+        .payment_price {
+            @include display_al();
+            justify-content: space-between;
+            margin-bottom: vw(40);
+            span {
+                @include font-22px-600();
+            }
+            strong {
+                @include font-22px-600();
+            }
+        }
+        .payment_price2 {
+            @include display_al();
+            justify-content: space-between;
+            margin-bottom: vw(40);
+            span {
+                @include font-22px-600();
+            }
+            strong {
+                @include font-22px-600();
+                color: $m_color2;
+            }
+        }
+        .payment_price {
+            @include display_al();
+            justify-content: space-between;
+            margin-bottom: vw(40);
+            span {
+                @include font-22px-600();
+            }
+            strong {
+                @include font-22px-600();
+            }
+        }
+        .payment_btn {
+            margin-top: vw(40);
+            button {
+                width: vw(440);
+                height: vw(50);
+                border-radius: vw(50);
+                @include display_center();
+                background-color: $m_color1;
+                @include font-18px-700();
+                color: #fff;
+            }
+        }
+        .chk_box_content {
+            .form_con {
+                @include display_al();
+                gap: vw(18);
+                margin-bottom: vw(10);
+                input[type='checkbox'] {
+                    display: none;
+                }
+                input + label {
+                    display: inline-block;
+                    @include bg();
+                    background-image: url(/images/icons/chk_mini.png);
+                    width: vw(16);
+                    height: vw(16);
+                    cursor: pointer;
+                }
+                input:checked + label {
+                    background-image: url(/images/icons/chk_mini_on.png);
+                    display: block;
+                    width: vw(16);
+                    height: vw(16);
+                }
+                span {
+                    @include font-12px-400();
+                }
+            }
+            .form_con4,
+            .form_con3,
+            .form_con2 {
+                margin-left: vw(24);
+            }
+            .all_chk {
+                margin-bottom: vw(10);
+                gap: vw(20);
+                width: vw(440);
+                height: vw(44);
+                box-sizing: border-box;
+                padding: vw(10) vw(20);
+                border-bottom: 1px solid #000;
+                input + label {
+                    width: vw(20);
+                    height: vw(20);
+                }
+                input:checked + label {
+                    width: vw(20);
+                    height: vw(20);
+                }
+                span {
+                    @include font-16px-600();
+                    white-space: nowrap;
+                }
+                img {
+                    margin-left: vw(225);
+                }
+            }
+        }
+    }
+}

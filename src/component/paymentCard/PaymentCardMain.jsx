@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useGoodsStore } from '../../store';
 import './style.scss';
-import PayList from './payList/PayList';
-import PayForm from './payInput/PayForm';
+
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-const Payment = () => {
-    const { itemTotal, paymentTotal, payment, completePush } = useGoodsStore();
+import PaymentCardForm from './paymentCardForm/PaymentCardForm';
+import PaymentCardList from './paymentCardList/PaymentCardList';
+
+const PaymentCardMain = () => {
+    const { itemTotal, paymentTotal, paymentCard, completeAdd } = useGoodsStore();
     const { updateTotals2 } = useGoodsStore();
     const [allChk, setAllChk] = useState(false);
     const [chk, setChk] = useState({
@@ -15,8 +17,6 @@ const Payment = () => {
         marketing: false,
     });
     const nav = useNavigate();
-
-    // PayForm에서 입력한 데이터를 저장할 상태
     const [formData, setFormData] = useState({
         recipient: '',
         phone: '',
@@ -25,6 +25,9 @@ const Payment = () => {
         detailAddress: '',
         memo: '',
     });
+
+    // 데이트 피커 값 상태 추가
+    const [selectedDate, setSelectedDate] = useState(new Date());
 
     const AllChk = (e) => {
         const on = e.target.checked;
@@ -48,7 +51,7 @@ const Payment = () => {
 
     useEffect(() => {
         updateTotals2();
-    }, [itemTotal, payment]);
+    }, [itemTotal, paymentCard]);
 
     useEffect(() => {
         const { service, privacy, marketing } = chk;
@@ -73,39 +76,61 @@ const Payment = () => {
         }
 
         const orderData = {
-            items: [...payment],
+            items: [...paymentCard],
             formData: { ...formData },
             totalPrice: paymentTotal,
             orderDate: new Date().toISOString(),
+            deliveryDate: selectedDate.toISOString(), // 데이트 피커 값 추가
             orderStatus: '결제완료',
         };
 
-        completePush(orderData);
+        completeAdd(orderData);
         toast('주문이 완료되었습니다.');
-        // 주문 완료 후 리다이렉트 또는 상태 초기화
-        nav('/complete');
+        nav('/completeCard');
     };
 
     // PayForm에서 데이터를 받아오는 함수
     const handleFormDataChange = (data) => {
         setFormData(data);
     };
+
+    // 데이트 피커 값 받아오는 함수 추가
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+    };
+
+    // 날짜 포맷팅 함수 추가
+    const formatDate = (date) => {
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
+        const weekday = weekdays[date.getDay()];
+
+        return `${year} .${month < 10 ? '0' + month : month} .${
+            day < 10 ? '0' + day : day
+        } (${weekday})`;
+    };
+
     return (
-        <div className="payment_style">
+        <div className="payment_cart_style">
             <div className="pay_list_content">
                 <div className="title_box_con">
-                    <h2 className="pay_title_con">주문상품 {`(총 ${payment.length})`}</h2>
+                    <h2 className="pay_title_con">주문상품 {`(총 ${paymentCard.length})`}</h2>
                     <img src="images/icons/black_top.png" alt="" />
                 </div>
-                <PayList />
+                <PaymentCardList />
                 <h2 className="delivery_addr">배송지 정보 입력</h2>
-                <PayForm onFormDataChange={handleFormDataChange} />
+                <PaymentCardForm
+                    onFormDataChange={handleFormDataChange}
+                    onDateChange={handleDateChange} // 데이트 피커 콜백 전달
+                />
             </div>
             <div className="total_price_box">
                 <h3>TOTAL</h3>
                 <ul className="price_cnt">
-                    {payment.map((item) => (
-                        <li>
+                    {paymentCard.map((item) => (
+                        <li key={item.id}>
                             <span>상품금액</span>
                             <p>+ {item.totalPrice} 원</p>
                         </li>
@@ -122,7 +147,11 @@ const Payment = () => {
                 </ul>
                 <p className="payment_price">
                     <span>총 결제 금액</span>
-                    <strong>{paymentTotal.toLocaleString()}원</strong>
+                    <strong>{paymentCard[0]?.price?.toLocaleString()}원</strong>
+                </p>
+                <p className="payment_price2">
+                    <span>배송 지정 날짜</span>
+                    <strong>{formatDate(selectedDate)}</strong> {/* 데이트 피커 값 표시 */}
                 </p>
                 <div className="chk_box_content">
                     <div className="form_con form_con1  all_chk">
@@ -156,7 +185,7 @@ const Payment = () => {
                             checked={privacy}
                             onChange={onChk}
                         />
-                        <label htmlFor="chk3" for="chk3"></label>
+                        <label htmlFor="chk3"></label>
                         <span>(필수) 개인 정보 수집 및 이용 동의</span>
                     </div>
                     <div className="form_con form_con4">
@@ -172,11 +201,11 @@ const Payment = () => {
                     </div>
                 </div>
                 <p className="payment_btn" onClick={handleOrder}>
-                    <button>{paymentTotal.toLocaleString()}원 주문하기</button>
+                    <button>{paymentCard[0]?.price?.toLocaleString()}원 주문하기</button>
                 </p>
             </div>
         </div>
     );
 };
 
-export default Payment;
+export default PaymentCardMain;

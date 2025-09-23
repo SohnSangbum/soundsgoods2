@@ -5,6 +5,7 @@ import Pagination from '../../pagination/Pagination';
 import { useEffect } from 'react';
 import { usePlaylistStore } from '../../../../store/albumSlice';
 import useUserStore from '../../../../store/userSlice';
+
 const Top100MusicList = ({ data, selectedAll }) => {
     const { setData, getCurrentPageData, currentPage, perPage } = usePaginationStore();
     const { isLoggedIn } = useUserStore();
@@ -16,6 +17,7 @@ const Top100MusicList = ({ data, selectedAll }) => {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [currentPage]);
+
     return (
         <>
             <table>

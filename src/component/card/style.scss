@@ -1,0 +1,385 @@
+@use '../../styled/utils' as *;
+
+.card_detail_main {
+    width: 100%;
+    position: relative;
+    height: vw(2000);
+}
+
+.card_right {
+    position: fixed;
+    right: vw(325);
+    top: vw(180);
+    width: vw(600);
+    height: vw(577);
+    box-sizing: border-box;
+    padding: vw(60) 0;
+    border-radius: vw(20);
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25), 0 0 10px 0 rgba(0, 0, 0, 0.25);
+
+    .cart_inner {
+        width: vw(500);
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        h2 {
+            @include font-24px-600();
+            text-align: left;
+            margin-left: vw(20);
+        }
+        //  .h2
+        ////////////////////////////////
+        .con {
+            margin-left: vw(20);
+            margin-top: vw(10);
+            @include display_al();
+            gap: vw(20);
+            ul {
+                @include display_al();
+                gap: vw(10);
+                margin-bottom: vw(20);
+                li {
+                    @include font-14px-400();
+                    position: relative;
+                    &:first-child {
+                        &::after {
+                            content: '';
+                            @include p_center_top();
+                            right: vw(-6);
+                            height: vw(10);
+                            width: vw(1);
+                            background-color: $fc;
+                        }
+                    }
+                }
+            }
+        }
+        //  .con
+        ////////////////////////////////
+        .price_cart {
+            @include font-24px-700();
+            margin-left: vw(20);
+            margin-bottom: vw(20);
+        }
+        //  .price_cart
+        ////////////////////////////////
+        .cart_form_chk {
+            width: vw(500);
+            height: vw(138);
+            padding: vw(10) 0;
+            box-sizing: border-box;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: vw(8);
+            margin-bottom: vw(20);
+            .form_con {
+                @include display_al();
+                gap: vw(18);
+                input[type='checkbox'] {
+                    display: none;
+                }
+                input + label {
+                    display: inline-block;
+                    @include bg();
+                    background-image: url(/images/icons/chk_mini.png);
+                    width: vw(20);
+                    height: vw(20);
+                    cursor: pointer;
+                }
+                input:checked + label {
+                    background-image: url(/images/icons/chk_mini_on.png);
+                    display: block;
+                    width: vw(20);
+                    height: vw(20);
+                }
+                span {
+                    @include font-14px-400();
+                }
+            }
+            .all_chk {
+                margin-top: vw(10);
+                gap: vw(20);
+                span {
+                    @include font-16px-600();
+                }
+                input[type='checkbox'] + label {
+                    width: vw(20);
+                    height: vw(20);
+
+                    cursor: pointer;
+                }
+                input[type='checkbox']:checked + label {
+                    width: vw(20);
+                    height: vw(20);
+                }
+            }
+        }
+        //  .cart_form_chk
+        ////////////////////////////////
+        .total_price_detail {
+            @include display_al();
+            justify-content: space-between;
+            margin-bottom: vw(40);
+            span {
+                @include font-14px-400();
+            }
+            strong {
+                @include font-18px-700();
+            }
+        }
+        // .total_price_detail
+        ////////////////////////////////
+        .total_price_detail_all {
+            @include display_al();
+            justify-content: space-between;
+            margin-bottom: vw(40);
+            span {
+                @include font-20px-500();
+            }
+            strong {
+                @include font-26px-700();
+                color: $m_color1;
+            }
+        }
+        // .total_price_detail_all
+        ////////////////////////////////
+        .pay_btns {
+            width: vw(500);
+            height: vw(110);
+            box-sizing: border-box;
+            padding-top: vw(20);
+            @include display_al();
+            flex-direction: column;
+            gap: vw(10);
+            border-top: 0.5px solid rgba(0, 0, 0, 0.7);
+            .purchase {
+                width: vw(380);
+                height: vw(40);
+                @include display_center();
+                border-radius: vw(50);
+                background-color: $m_color1;
+                span {
+                    @include font-18px-700();
+                    color: #fff;
+                }
+            }
+            .wish_list {
+                @include display_al();
+                gap: vw(20);
+                .btn0 {
+                    @include display_center();
+                    width: vw(180);
+                    height: vw(40);
+                    border-radius: vw(50);
+                    border: 1px solid $m_color2;
+                    span {
+                        @include font-16px-600();
+                        color: $m_color2;
+                    }
+                }
+            }
+        }
+        // pay_btns
+        ////////////////////////////////
+    }
+    //  .cart_inner
+    ////////////////////////////////
+}
+.card_left {
+    width: vw(600);
+    @include display_al();
+    flex-direction: column;
+    .detail_pic_1 {
+        width: vw(600);
+        height: vw(439);
+        overflow: hidden;
+        @include display_ju();
+        align-items: end;
+        gap: vw(30);
+        margin-bottom: vw(60);
+        .pic {
+            width: vw(284px);
+            height: vw(439px);
+            overflow: hidden;
+            border-radius: vw(20);
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .pic2 {
+            width: vw(208px);
+            height: vw(322px);
+            overflow: hidden;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+    //detail_pic_1
+    ////////////////////////////////////
+    .detail_pic_2 {
+        width: vw(600);
+        @include display_ju();
+        margin-bottom: vw(60);
+        img {
+            width: vw(600);
+        }
+    }
+    //detail_pic_2
+    ////////////////////////////////////
+    .delivery_text {
+        width: vw(500);
+        height: vw(140);
+        overflow: hidden;
+        transition: 0.5s;
+        margin-bottom: vw(20);
+        &.show {
+            height: vw(64);
+        }
+        .text_box1 {
+            width: vw(500);
+            height: vw(64);
+            box-sizing: border-box;
+            padding: vw(20);
+            @include display_al();
+            justify-content: space-between;
+            border-bottom: 0.5px solid rgba(0, 0, 0, 0.7);
+            margin-bottom: vw(10);
+            span {
+                @include font-16px-400();
+            }
+            img {
+                width: vw(24);
+                height: vw(24);
+            }
+        }
+        .delivery_list {
+            padding-left: vw(40);
+            li {
+                list-style: disc;
+                line-height: 160%;
+                @include font-14px-400();
+            }
+        }
+    }
+    // delivery_text
+    ////////////////////////////////////
+    .pay_guide_text {
+        width: vw(500);
+        height: vw(162);
+        overflow: hidden;
+        transition: 0.5s;
+        margin-bottom: vw(20);
+        &.show {
+            height: vw(64);
+        }
+        .text_box1 {
+            width: vw(500);
+            height: vw(64);
+            box-sizing: border-box;
+            padding: vw(20);
+            @include display_al();
+            justify-content: space-between;
+            border-bottom: 0.5px solid rgba(0, 0, 0, 0.7);
+            margin-bottom: vw(10);
+            span {
+                @include font-16px-400();
+            }
+            img {
+                width: vw(24);
+                height: vw(24);
+            }
+        }
+        .pay_guide_list {
+            padding-left: vw(40);
+            li {
+                list-style: disc;
+                line-height: 160%;
+                @include font-14px-400();
+            }
+        }
+    }
+    // pay_guide_text
+    ////////////////////////////////////
+    .change_text {
+        width: vw(500);
+        height: vw(250);
+        overflow: hidden;
+        transition: 0.5s;
+        margin-bottom: vw(20);
+        &.show {
+            height: vw(64);
+        }
+        .text_box1 {
+            width: vw(500);
+            height: vw(64);
+            box-sizing: border-box;
+            padding: vw(20);
+            @include display_al();
+            justify-content: space-between;
+            border-bottom: 0.5px solid rgba(0, 0, 0, 0.7);
+            margin-bottom: vw(10);
+            span {
+                @include font-16px-400();
+            }
+            img {
+                width: vw(24);
+                height: vw(24);
+            }
+        }
+        .change_list {
+            padding-left: vw(40);
+            li {
+                list-style: disc;
+                @include font-14px-400();
+                line-height: 160%;
+                ul {
+                    padding-left: vw(20);
+                }
+            }
+        }
+    }
+    // change_text
+    ////////////////////////////////////
+    .goods_status_text {
+        width: vw(500);
+        height: vw(114);
+        overflow: hidden;
+        transition: 0.5s;
+        margin-bottom: vw(60);
+        &.show {
+            height: vw(64);
+        }
+        .text_box1 {
+            width: vw(500);
+            height: vw(64);
+            box-sizing: border-box;
+            padding: vw(20);
+            @include display_al();
+            justify-content: space-between;
+            border-bottom: 0.5px solid rgba(0, 0, 0, 0.7);
+            margin-bottom: vw(10);
+            span {
+                @include font-16px-400();
+            }
+            img {
+                width: vw(24);
+                height: vw(24);
+            }
+        }
+        .goods_status_list {
+            padding-left: vw(40);
+            li {
+                list-style: disc;
+                line-height: 160%;
+                @include font-14px-400();
+            }
+        }
+    }
+    // goods_status_text
+    ////////////////////////////////////
+}

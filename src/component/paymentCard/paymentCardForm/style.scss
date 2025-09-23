@@ -1,0 +1,253 @@
+@use '../../../styled/utils' as *;
+
+.pay_delivery_form {
+    position: relative;
+    @include font-18px-500();
+    line-height: 222%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    .name_text_box {
+        display: flex;
+        margin-bottom: vw(20);
+        gap: vw(125);
+        strong {
+            display: block;
+            width: vw(83);
+        }
+        .inp {
+            display: flex;
+            flex-direction: column;
+            gap: vw(10);
+            input[type='text'] {
+                width: vw(299);
+                height: vw(40);
+                box-sizing: border-box;
+                border: 1px solid #a8a8a8;
+                padding: vw(11) vw(10) vw(12) vw(10);
+                @include font-14px-500();
+            }
+            .cont {
+                @include display_al();
+                gap: vw(8);
+                input[type='checkbox'] {
+                    display: none;
+                }
+                input[type='checkbox'] + .chh {
+                    display: inline-block;
+                    @include bg();
+                    background-image: url(/images/icons/chk_mini.png);
+                    width: vw(16);
+                    height: vw(16);
+                    cursor: pointer;
+                }
+                input[type='checkbox']:checked + .chh {
+                    background-image: url(/images/icons/chk_mini_on.png);
+                    display: block;
+                    width: vw(16);
+                    height: vw(16);
+                }
+                span {
+                    @include font-14px-500();
+                }
+            }
+        }
+    }
+    //// name_text_box
+    /////////////////////////////////////////////////////////////
+    .addr_box {
+        display: flex;
+        margin-bottom: vw(20);
+        gap: vw(125);
+        strong {
+            display: block;
+            width: vw(83);
+        }
+        .inp {
+            display: flex;
+            flex-direction: column;
+            gap: vw(10);
+
+            input[type='text'] {
+                width: vw(299);
+                height: vw(40);
+                box-sizing: border-box;
+                border: 1px solid #a8a8a8;
+                padding: vw(11) vw(10) vw(12) vw(10);
+                @include font-14px-500();
+            }
+            .addr_text {
+                @include display_al();
+                gap: vw(10);
+                input[type='text'] {
+                    width: vw(182);
+                    height: vw(40);
+                    box-sizing: border-box;
+                    border: 1px solid #a8a8a8;
+                    padding: vw(11) vw(10) vw(12) vw(10);
+                    @include font-14px-500();
+                }
+                button {
+                    width: vw(89);
+                    height: vw(40);
+                    @include display_center();
+                    border: 1px solid #a8a8a8;
+                    @include font-14px-400();
+                }
+            }
+            .cont {
+                @include display_al();
+                gap: vw(8);
+                input[type='checkbox'] {
+                    display: none;
+                }
+                input[type='checkbox'] + .chh {
+                    display: inline-block;
+                    @include bg();
+                    background-image: url(/images/icons/chk_mini.png);
+                    width: vw(16);
+                    height: vw(16);
+                    cursor: pointer;
+                }
+                input[type='checkbox']:checked + .chh {
+                    background-image: url(/images/icons/chk_mini_on.png);
+                    display: block;
+                    width: vw(16);
+                    height: vw(16);
+                }
+                span {
+                    @include font-14px-500();
+                }
+            }
+        }
+    }
+    //// addr_box
+    /////////////////////////////////////////////////////////////
+    .addr_memo {
+        display: flex;
+        margin-bottom: vw(40);
+        gap: vw(125);
+        strong {
+            display: block;
+            width: vw(83);
+        }
+        select {
+            width: vw(299);
+            height: vw(40);
+            box-sizing: border-box;
+            border: 1px solid #a8a8a8;
+            padding: vw(11) vw(10) vw(12) vw(10);
+            @include font-14px-500();
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+
+            background: url(./images/icons/black_bottom.png) no-repeat right vw(10) center;
+            background-size: vw(16px);
+        }
+    }
+    //// addr_memo
+    /////////////////////////////////////////////////////////////
+    .pay_content {
+        width: 100%;
+
+        h3 {
+            margin-bottom: vw(20);
+            @include font-18px-600();
+            width: 100%;
+            height: vw(41);
+            border-bottom: 1px solid #000;
+        }
+        .pay_content_list {
+            @include display_al();
+            gap: vw(30);
+            li {
+                @include display_al();
+                gap: vw(10);
+                position: relative;
+                cursor: pointer;
+                &.on {
+                    span {
+                        border-color: $m_color2;
+                        &::after {
+                            content: '';
+                            background-color: $m_color2;
+                            width: vw(11.7);
+                            height: vw(11.7);
+                            @include p_center_center();
+                            border-radius: 100%;
+                            @include display_center();
+                        }
+                    }
+                }
+                span {
+                    @include display_center();
+                    position: relative;
+                    display: block;
+                    width: vw(16);
+                    height: vw(16);
+                    border-radius: 100%;
+                    border: 1px solid #d9d9d9;
+                }
+            }
+        }
+    }
+    .data_card {
+        @include display_al();
+        strong {
+            display: block;
+            width: vw(83);
+            margin-right: vw(125);
+        }
+        .data_style {
+            width: vw(124);
+            height: vw(28);
+            box-sizing: border-box;
+            padding: vw(2) vw(10);
+            border-radius: vw(50px);
+            border: 1px solid #d395f6;
+            @include font-12px-400();
+            line-height: 200%;
+            // margin-bottom: vw(12);
+            margin-right: vw(20);
+        }
+        .date-select-button {
+            padding: 0 vw(10);
+            border-radius: vw(50px);
+            border: 1px solid #d395f6;
+            white-space: nowrap;
+            font-family: 'pretendard';
+            @include font-12px-400();
+            line-height: 200%;
+        }
+        .hidden-datepicker {
+            opacity: 0;
+            position: absolute;
+            top: vw(1000000);
+            left: 0;
+        }
+        .react-datepicker-wrapper {
+            width: vw(89);
+            height: vw(28);
+            @include display_center();
+            .react-datepicker__input-container {
+                width: vw(89);
+                height: vw(28);
+                border-radius: vw(50px);
+                // border: 1px solid #d395f6;
+                input {
+                    width: vw(89);
+                    height: vw(28);
+                    border-radius: vw(50px);
+                    border: none;
+                    padding: vw(0) vw(10);
+                    line-height: 200%;
+                    box-sizing: border-box;
+                }
+            }
+        }
+    }
+}

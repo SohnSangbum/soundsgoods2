@@ -17,6 +17,9 @@ import {
     Pay,
     Complete,
     CardDetail,
+    PaymentCard,
+    CompleteCard,
+    MyReservation,
 } from './page';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/ReactToastify.css';
@@ -25,8 +28,14 @@ import './styled/reset.scss';
 import Mymusic_Access from './component/mymusic/access/Mymusic_Access';
 import Search from './page/search';
 import ScrollTop from './ui/ScrollTop';
+import useUserStore from './store/authSlice';
+import { useEffect } from 'react';
 
 const App = () => {
+    const initialize = useUserStore((state) => state.initialize);
+    useEffect(() => {
+        initialize();
+    }, []);
     return (
         <>
             <ToastContainer className="toast_custom" toastClassName="toast_custom_div" />
@@ -44,7 +53,10 @@ const App = () => {
                         <Route path="cart" element={<Cart />} />
                         <Route path="popup" element={<Popup />} />
                         <Route path="pay" element={<Pay />} />
+                        <Route path="paymentCard" element={<PaymentCard />} />
+                        <Route path="myReservation" element={<MyReservation />} />
                         <Route path="complete" element={<Complete />} />
+                        <Route path="completeCard" element={<CompleteCard />} />
                         <Route path="goods">
                             <Route index element={<Goods />} />
                             <Route path=":goodsID" element={<GoodsDetail />} />
