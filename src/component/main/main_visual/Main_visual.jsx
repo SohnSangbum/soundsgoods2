@@ -29,7 +29,7 @@ const Main_visual = () => {
 
         setTimeout(() => {
             setIsAnimating(false);
-        }, 600); // 타이밍 단축
+        }, 600);
     };
 
     const handlePrevious = () => updateCarousel(currentIndex - 1);
@@ -56,13 +56,12 @@ const Main_visual = () => {
 
         textAnimationRef.current = gsap.timeline();
 
-        // 더 빠른 타이밍으로 수정
         textAnimationRef.current
             .fromTo(
                 tlTextRef.current[0],
                 { opacity: 0, scale: 0.8 },
                 {
-                    duration: 0.4, // 단축
+                    duration: 0.4,
                     opacity: 1,
                     scale: 1,
                     ease: 'power2.out',
@@ -71,25 +70,24 @@ const Main_visual = () => {
             .to(
                 tlTextRef.current[0],
                 {
-                    duration: 0.6, // 단축
+                    duration: 0.6,
                     x: -200,
                     scale: 0.7,
                     ease: 'power2.inOut',
                 },
-                0.2 // 더 빠른 시작
+                0.2
             )
             .fromTo(
                 tlTextRef.current[1],
                 { opacity: 0, x: 300 },
                 {
-                    duration: 0.6, // 단축
+                    duration: 0.6,
                     opacity: 1,
                     x: 0,
                     ease: 'power2.out',
                 },
-                0.2 // 더 빠른 시작
+                0.2
             )
-            // 나머지 텍스트들도 순차적으로 나타나도록 추가
             .fromTo(
                 '.tl_3',
                 { opacity: 0, y: 50 },
@@ -149,7 +147,7 @@ const Main_visual = () => {
         return textAnimationRef.current;
     };
 
-    // 전체 화면 모드 진입 (더 빠르게)
+    // 전체 화면 모드 진입 (비디오 재생 타이밍 최적화)
     const enterFullscreen = (index) => {
         if (isAnimating || isFullscreen) return;
 
@@ -198,6 +196,8 @@ const Main_visual = () => {
             cloneVideo.src = video.src;
             cloneVideo.muted = true;
             cloneVideo.playsInline = true;
+            // 클론 비디오 미리 재생 준비
+            cloneVideo.load();
         }
 
         const targetScale =
@@ -212,7 +212,7 @@ const Main_visual = () => {
             pointerEvents: 'auto',
         });
 
-        // 텍스트 초기 위치 조정 (더 세련된 위치로)
+        // 텍스트 초기 위치 조정
         gsap.set(tlTextRef.current, {
             opacity: 0,
             x: 0,
@@ -236,17 +236,24 @@ const Main_visual = () => {
             borderRadius: 20,
         });
 
+        // 비디오 미리 재생 시작 (애니메이션 완료를 기다리지 않음)
+        const playVideo = () => {
+            video.play().catch(console.error);
+            if (cloneVideo) {
+                cloneVideo.play().catch(console.error);
+            }
+        };
+
         const masterTimeline = gsap.timeline({
+            onStart: playVideo, // 애니메이션 시작과 동시에 비디오 재생
             onComplete: () => {
-                video.play().catch(console.error);
-                if (cloneVideo) cloneVideo.play().catch(console.error);
                 setIsAnimating(false);
             },
         });
 
         // 더 빠른 애니메이션
         masterTimeline.to(clone, {
-            duration: 0.5, // 단축
+            duration: 0.5,
             x: moveX,
             y: moveY,
             scale: targetScale,
@@ -257,17 +264,17 @@ const Main_visual = () => {
         masterTimeline.to(
             fullscreenOverlayRef.current,
             {
-                duration: 0.2, // 단축
+                duration: 0.2,
                 opacity: 1,
                 ease: 'power2.out',
             },
             0.1
         );
 
-        masterTimeline.add(runTextAnimation(), 0.1); // 더 빠른 시작
+        masterTimeline.add(runTextAnimation(), 0.2); // 텍스트 애니메이션도 더 빠르게 시작
     };
 
-    // 전체 화면 모드 종료 (더 빠르게)
+    // 전체 화면 모드 종료
     const exitFullscreen = () => {
         if (isAnimating || !isFullscreen) return;
 
@@ -279,6 +286,7 @@ const Main_visual = () => {
 
         if (!clone || !video) return;
 
+        // 비디오 즉시 정지
         video.pause();
         video.currentTime = 0;
 
@@ -299,9 +307,9 @@ const Main_visual = () => {
             ease: 'power2.in',
         });
 
-        // 더 빠른 복원 애니메이션
+        // 빠른 복원 애니메이션
         gsap.to(clone, {
-            duration: 0.5, // 단축
+            duration: 0.5,
             x: 0,
             y: 0,
             scale: 1,
@@ -318,7 +326,7 @@ const Main_visual = () => {
                 }
 
                 gsap.to(fullscreenOverlayRef.current, {
-                    duration: 0.15, // 단축
+                    duration: 0.15,
                     opacity: 0,
                     onComplete: () => {
                         gsap.set(fullscreenOverlayRef.current, {

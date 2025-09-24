@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useGoodsStore } from '../../store';
 import './style.scss';
-import useUserStore from '../../store/userSlice';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../../store/authSlice';
 
@@ -13,13 +12,13 @@ const CompleteCard = () => {
 
     useEffect(() => {
         if (completeCard.length > 0) {
-            // 가장 최근 주문 (마지막 요소) 가져오기
             const latest = completeCard[completeCard.length - 1];
             setLastCom(latest);
         }
     }, [completeCard]);
 
-    if (!lastCom) {
+    // 더 엄격한 조건 확인
+    if (!lastCom || !lastCom.items || lastCom.items.length === 0) {
         return (
             <div id="complete">
                 <div className="inner">
@@ -29,8 +28,11 @@ const CompleteCard = () => {
         );
     }
 
-    const { recipient, phone, zipcode, address, detailAddress, memo } = lastCom.formData;
-    const { id, artist, bookmark, chk, price, totalPrice } = lastCom.items;
+    // 안전하게 데이터 추출
+    const firstItem = lastCom.items[0] || {};
+    const formData = lastCom.formData || {};
+    const { recipient, phone, zipcode, address, detailAddress, memo } = formData;
+    const { id, artist, bookmark, chk, price, totalPrice } = firstItem;
 
     return (
         <div id="complete">
@@ -44,14 +46,14 @@ const CompleteCard = () => {
                     <div className="del2 delivery_information">
                         <strong>배송 수령인 정보</strong>
                         <p className="cocon">
-                            <span>{phone}</span>
-                            <span>{user.name}</span>
+                            <span>{phone || '전화번호 정보 없음'}</span>
+                            <span>{user?.name || '고객 정보 없음'}</span>
                         </p>
                     </div>
                     <div className="del del_memo">
                         <strong>배송메모</strong>
                         <p className="cocon">
-                            <span>{memo}</span>
+                            <span>{memo || '배송메모 없음'}</span>
                         </p>
                     </div>
                     <div className="del del_memo">
@@ -61,17 +63,18 @@ const CompleteCard = () => {
                         </p>
                     </div>
                     <div className="del2 delivery_information">
-                        <strong>배송 수령인 정보</strong>
+                        <strong>입금 계좌 정보</strong>
                         <p className="cocon">
                             <span>은행명: 국민은행 035-12345678-456</span>
                             <span>예금주: 사운드굿즈(주)</span>
-                            <span>{user.name}</span>
+                            <span>{user?.name || '고객 정보 없음'}</span>
                         </p>
                     </div>
                     <div className="del del_memo">
                         <strong>입금금액</strong>
                         <p className="cocon">
-                            <span>{lastCom.price.toLocaleString() + 2000}원</span>
+                            {/* 가장 안전한 방법 */}
+                            <span>{(price || 0 + 3000).toLocaleString()}원</span>
                         </p>
                     </div>
                 </div>
