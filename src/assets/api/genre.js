@@ -1279,7 +1279,7 @@ export default [
     },
     {
         genre: 'JAZZ',
-        genreimg: '../../../../public/images/streaming/genre_jazz.jpg',
+        genreimg: '/images/streaming/genre_jazz.jpg',
         singer: [
             {
                 artist: '박효신',
@@ -2063,7 +2063,7 @@ export default [
     },
     {
         genre: 'ROCK',
-        genreimg: '../../../../public/images/streaming/genre_rock.jpg',
+        genreimg: '/images/streaming/genre_rock.jpg',
         singer: [
             {
                 artist: 'WOODZ',
@@ -2846,7 +2846,7 @@ export default [
     },
     {
         genre: 'BALLAD',
-        genreimg: '../../../../public/images/streaming/genre_ballad.jpg',
+        genreimg: '/images/streaming/genre_ballad.jpg',
         singer: [
             {
                 artist: '우디 (Woody)',
@@ -3629,7 +3629,7 @@ export default [
     },
     {
         genre: 'POP',
-        genreimg: '../../../../public/images/streaming/genre_pop.jpg',
+        genreimg: '/images/streaming/genre_pop.jpg',
         singer: [
             {
                 artist: 'Charlie Puth',
