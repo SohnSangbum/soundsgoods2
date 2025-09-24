@@ -2,7 +2,12 @@ import { useEffect, useState } from 'react';
 import MagazinItem from './magazinItem/MagazinItem';
 import MagazinTidins from './magazinTidings/MagazinTidins';
 import './style.scss';
+import { useNavigate } from 'react-router-dom';
 const MagazineMain = () => {
+    const navigate = useNavigate();
+    const onGoMagazine = () => {
+        navigate('/magazine');
+    };
     const today = new Date();
     const [width, setWidth] = useState(window.innerWidth);
     const year = today.getFullYear();
@@ -26,7 +31,7 @@ const MagazineMain = () => {
                         <button>
                             <img src="/images/icons/white_next.png" alt="" />
                         </button>
-                        <span>더 많은 매거진 알아보기</span>
+                        <span onClick={onGoMagazine}>더 많은 매거진 알아보기</span>
                     </div>
                 )}
             </div>
