@@ -95,10 +95,10 @@ const Goods = () => {
             const totalScrollDistance = sliderWrapperRef.current.offsetWidth;
             ScrollTrigger.create({
                 trigger: mainGoodsRef.current,
+
                 start: 'top 90%',
-                end: `+=${totalScrollDistance * 0.2}`, // 슬라이더가 끝날 때까지
-                pin: mainGoodsRef.current, // main-goods 전체를 핀 고정
-                pinSpacing: true,
+                end: `+=${totalScrollDistance * 0.5}`, // 슬라이더가 끝날 때까지
+                pin: true, // main-goods 전체를 핀 고정
             });
         }
         return () => {

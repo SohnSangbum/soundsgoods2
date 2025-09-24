@@ -160,10 +160,8 @@ export const usemainAlbumStore = create((set, get) => {
             if (currentIndex < currentPlaylist.length - 1) {
                 nextIndex = currentIndex + 1;
             } else if (isRepeat) {
-                // 반복 모드면 첫 번째 곡으로
-                nextIndex = 0;
+                nextIndex = 0; // 반복 모드
             } else {
-                // 마지막 곡이면 재생 중지
                 set({ isPlaying: false });
                 return;
             }
@@ -181,10 +179,9 @@ export const usemainAlbumStore = create((set, get) => {
             if (currentIndex > 0) {
                 prevIndex = currentIndex - 1;
             } else if (isRepeat) {
-                // 반복 모드면 마지막 곡으로
-                prevIndex = currentPlaylist.length - 1;
+                prevIndex = currentPlaylist.length - 1; // 반복 모드
             } else {
-                // 첫 번째 곡이면 그대로 처음부터 재생
+                // 첫 곡이면 처음부터 재생
                 const currentTrack = currentPlaylist[0];
                 const { players } = get();
                 if (players[currentTrack.id]) {
@@ -521,33 +518,44 @@ export const usemainAlbumStore = create((set, get) => {
         // ==================== 트랙 재생 시작 ====================
         MStart: async (id, type) => {
             try {
-                console.log(`MStart called: id=${id}, type=${type}`); // 디버깅용 로그
+                console.log(`MStart called: id=${id}, type=${type}`);
 
                 const track = get().findTrack(id, type);
                 if (!track) {
                     console.error(`Track not found: id=${id}, type=${type}`);
-                    console.log('Available types:', Object.keys(get())); // 스토어 구조 확인
                     return;
                 }
 
-                // image → album_img 보정
+                // 보정
                 if (!track.album_img && track.image) {
                     track.album_img = track.image;
                 }
 
-                // 플레이리스트가 설정되지 않았거나 다른 타입이면 새로 설정
+                // 플레이리스트 세팅
                 const { currentPlaylistType } = get();
                 if (currentPlaylistType !== type) {
-                    console.log(`Setting new playlist: ${type}`);
                     const allTracks = get().getAllTracksByType(type);
-                    if (!allTracks || allTracks.length === 0) {
-                        console.error(`No tracks found for type: ${type}`);
-                        return;
-                    }
+                    if (!allTracks || allTracks.length === 0) return;
                     get().setPlaylist(allTracks, id, type);
                 }
 
-                // 음악 실행 상태 업데이트
+                const state = get();
+                const { currentPlayerId, players } = state;
+                const YT = getYT();
+
+                // ✅ 기존 플레이어 정리 (새 곡일 경우)
+                if (currentPlayerId && players[currentPlayerId] && currentPlayerId !== id) {
+                    try {
+                        players[currentPlayerId].stopVideo();
+                        players[currentPlayerId].destroy();
+                        delete players[currentPlayerId];
+                        console.log(`Cleaned up previous player: ${currentPlayerId}`);
+                    } catch (error) {
+                        console.error('Error cleaning previous player:', error);
+                    }
+                }
+
+                // 상태 업데이트
                 set({
                     musicOn: true,
                     musicModal: track,
@@ -555,28 +563,16 @@ export const usemainAlbumStore = create((set, get) => {
                     currentPlayerId: id,
                 });
 
-                // YouTube API 준비
-                const state = get();
+                // YT API 준비
                 if (!state.ytReady) {
-                    console.log('Initializing YouTube API...');
                     const isReady = await state.initYouTube();
-                    if (!isReady) {
-                        console.error('YouTube API failed to initialize');
-                        return;
-                    }
+                    if (!isReady) return;
                 }
 
-                const { currentPlayerId, players } = get();
-                const YT = getYT();
-
-                console.log(`Current player ID: ${currentPlayerId}, Target ID: ${id}`);
-
+                // 같은 곡 → 토글, 새로운 곡 → 생성
                 if (currentPlayerId === id && players[id]) {
-                    // 같은 트랙 재생 중이면 토글
                     try {
                         const playerState = players[id].getPlayerState();
-                        console.log(`Current player state: ${playerState}`);
-
                         if (playerState === YT.PlayerState.PLAYING) {
                             players[id].pauseVideo();
                             set({ isPlaying: false });
@@ -589,12 +585,9 @@ export const usemainAlbumStore = create((set, get) => {
                         await get().createPlayer(track);
                     }
                 } else {
-                    // 새로운 트랙이면 새 플레이어 생성
-                    console.log('Creating new player for track:', track);
                     await get().createPlayer(track);
                 }
 
-                // actv 업데이트
                 get().updateActiveTracks(id, type);
             } catch (error) {
                 console.error('Error in MStart:', error);

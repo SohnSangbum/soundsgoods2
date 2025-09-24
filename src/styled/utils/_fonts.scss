@@ -322,3 +322,17 @@
     line-height: 130%;
     color: #000;
 }
+@mixin font-100px-700 {
+    font-size: vw(100px);
+    font-weight: 700;
+    letter-spacing: vw(0);
+    line-height: 130%;
+    color: #000;
+}
+@mixin font-140px-700 {
+    font-size: vw(100px);
+    font-weight: 700;
+    letter-spacing: vw(0);
+    line-height: 130%;
+    color: #000;
+}
