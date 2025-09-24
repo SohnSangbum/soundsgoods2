@@ -34,7 +34,7 @@ const Mymusic_Access = () => {
     return (
         <div className="inner">
             <div className="access">
-                <img src="../../../../public/images/icons/Login_Acess.png" alt="" />
+                <img src="/images/icons/Login_Acess.png" alt="" />
             </div>
             <div className="text">
                 <p>

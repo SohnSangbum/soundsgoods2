@@ -54,14 +54,14 @@ const IveSecret = () => {
                             <div className="leftImg">
                                 <p className="leftImg1">
                                     <img
-                                        src="../../../public/images/main/main_con5_1.jpg"
+                                        src="/images/main/main_con5_1.jpg"
                                         alt=""
                                         style={{ width: 570 }}
                                     />
                                 </p>
                                 <p className="leftImg2">
                                     <img
-                                        src="../../../public/images/main/main_con5_2.jpg"
+                                        src="/images/main/main_con5_2.jpg"
                                         alt=""
                                         style={{ width: 280 }}
                                     />

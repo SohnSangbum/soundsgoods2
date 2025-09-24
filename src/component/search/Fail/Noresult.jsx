@@ -7,7 +7,7 @@ const Noresult = ({ text }) => {
     return (
         <div className="inner">
             <div className="searchaccess">
-                <img src="../../../../public/images/streaming/searchFail.png" alt="" />
+                <img src="/images/streaming/searchFail.png" alt="" />
             </div>
             <div className="text">
                 <p>

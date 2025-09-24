@@ -1,7 +1,7 @@
 export default [
     {
         id: 1,
-        image: '/public/images/artistinfo/visual_bts.jpg',
+        image: '/images/artistinfo/visual_bts.jpg',
         imageS: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/images/artist/bts.png',
         artist: '방탄소년단 (BTS)',
         members: 'RM, SUGA, 진, j-hope, 지민, V, 정국',
@@ -182,7 +182,7 @@ export default [
     },
     {
         id: 2,
-        image: '/public/images/artistinfo/visual_seventeen.jpg',
+        image: '/images/artistinfo/visual_seventeen.jpg',
         imageS: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/images/artist/seventeen.png',
         artist: '세븐틴 (SEVENTEEN)',
         members:
@@ -364,7 +364,7 @@ export default [
     },
     {
         id: 3,
-        image: '/public/images/artistinfo/visual_zerobaseone.jpg',
+        image: '/images/artistinfo/visual_zerobaseone.jpg',
         imageS: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/images/artist/zerobaseone.png',
         artist: '제로베이스원 (ZEROBASEONE)',
         members: '성한빈, 김지웅, 장하오, 석매튜, 김태래, 리키, 김규빈, 박건욱, 한유진',
@@ -545,7 +545,7 @@ export default [
     },
     {
         id: 4,
-        image: '/public/images/artistinfo/visual_theboyz.jpg',
+        image: '/images/artistinfo/visual_theboyz.jpg',
         imageS: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/images/artist/theboyz.png',
         artist: '더보이즈 (THE BOYZ)',
         members: '선우, 현재, 영훈, 케빈, 상연, 주연, 뉴, 큐, 제이콥, 에릭',
@@ -741,7 +741,7 @@ export default [
     },
     {
         id: 5,
-        image: '/public/images/artistinfo/visual_day6.jpg',
+        image: '/images/artistinfo/visual_day6.jpg',
         imageS: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/images/artist/day6.png',
         artist: '데이식스 (DAY6)',
         members: '성진, Young K, 원필, 도운',
@@ -922,7 +922,7 @@ export default [
     },
     {
         id: 6,
-        image: '/public/images/artistinfo/visual_lesserafim.jpg',
+        image: '/images/artistinfo/visual_lesserafim.jpg',
         imageS: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/images/artist/lesserafim.png',
         artist: '르세라핌 (LE SSERAFIM)',
         members: '김채원, 사쿠라, 허윤진, 카즈하, 홍은채',
@@ -1103,7 +1103,7 @@ export default [
     },
     {
         id: 7,
-        image: '/public/images/artistinfo/visual_promise9.jpg',
+        image: '/images/artistinfo/visual_promise9.jpg',
         imageS: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/images/artist/promisenine.png',
         artist: '프로미스나인',
         members: '송하영, 이채영, 이나경, 박지원, 백지헌',
@@ -1284,7 +1284,7 @@ export default [
     },
     {
         id: 8,
-        image: '/public/images/artistinfo/visual_redvelvet.jpg',
+        image: '/images/artistinfo/visual_redvelvet.jpg',
         imageS: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/images/artist/redvelvet.png',
         artist: '레드벨벳 (Red Velvet)',
         members: '웬디, 아이린, 슬기, 조이, 예리',
@@ -1465,7 +1465,7 @@ export default [
     },
     {
         id: 9,
-        image: '/public/images/artistinfo/visual_itzy.jpg',
+        image: '/images/artistinfo/visual_itzy.jpg',
         imageS: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/images/artist/itzy.png',
         artist: '있지 (ITZY)',
         members: '예지, 리아, 류진, 채령, 유나',
@@ -1661,7 +1661,7 @@ export default [
     },
     {
         id: 10,
-        image: '/public/images/artistinfo/visual_jannabi.jpg',
+        image: '/images/artistinfo/visual_jannabi.jpg',
         imageS: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/images/artist/jannabi.png',
         artist: '잔나비',
         members: '잔나비',
@@ -1760,7 +1760,7 @@ export default [
     },
     {
         id: 11,
-        image: '/public/images/artistinfo/visual_iu.jpg',
+        image: '/images/artistinfo/visual_iu.jpg',
         imageS: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/images/artist/iu.png',
         artist: '아이유 (IU)',
         members: '이지은',
@@ -1854,7 +1854,7 @@ export default [
     },
     {
         id: 12,
-        image: '/public/images/artistinfo/visual_ive.jpg',
+        image: '/images/artistinfo/visual_ive.jpg',
         imageS: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/images/artist/ive.png',
         artist: '아이브 (IVE)',
         members: '안유진, 가을, 레이, 원영, 리즈, 이서',
@@ -2046,7 +2046,7 @@ export default [
     },
     {
         id: 13,
-        image: '/public/images/artistinfo/visual_akmu.jpg',
+        image: '/images/artistinfo/visual_akmu.jpg',
         imageS: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/images/artist/akmu.png',
         artist: '악뮤 (AKMU)',
         members: '이찬혁, 이수현',
@@ -2146,7 +2146,7 @@ export default [
     },
     {
         id: 14,
-        image: '/public/images/artistinfo/visual_ovan.jpg',
+        image: '/images/artistinfo/visual_ovan.jpg',
         imageS: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/images/artist/ovan.png',
         artist: '오반 (OVAN)',
         members: '오반',
@@ -2245,7 +2245,7 @@ export default [
     },
     {
         id: 15,
-        image: '/public/images/artistinfo/visual_nerd.jpg',
+        image: '/images/artistinfo/visual_nerd.jpg',
         imageS: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/images/artist/nerd.png',
         artist: '너드커넥션 (Nerd Connection)',
         members: '너드커넥션',
