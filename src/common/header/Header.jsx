@@ -15,7 +15,7 @@ import GoodsList from './nav/navList/GoodsList';
 import useAuthStore from '../../store/authSlice';
 
 const Header = () => {
-    const { authed, user, logout } = useAuthStore(); // userStore 제거하고 authStore만 사용
+    const { authed, user, logout } = useAuthStore();
     const [show, setShow] = useState(false);
     const [data, setData] = useState(headerData);
     const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -24,34 +24,29 @@ const Header = () => {
     const toggleJoin = () => setIsJoinOpen((prev) => !prev);
     const swiperRef = useRef();
     const nav = useNavigate();
+
     const onHome = () => {
         nav('/');
     };
-    const headerOn = (x) => {
-        setData(
-            data.map((item) => {
-                if (item.id === x) {
-                    // 호버한 항목이 isOn을 가지고 있으면 true로 설정
-                    if (item.isOn !== undefined) {
-                        return { ...item, isOn: true };
-                    }
-                    // isOn이 없는 항목이면 아무 변화 없이 리턴
-                    return item;
-                } else {
-                    // 다른 항목들: isOn이 있고 현재 true인 항목만 false로 설정
-                    // (isOn이 없는 항목은 건드리지 않음)
-                    if (item.isOn !== undefined && item.isOn === true) {
-                        return { ...item, isOn: false };
-                    }
-                    return item;
-                }
-            })
-        );
-    };
-    // 디버깅을 위한 콘솔 로그
-    console.log('authed 상태:', authed);
-    console.log('user 정보:', user);
 
+    // 디버깅용으로 현재 데이터 상태 출력
+    console.log('현재 데이터:', data);
+
+    const headerOn = (hoveredId) => {
+        setData((prevData) => {
+            const newData = prevData.map((item) => {
+                if (item.id === hoveredId) {
+                    return item.onContent ? { ...item, isOn: true } : item;
+                } else {
+                    return item.onContent && item.isOn ? { ...item, isOn: false } : item;
+                }
+            });
+            const shouldShow = newData.some((item) => item.onContent && item.isOn);
+            setShow(shouldShow);
+
+            return newData;
+        });
+    };
     return (
         <header id="header" className={show ? 'active' : ''} onMouseLeave={() => setShow(false)}>
             <div className="header_top_menu">
@@ -81,16 +76,27 @@ const Header = () => {
                 <HeaderForm />
                 <Nav data={data} setShow={setShow} headerOn={headerOn} />
             </div>
-            {data[2].isOn && (
+
+            {/* id 2번: 굿즈 사전 예약 */}
+            {data.find((item) => item.id === 2)?.isOn && (
+                <div className="header_content2">
+                    <div className="headergoods">
+                        <GoodsList data={data.find((item) => item.id === 2)} />
+                    </div>
+                </div>
+            )}
+
+            {/* id 3번: 팝업 스토어 */}
+            {data.find((item) => item.id === 3)?.isOn && (
                 <div className="header_content">
                     <h2>
                         <strong>sounds goods</strong>
                         <p>pop-up store</p>
                     </h2>
-                    <button className="swiper_next" onClick={() => swiperRef.current.slideNext()}>
+                    <button className="swiper_next" onClick={() => swiperRef.current?.slideNext()}>
                         <img src="/images/icons/icon-park-outline_right.png" alt="" />
                     </button>
-                    <button className="swiper_prev" onClick={() => swiperRef.current.slidePrev()}>
+                    <button className="swiper_prev" onClick={() => swiperRef.current?.slidePrev()}>
                         <img src="/images/icons/icon-park-outline_left.png" alt="" />
                     </button>
                     <Swiper
@@ -102,25 +108,19 @@ const Header = () => {
                         spaceBetween={50}
                         slidesPerGroup={3}
                     >
-                        {data[2].onContent.map((item) => (
-                            <SwiperSlide key={item.id}>
-                                <div className="swiper_content">
-                                    <img src={item.img} alt="" />
-                                    <p>{item.title}</p>
-                                    <span>{item.desc}</span>
-                                    <div className="bg"></div>
-                                </div>
-                            </SwiperSlide>
-                        ))}
+                        {data
+                            .find((item) => item.id === 3)
+                            ?.onContent?.map((item) => (
+                                <SwiperSlide key={item.id}>
+                                    <div className="swiper_content">
+                                        <img src={item.img} alt="" />
+                                        <p>{item.title}</p>
+                                        <span>{item.desc}</span>
+                                        <div className="bg"></div>
+                                    </div>
+                                </SwiperSlide>
+                            ))}
                     </Swiper>
-                </div>
-            )}
-            {/* ////////////////////////////////////////////////// */}
-            {data[1].isOn && (
-                <div className="header_content2">
-                    <div className="headergoods">
-                        <GoodsList data={data[1]} />
-                    </div>
                 </div>
             )}
 
