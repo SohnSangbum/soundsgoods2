@@ -2,7 +2,7 @@ export default [
     {
         id: 1,
         title: '스트리밍',
-        isOn: false,
+
         path: '/streaming',
     },
     {
@@ -132,7 +132,7 @@ export default [
     {
         id: 4,
         title: '매거진 소식',
-        isOn: false,
+
         path: '/magazine',
     },
 ];

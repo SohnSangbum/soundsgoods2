@@ -65,13 +65,13 @@ const CompleteCard = () => {
                         <p className="cocon">
                             <span>은행명: 국민은행 035-12345678-456</span>
                             <span>예금주: 사운드굿즈(주)</span>
-                            <span>홍길동</span>
+                            <span>{user.name}</span>
                         </p>
                     </div>
                     <div className="del del_memo">
                         <strong>입금금액</strong>
                         <p className="cocon">
-                            <span>{lastCom.totalPrice.toLocaleString()}원</span>
+                            <span>{lastCom.price.toLocaleString() + 2000}원</span>
                         </p>
                     </div>
                 </div>

@@ -29,7 +29,23 @@ const Header = () => {
     };
     const headerOn = (x) => {
         setData(
-            data.map((item) => (item.id === x ? { ...item, isOn: true } : { ...item, isOn: false }))
+            data.map((item) => {
+                if (item.id === x) {
+                    // 호버한 항목이 isOn을 가지고 있으면 true로 설정
+                    if (item.isOn !== undefined) {
+                        return { ...item, isOn: true };
+                    }
+                    // isOn이 없는 항목이면 아무 변화 없이 리턴
+                    return item;
+                } else {
+                    // 다른 항목들: isOn이 있고 현재 true인 항목만 false로 설정
+                    // (isOn이 없는 항목은 건드리지 않음)
+                    if (item.isOn !== undefined && item.isOn === true) {
+                        return { ...item, isOn: false };
+                    }
+                    return item;
+                }
+            })
         );
     };
     // 디버깅을 위한 콘솔 로그
