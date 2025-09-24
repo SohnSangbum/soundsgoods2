@@ -1,0 +1,25 @@
+@use '../../styled/utils' as *;
+
+.no_reservation {
+    @include display_al();
+    flex-direction: column;
+    gap: vw(40);
+    img {
+        width: vw(150);
+    }
+    strong {
+        @include font-18px-700();
+    }
+    p {
+        button {
+            width: vw(380);
+            height: vw(40);
+            box-sizing: border-box;
+            background-color: $m_color1;
+            @include display_center();
+            @include font-18px-700();
+            color: #fff;
+            border-radius: vw(50);
+        }
+    }
+}

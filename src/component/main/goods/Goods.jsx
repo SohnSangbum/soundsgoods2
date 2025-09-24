@@ -92,14 +92,13 @@ const Goods = () => {
         // main-goods를 기준으로 GSAP ScrollTrigger 핀 고정
         if (mainGoodsRef.current && sliderWrapperRef.current) {
             // 전체 스크롤 거리 계산
-            const totalScrollDistance = sliderWrapperRef.current.offsetWidth - window.innerWidth;
+            const totalScrollDistance = sliderWrapperRef.current.offsetWidth;
             ScrollTrigger.create({
                 trigger: mainGoodsRef.current,
+
                 start: 'top 25%',
                 end: `+=${totalScrollDistance * 0.5}`, // 슬라이더가 끝날 때까지
                 pin: true, // main-goods 전체를 핀 고정
-                pinSpacing: true,
-                markers: true,
             });
         }
         return () => {

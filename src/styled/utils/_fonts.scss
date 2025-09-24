@@ -308,3 +308,31 @@
     line-height: 130%;
     color: #fff;
 }
+@mixin font-60px-600 {
+    font-size: vw(60);
+    font-weight: 700;
+    letter-spacing: vw(0);
+    line-height: 130%;
+    color: #000;
+}
+@mixin font-60px-400 {
+    font-size: vw(60);
+    font-weight: 400;
+    letter-spacing: vw(0);
+    line-height: 130%;
+    color: #000;
+}
+@mixin font-100px-700 {
+    font-size: vw(100px);
+    font-weight: 700;
+    letter-spacing: vw(0);
+    line-height: 130%;
+    color: #000;
+}
+@mixin font-140px-700 {
+    font-size: vw(100px);
+    font-weight: 700;
+    letter-spacing: vw(0);
+    line-height: 130%;
+    color: #000;
+}

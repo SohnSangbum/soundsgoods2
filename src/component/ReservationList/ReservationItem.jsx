@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-const ReservationItem = ({ item, form, orderDate }) => {
+const ReservationItem = ({ item, form, deliveryDate }) => {
     const { id, artist, title, price, release, cpn, img, remain } = item;
     const [mo, setMo] = useState(false);
     const { comDel } = useGoodsStore();
@@ -26,9 +26,7 @@ const ReservationItem = ({ item, form, orderDate }) => {
     const handleDelete = (id) => {
         Swal.fire({
             title: '정말 예약을 취소하겠습니까?',
-
             showCancelButton: true,
-
             confirmButtonText: '예약취소',
             cancelButtonText: '×',
             customClass: {
@@ -81,7 +79,8 @@ const ReservationItem = ({ item, form, orderDate }) => {
                     </ul>
                 </div>
             </div>
-            <strong className="data_text">{formatDate(orderDate)} 배송 예약</strong>
+            {/* orderDate를 사용하여 배송 예약 날짜 표시 */}
+            <strong className="data_text">{formatDate(deliveryDate)} 배송 예약</strong>
             <div className="btn_close">
                 <p className="ppp">
                     <button>예약 완료</button>

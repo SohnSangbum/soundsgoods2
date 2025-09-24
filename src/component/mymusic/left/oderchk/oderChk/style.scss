@@ -109,7 +109,14 @@
                 height: 80px;
                 background: #eee;
                 border: 1px solid #ddd;
-                border-radius: 3px;
+                box-sizing: border-box;
+                border-radius: 10px;
+                overflow: hidden;
+                img {
+                    width: 80px;
+                    height: 80px;
+                    object-fit: cover;
+                }
             }
 
             .order-desc {

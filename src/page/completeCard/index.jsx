@@ -3,10 +3,11 @@ import { useGoodsStore } from '../../store';
 import './style.scss';
 import useUserStore from '../../store/userSlice';
 import { useNavigate } from 'react-router-dom';
+import useAuthStore from '../../store/authSlice';
 
 const CompleteCard = () => {
-    const user = useUserStore((state) => state.user);
     const completeCard = useGoodsStore((state) => state.completeCard);
+    const { authed, user } = useAuthStore();
     const [lastCom, setLastCom] = useState(null);
     const nav = useNavigate();
 

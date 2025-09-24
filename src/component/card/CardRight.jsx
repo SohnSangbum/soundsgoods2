@@ -5,12 +5,13 @@ import { toast } from 'react-toastify';
 import { useGoodsStore } from '../../store';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import useAuthStore from '../../store/authSlice';
 
 const CardRight = ({ data }) => {
     const { artist, title, price, release, cpn, quantity, id, totalPrice } = data;
     const { CardPush } = useGoodsStore();
     const nav = useNavigate();
-
+    const { authed } = useAuthStore();
     // 체크박스 상태 관리
     const [checkboxes, setCheckboxes] = useState({
         chk1: false,
@@ -52,8 +53,12 @@ const CardRight = ({ data }) => {
             toast('안내 사항을 모두 확인해주세요.');
             return;
         }
-        CardPush(x);
-        nav('/paymentCard');
+        if (authed) {
+            CardPush(x);
+            nav('/paymentCard');
+        } else {
+            toast('제품 구매를 위해 로그인이 필요합니다');
+        }
     };
 
     return (

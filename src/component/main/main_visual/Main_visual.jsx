@@ -1,592 +1,487 @@
-import './style.scss';
-import { useRef, useState, useEffect } from 'react';
-import { useGSAP } from '@gsap/react';
+import React, { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Autoplay, Mousewheel, EffectCreative } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/effect-creative';
+import './style.scss';
 
-const vis = [
-    {
-        id: 1,
-        video: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/videos/main_visual_tooo.MOV',
-        right: 'Love',
-        left: 'It',
-        class: 'third',
-    },
-    {
-        id: 2,
-        video: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/videos/main_visual_too.mov',
-        right: 'Feel',
-        left: 'It',
-        class: 'second',
-    },
-    {
-        id: 3,
-        video: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/videos/main_visual_to.mp4',
-        right: 'Play',
-        left: 'It',
-        class: 'first',
-    },
-];
+const Main_visual = () => {
+    const teamMembers = [{ name: 'G-DRAGON' }, { name: 'IU' }, { name: 'DEMON HUNTERS' }];
+    const teamVideos = [
+        'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/videos/main_visual_too.mov',
+        'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/videos/main_visual_tooo.MOV',
+        'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/videos/main_visual_to.mp4',
+    ];
 
-const Main_visual = ({ onVideoPlay }) => {
-    const titleRef = useRef();
-    const titleRef2 = useRef();
-    const titleRef3 = useRef();
-    const titleRef4 = useRef();
-    const titleRef5 = useRef();
-    const titleRef6 = useRef();
-    const titleRef7 = useRef();
-    const sectionRef = useRef(null);
-    const [isExpanded, setIsExpanded] = useState(false);
-    const [showVideo, setShowVideo] = useState(false);
-    const originalSizes = useRef({
-        width: 0,
-        height: 0,
-        left: 0,
-        top: 0,
-        scrollY: 0,
-    });
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isAnimating, setIsAnimating] = useState(false);
+    const [isFullscreen, setIsFullscreen] = useState(false);
     const videoRefs = useRef([]);
-    const fullscreenVideoRef = useRef(null);
-    const swiperRef = useRef(null);
+    const cardRefs = useRef([]);
+    const fullscreenOverlayRef = useRef(null);
+    const cloneRef = useRef(null);
+    const tlTextRef = useRef([]);
+    const textAnimationRef = useRef(null);
 
-    // 비디오 ref 초기화
-    useEffect(() => {
-        videoRefs.current = videoRefs.current.slice(0, vis.length);
-    }, []);
+    const updateCarousel = (newIndex) => {
+        if (isAnimating || isFullscreen) return;
+        setIsAnimating(true);
 
-    // 비디오 상태 관리
-    useEffect(() => {
-        if (!showVideo && fullscreenVideoRef.current) {
-            fullscreenVideoRef.current.pause();
-            fullscreenVideoRef.current.currentTime = 0;
+        const index = (newIndex + teamMembers.length) % teamMembers.length;
+        setCurrentIndex(index);
+
+        setTimeout(() => {
+            setIsAnimating(false);
+        }, 600); // 타이밍 단축
+    };
+
+    const handlePrevious = () => updateCarousel(currentIndex - 1);
+    const handleNext = () => updateCarousel(currentIndex + 1);
+
+    const handleCardClick = (index) => {
+        if (isFullscreen) {
+            exitFullscreen();
+            return;
         }
-    }, [showVideo]);
 
-    // 썸네일 비디오 자동 재생 방지
-    useEffect(() => {
-        videoRefs.current.forEach((video, index) => {
-            if (video && !isExpanded) {
-                video.pause();
-                video.currentTime = 0.1;
-            }
-        });
-    }, [isExpanded]);
-
-    const handleVideoClick = (item, index) => {
-        if (item.id === 3 && !isExpanded) {
-            if (onVideoPlay) {
-                onVideoPlay(true);
-            }
-
-            const scrollY = window.scrollY;
-            originalSizes.current.scrollY = scrollY;
-
-            setIsExpanded(true);
-
-            const visualElement = document.querySelector(`.${item.class}_visual`);
-            const videoContainer = visualElement.querySelector('.video-container');
-            const textElements = visualElement.querySelectorAll('strong');
-
-            const rect = videoContainer.getBoundingClientRect();
-
-            originalSizes.current = {
-                ...originalSizes.current,
-                width: rect.width,
-                height: rect.height,
-                left: rect.left,
-                top: rect.top,
-            };
-
-            document.body.classList.add('scroll-locked');
-            document.documentElement.style.scrollBehavior = 'auto';
-
-            const header = document.querySelector('header');
-            if (header) {
-                header.classList.add('hidden');
-            }
-
-            // 다른 visual 요소 숨기기
-            gsap.utils.toArray('.visual').forEach((visual, i) => {
-                if (i !== 2) {
-                    gsap.to(visual, {
-                        opacity: 0,
-                        duration: 0.5,
-                    });
-                }
-            });
-
-            // 텍스트 숨기기
-            gsap.to(textElements, {
-                opacity: 0,
-                duration: 0.5,
-            });
-
-            // 현재 썸네일 비디오 일시정지
-            if (videoRefs.current[index]) {
-                videoRefs.current[index].pause();
-                videoRefs.current[index].currentTime = 0.1;
-            }
-
-            gsap.set(visualElement, {
-                x: 0,
-                y: 0,
-                scale: 1,
-            });
-
-            gsap.set(videoContainer, {
-                position: 'fixed',
-                left: rect.left,
-                top: rect.top,
-                width: rect.width,
-                height: rect.height,
-                zIndex: 1000,
-            });
-
-            gsap.to(videoContainer, {
-                left: '50%',
-                top: '50%',
-                x: '-50%',
-                y: '-50%',
-                width: '100vw',
-                height: '100vh',
-                borderRadius: 0,
-                duration: 1,
-                onComplete: () => {
-                    setShowVideo(true);
-                    setTimeout(() => {
-                        if (fullscreenVideoRef.current) {
-                            fullscreenVideoRef.current.currentTime = 0;
-                            fullscreenVideoRef.current
-                                .play()
-                                .catch((e) => console.log('Autoplay prevented:', e));
-                        }
-                    }, 100);
-                },
-            });
+        if (index === currentIndex) {
+            enterFullscreen(index);
+        } else {
+            updateCarousel(index);
         }
     };
 
-    const handleCloseVideo = () => {
-        if (fullscreenVideoRef.current) {
-            fullscreenVideoRef.current.pause();
-            fullscreenVideoRef.current.currentTime = 0;
+    // 텍스트 애니메이션 실행 (더 빠르게)
+    const runTextAnimation = () => {
+        if (textAnimationRef.current) {
+            textAnimationRef.current.kill();
         }
 
-        setShowVideo(false);
+        textAnimationRef.current = gsap.timeline();
 
-        if (onVideoPlay) {
-            onVideoPlay(false);
-        }
-
-        const header = document.querySelector('header');
-        if (header) {
-            header.classList.remove('hidden');
-        }
-
-        const visualElement = document.querySelector('.third_visual');
-        const videoContainer = visualElement.querySelector('.video-container');
-        const textElements = visualElement.querySelectorAll('strong');
-
-        gsap.to(videoContainer, {
-            left: originalSizes.current.left,
-            top: originalSizes.current.top,
-            width: originalSizes.current.width,
-            height: originalSizes.current.height,
-            borderRadius: 8,
-            duration: 0.8,
-            onComplete: () => {
-                gsap.set(videoContainer, {
-                    position: 'relative',
-                    left: 'auto',
-                    top: 'auto',
-                    x: 0,
-                    y: 0,
-                    zIndex: 2,
-                });
-
-                gsap.to(textElements, {
+        // 더 빠른 타이밍으로 수정
+        textAnimationRef.current
+            .fromTo(
+                tlTextRef.current[0],
+                { opacity: 0, scale: 0.8 },
+                {
+                    duration: 0.4, // 단축
                     opacity: 1,
+                    scale: 1,
+                    ease: 'power2.out',
+                }
+            )
+            .to(
+                tlTextRef.current[0],
+                {
+                    duration: 0.6, // 단축
+                    x: -200,
+                    scale: 0.7,
+                    ease: 'power2.inOut',
+                },
+                0.2 // 더 빠른 시작
+            )
+            .fromTo(
+                tlTextRef.current[1],
+                { opacity: 0, x: 300 },
+                {
+                    duration: 0.6, // 단축
+                    opacity: 1,
+                    x: 0,
+                    ease: 'power2.out',
+                },
+                0.2 // 더 빠른 시작
+            )
+            // 나머지 텍스트들도 순차적으로 나타나도록 추가
+            .fromTo(
+                '.tl_3',
+                { opacity: 0, y: 50 },
+                {
+                    duration: 0.4,
+                    opacity: 1,
+                    y: 0,
+                    ease: 'power2.out',
+                },
+                0.4
+            )
+            .fromTo(
+                '.tl_4',
+                { opacity: 0, y: 50 },
+                {
+                    duration: 0.4,
+                    opacity: 1,
+                    y: 0,
+                    ease: 'power2.out',
+                },
+                0.5
+            )
+            .fromTo(
+                '.tl_5',
+                { opacity: 0, y: 50 },
+                {
+                    duration: 0.4,
+                    opacity: 1,
+                    y: 0,
+                    ease: 'power2.out',
+                },
+                0.6
+            )
+            .fromTo(
+                '.tl_6',
+                { opacity: 0, y: 50 },
+                {
+                    duration: 0.4,
+                    opacity: 1,
+                    y: 0,
+                    ease: 'power2.out',
+                },
+                0.7
+            )
+            .fromTo(
+                '.tl_7',
+                { opacity: 0, scale: 0.8 },
+                {
                     duration: 0.5,
-                });
+                    opacity: 1,
+                    scale: 1,
+                    ease: 'back.out(1.7)',
+                },
+                0.8
+            );
 
-                gsap.utils.toArray('.visual').forEach((visual) => {
-                    gsap.to(visual, {
-                        opacity: 1,
-                        duration: 0.5,
-                    });
-                });
+        return textAnimationRef.current;
+    };
 
-                // 썸네일 비디오 복구
-                const thumbnailVideo = videoRefs.current[2];
-                if (thumbnailVideo) {
-                    thumbnailVideo.currentTime = 0.1;
-                    setTimeout(() => {
-                        thumbnailVideo.pause();
-                    }, 100);
+    // 전체 화면 모드 진입 (더 빠르게)
+    const enterFullscreen = (index) => {
+        if (isAnimating || isFullscreen) return;
+
+        setIsAnimating(true);
+        setIsFullscreen(true);
+
+        const originalCard = cardRefs.current[index];
+        const video = videoRefs.current[index];
+
+        if (!originalCard || !video) return;
+
+        originalCard.style.visibility = 'hidden';
+
+        const rect = originalCard.getBoundingClientRect();
+        const clone = originalCard.cloneNode(true);
+        clone.classList.add('fullscreen-clone');
+
+        const memberInfo = clone.querySelector('.member-info');
+        if (memberInfo) {
+            memberInfo.style.display = 'none';
+        }
+
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const screenCenterX = window.innerWidth / 2;
+        const screenCenterY = window.innerHeight / 2;
+
+        Object.assign(clone.style, {
+            position: 'fixed',
+            top: `${rect.top}px`,
+            left: `${rect.left}px`,
+            width: `${rect.width}px`,
+            height: `${rect.height}px`,
+            margin: '0',
+            transform: 'none',
+            transformOrigin: 'center center',
+            zIndex: '1000',
+            visibility: 'visible',
+        });
+
+        document.body.appendChild(clone);
+        cloneRef.current = clone;
+
+        const cloneVideo = clone.querySelector('video');
+        if (cloneVideo) {
+            cloneVideo.src = video.src;
+            cloneVideo.muted = true;
+            cloneVideo.playsInline = true;
+        }
+
+        const targetScale =
+            Math.max(window.innerWidth / rect.width, window.innerHeight / rect.height) * 1.02;
+        const moveX = screenCenterX - centerX;
+        const moveY = screenCenterY - centerY;
+
+        // 오버레이 설정
+        gsap.set(fullscreenOverlayRef.current, {
+            display: 'block',
+            opacity: 0,
+            pointerEvents: 'auto',
+        });
+
+        // 텍스트 초기 위치 조정 (더 세련된 위치로)
+        gsap.set(tlTextRef.current, {
+            opacity: 0,
+            x: 0,
+            y: 0,
+            scale: 1,
+            display: 'block',
+            zIndex: 1001,
+        });
+
+        gsap.set(tlTextRef.current[1], { x: 300 });
+        gsap.set('.tl_3', { opacity: 0, y: 50 });
+        gsap.set('.tl_4', { opacity: 0, y: 50 });
+        gsap.set('.tl_5', { opacity: 0, y: 50 });
+        gsap.set('.tl_6', { opacity: 0, y: 50 });
+        gsap.set('.tl_7', { opacity: 0, scale: 0.8 });
+
+        gsap.set(clone, {
+            x: 0,
+            y: 0,
+            scale: 1,
+            borderRadius: 20,
+        });
+
+        const masterTimeline = gsap.timeline({
+            onComplete: () => {
+                video.play().catch(console.error);
+                if (cloneVideo) cloneVideo.play().catch(console.error);
+                setIsAnimating(false);
+            },
+        });
+
+        // 더 빠른 애니메이션
+        masterTimeline.to(clone, {
+            duration: 0.5, // 단축
+            x: moveX,
+            y: moveY,
+            scale: targetScale,
+            borderRadius: 0,
+            ease: 'power3.inOut',
+        });
+
+        masterTimeline.to(
+            fullscreenOverlayRef.current,
+            {
+                duration: 0.2, // 단축
+                opacity: 1,
+                ease: 'power2.out',
+            },
+            0.1
+        );
+
+        masterTimeline.add(runTextAnimation(), 0.1); // 더 빠른 시작
+    };
+
+    // 전체 화면 모드 종료 (더 빠르게)
+    const exitFullscreen = () => {
+        if (isAnimating || !isFullscreen) return;
+
+        setIsAnimating(true);
+
+        const originalCard = cardRefs.current[currentIndex];
+        const video = videoRefs.current[currentIndex];
+        const clone = cloneRef.current;
+
+        if (!clone || !video) return;
+
+        video.pause();
+        video.currentTime = 0;
+
+        const cloneVideo = clone.querySelector('video');
+        if (cloneVideo) {
+            cloneVideo.pause();
+            cloneVideo.currentTime = 0;
+        }
+
+        if (textAnimationRef.current) {
+            textAnimationRef.current.kill();
+        }
+
+        // 텍스트 빠르게 사라지게
+        gsap.to([tlTextRef.current, '.tl_3', '.tl_4', '.tl_5', '.tl_6', '.tl_7'], {
+            duration: 0.15,
+            opacity: 0,
+            ease: 'power2.in',
+        });
+
+        // 더 빠른 복원 애니메이션
+        gsap.to(clone, {
+            duration: 0.5, // 단축
+            x: 0,
+            y: 0,
+            scale: 1,
+            borderRadius: 20,
+            ease: 'power3.inOut',
+            onComplete: () => {
+                if (clone.parentNode) {
+                    clone.parentNode.removeChild(clone);
+                }
+                cloneRef.current = null;
+
+                if (originalCard) {
+                    originalCard.style.visibility = 'visible';
                 }
 
-                document.body.classList.remove('scroll-locked');
-                document.documentElement.style.scrollBehavior = '';
-
-                window.scrollTo(0, originalSizes.current.scrollY);
-
-                setIsExpanded(false);
+                gsap.to(fullscreenOverlayRef.current, {
+                    duration: 0.15, // 단축
+                    opacity: 0,
+                    onComplete: () => {
+                        gsap.set(fullscreenOverlayRef.current, {
+                            display: 'none',
+                            pointerEvents: 'none',
+                        });
+                        setIsFullscreen(false);
+                        setIsAnimating(false);
+                    },
+                });
             },
         });
     };
 
-    // 비디오 재생 시 텍스트 애니메이션
+    // ESC 키 처리
     useEffect(() => {
-        if (showVideo) {
-            const tl = gsap.timeline();
-
-            tl.to(titleRef.current, {
-                opacity: 1,
-                duration: 0.8,
-                ease: 'power2.out',
-            })
-                .to(
-                    titleRef.current,
-                    {
-                        x: '-95%',
-                        fontSize: 80,
-                        duration: 1,
-                        ease: 'power2.out',
-                    },
-                    '>'
-                )
-                .fromTo(
-                    titleRef2.current,
-                    {
-                        x: '100%',
-                        opacity: 0,
-                        scale: 1,
-                    },
-                    {
-                        x: '0%',
-                        opacity: 1,
-                        duration: 1,
-                        ease: 'power2.out',
-                    },
-                    '<'
-                )
-                .to(
-                    titleRef2.current,
-                    {
-                        opacity: 1,
-                        duration: 0.1,
-                    },
-                    '>0.4'
-                )
-                .fromTo(
-                    titleRef3.current,
-                    {
-                        y: '100%',
-                        opacity: 0,
-                    },
-                    {
-                        y: '0%',
-                        opacity: 1,
-                        duration: 1,
-                        ease: 'power2.out',
-                    },
-                    '<'
-                )
-                .to(
-                    titleRef.current,
-                    {
-                        opacity: 0,
-                        duration: 0.5,
-                        ease: 'power2.out',
-                    },
-                    '>0.5'
-                )
-                .to(
-                    [titleRef2.current],
-                    {
-                        x: '-120%',
-                        rotation: -90,
-                        transformOrigin: 'center center',
-                        duration: 1,
-                        ease: 'power2.out',
-                    },
-                    '<'
-                )
-                .to(
-                    [titleRef3.current],
-                    {
-                        x: '-185%',
-                        rotation: -90,
-                        transformOrigin: 'center center',
-                        duration: 1,
-                        ease: 'power2.out',
-                    },
-                    '<'
-                )
-                .fromTo(
-                    titleRef4.current,
-                    {
-                        x: '100%',
-                        opacity: 0,
-                    },
-                    {
-                        x: '0',
-                        opacity: 1,
-                        duration: 1,
-                        ease: 'power2.out',
-                    },
-                    '>'
-                )
-                .fromTo(
-                    titleRef5.current,
-                    {
-                        x: '100%',
-                        opacity: 0,
-                    },
-                    {
-                        x: '0',
-                        opacity: 1,
-                        duration: 1,
-                        ease: 'power2.out',
-                    },
-                    '>'
-                )
-                .fromTo(
-                    titleRef6.current,
-                    {
-                        x: '100%',
-                        opacity: 0,
-                    },
-                    {
-                        x: '0',
-                        opacity: 1,
-                        duration: 1,
-                        ease: 'power2.out',
-                    },
-                    '>'
-                )
-                .to(
-                    [titleRef2.current, titleRef3.current],
-                    {
-                        opacity: 0,
-                        duration: 0.8,
-                        ease: 'power2.out',
-                    },
-                    '>'
-                )
-                .to(
-                    [titleRef4.current, titleRef5.current, titleRef6.current],
-                    {
-                        x: '-650',
-                        duration: 1,
-                        ease: 'power2.out',
-                    },
-                    '>'
-                )
-                .to(
-                    [titleRef4.current, titleRef5.current, titleRef6.current],
-                    {
-                        opacity: 0,
-                        duration: 0.5,
-                        ease: 'power2.out',
-                    },
-                    '>0.2'
-                )
-                .fromTo(
-                    titleRef7.current,
-                    {
-                        x: '-100%',
-                        opacity: 0,
-                    },
-                    {
-                        x: '0%',
-                        opacity: 1,
-                        duration: 1,
-                        ease: 'power2.out',
-                    },
-                    '>'
-                );
-        }
-    }, [showVideo]);
-
-    useEffect(() => {
-        return () => {
-            document.body.classList.remove('scroll-locked');
-            document.documentElement.style.scrollBehavior = '';
-
-            const header = document.querySelector('header');
-            if (header && header.classList.contains('hidden')) {
-                header.classList.remove('hidden');
-            }
-
-            if (onVideoPlay) {
-                onVideoPlay(false);
-            }
-
-            videoRefs.current.forEach((video) => {
-                if (video) {
-                    video.pause();
-                    video.currentTime = 0;
-                }
-            });
-
-            if (fullscreenVideoRef.current) {
-                fullscreenVideoRef.current.pause();
-                fullscreenVideoRef.current.currentTime = 0;
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape' && isFullscreen) {
+                exitFullscreen();
+            } else if (e.key === 'ArrowLeft' && !isFullscreen && !isAnimating) {
+                handlePrevious();
+            } else if (e.key === 'ArrowRight' && !isFullscreen && !isAnimating) {
+                handleNext();
             }
         };
+
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, [currentIndex, isFullscreen, isAnimating]);
+
+    // 모든 비디오 정지
+    const pauseAllVideos = () => {
+        videoRefs.current.forEach((video) => {
+            if (video) {
+                video.pause();
+                video.currentTime = 0;
+            }
+        });
+    };
+
+    useEffect(() => {
+        pauseAllVideos();
     }, []);
 
+    useEffect(() => {
+        if (!isFullscreen) {
+            pauseAllVideos();
+        }
+    }, [currentIndex, isFullscreen]);
+
+    // 터치 이벤트
+    useEffect(() => {
+        if (isFullscreen || isAnimating) return;
+
+        let touchStartX = 0;
+        const handleTouchStart = (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        };
+        const handleTouchEnd = (e) => {
+            const touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                diff > 0 ? handleNext() : handlePrevious();
+            }
+        };
+
+        document.addEventListener('touchstart', handleTouchStart);
+        document.addEventListener('touchend', handleTouchEnd);
+        return () => {
+            document.removeEventListener('touchstart', handleTouchStart);
+            document.removeEventListener('touchend', handleTouchEnd);
+        };
+    }, [currentIndex, isFullscreen, isAnimating]);
+
+    // 카드 클래스 계산
+    const getCardClass = (index) => {
+        if (isFullscreen && index === currentIndex) return 'center';
+
+        const offset = (index - currentIndex + teamMembers.length) % teamMembers.length;
+        if (offset === 0) return 'center';
+        if (offset === 1) return 'right-1';
+        if (offset === teamMembers.length - 1) return 'left-1';
+        return 'hidden';
+    };
+
     return (
-        <section id="main-visual" ref={sectionRef}>
-            {/* Swiper에 중앙 확대 효과 적용 */}
-            <Swiper
-                ref={swiperRef}
-                modules={[Navigation, Autoplay, Mousewheel]}
-                centeredSlides={true}
-                loop={true}
-                speed={500}
-                slidesPerView={1.5}
-                spaceBetween={40}
-                autoplay={{
-                    delay: 3000,
-                    disableOnInteraction: false,
-                }}
-                navigation={{
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                }}
-                mousewheel={true}
-                breakpoints={{
-                    640: {
-                        slidesPerView: 2.5,
-                    },
-                    768: {
-                        slidesPerView: 2.75,
-                    },
-                    1080: {
-                        slidesPerView: 3.25,
-                    },
-                    1280: {
-                        slidesPerView: 3.75,
-                    },
-                }}
-                className="swiper-visual"
-                onSlideChangeTransitionStart={(swiper) => {
-                    // 슬라이드 전환 시작 시 효과 적용
-                    const slides = document.querySelectorAll('.swiper-slide');
-                    slides.forEach((slide, index) => {
-                        if (index === swiper.activeIndex) {
-                            // 활성 슬라이드 확대
-                            gsap.to(slide, {
-                                scale: 1.5,
-                                opacity: 1,
-                                zIndex: 1,
-                                duration: 0.7,
-                                ease: 'power2.out',
-                            });
-                        } else {
-                            // 비활성 슬라이드 축소
-                            gsap.to(slide, {
-                                scale: 1,
-                                opacity: 0.4,
-                                zIndex: 0,
-                                duration: 0.7,
-                                ease: 'power2.out',
-                            });
-                        }
-                    });
-                }}
-                onInit={(swiper) => {
-                    // 초기화 시 활성 슬라이드에 효과 적용
-                    const activeSlide = document.querySelector('.swiper-slide-active');
-                    if (activeSlide) {
-                        gsap.set(activeSlide, {
-                            scale: 1.5,
-                            opacity: 1,
-                            zIndex: 1,
-                        });
-                    }
-                }}
-            >
-                {vis.map((item, index) => (
-                    <SwiperSlide key={item.id}>
-                        <div
-                            className={`visual ${item.class}_visual ${
-                                isExpanded && item.id === 3 ? 'expanded' : ''
-                            }`}
-                            onClick={() => handleVideoClick(item, index)}
-                        >
-                            <div className="video-container">
+        <section className="main_visual">
+            <div className="team-carousel-wrapper-visual">
+                <div className="carousel-container">
+                    <button
+                        className="nav-arrow left"
+                        onClick={handlePrevious}
+                        disabled={isAnimating || isFullscreen}
+                        style={{
+                            display: isFullscreen ? 'none' : 'flex',
+                            opacity: isAnimating ? 0.5 : 1,
+                        }}
+                    >
+                        <img src="/images/icons/big_right.png" alt="Previous" />
+                    </button>
+
+                    <div className="carousel-track">
+                        {teamMembers.map((member, index) => (
+                            <div
+                                key={index}
+                                ref={(el) => (cardRefs.current[index] = el)}
+                                className={`card ${getCardClass(index)}`}
+                                onClick={() => handleCardClick(index)}
+                            >
                                 <video
                                     ref={(el) => (videoRefs.current[index] = el)}
-                                    src={item.video}
+                                    src={teamVideos[index]}
                                     muted
                                     playsInline
-                                    preload="metadata"
-                                    onLoadedData={(e) => {
-                                        e.target.currentTime = 0.1;
-                                        setTimeout(() => e.target.pause(), 100);
-                                    }}
-                                    onPlay={(e) => {
-                                        if (
-                                            !isExpanded &&
-                                            e.target !== fullscreenVideoRef.current
-                                        ) {
-                                            e.target.pause();
-                                            e.target.currentTime = 0.1;
-                                        }
-                                    }}
-                                />
+                                    preload="auto"
+                                    className="video-content"
+                                >
+                                    Your browser does not support the video tag.
+                                </video>
+                                <div className="member-info">
+                                    <h2 className="member-name">{member.name}</h2>
+                                </div>
                             </div>
-                            <strong className="right-text">{item.right}</strong>
-                            <strong className="left-text">{item.left}</strong>
-                        </div>
-                    </SwiperSlide>
-                ))}
-                {/* 네비게이션 버튼 추가 */}
-                <div className="swiper-button-next"></div>
-                <div className="swiper-button-prev"></div>
-            </Swiper>
+                        ))}
+                    </div>
 
-            {showVideo && (
-                <div className="video_fullscreen" onClick={handleCloseVideo}>
-                    <strong className="title_1" ref={titleRef}>
-                        당신의 playlist가
-                    </strong>
-                    <strong className="title_2" ref={titleRef2}>
-                        아티스트와 연결되는
-                    </strong>
-                    <strong className="title_3" ref={titleRef3}>
-                        순간
-                    </strong>
-                    <strong className="title_4" ref={titleRef4}>
-                        Good People,
-                    </strong>
-                    <strong className="title_5" ref={titleRef5}>
-                        Good Music,
-                    </strong>
-                    <strong className="title_6" ref={titleRef6}>
-                        Good Moments.
-                    </strong>
-                    <strong className="title_7" ref={titleRef7}>
-                        SOUNDS GOODS
-                    </strong>
-                    <video
-                        ref={fullscreenVideoRef}
-                        src="https://github.com/SongTam-tam/SoundsGoods_image/raw/main/videos/main_visual_to.mp4"
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                    />
+                    <button
+                        className="nav-arrow right"
+                        onClick={handleNext}
+                        disabled={isAnimating || isFullscreen}
+                        style={{
+                            display: isFullscreen ? 'none' : 'flex',
+                            opacity: isAnimating ? 0.5 : 1,
+                        }}
+                    >
+                        <img src="/images/icons/big_left.png" alt="Next" />
+                    </button>
                 </div>
-            )}
+            </div>
+
+            <div
+                ref={fullscreenOverlayRef}
+                className="fullscreen-overlay"
+                onClick={exitFullscreen}
+                style={{ display: 'none' }}
+            >
+                <button className="close-fullscreen">
+                    <span>×</span>
+                </button>
+                <strong ref={(el) => (tlTextRef.current[0] = el)} className="tl tl_1">
+                    당신의 playlist가
+                </strong>
+                <strong ref={(el) => (tlTextRef.current[1] = el)} className="tl tl_2">
+                    아티스트와 연결되는
+                </strong>
+                <strong className="tl tl_3">순간</strong>
+                <strong className="tl tl_4">Good People,</strong>
+                <strong className="tl tl_5">Good Music,</strong>
+                <strong className="tl tl_6">Good Moments.</strong>
+                <strong className="tl tl_7">sounds goods</strong>
+            </div>
+
+            <div className="big_text_bg">SOUNDS GOODS</div>
         </section>
     );
 };

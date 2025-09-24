@@ -10,7 +10,9 @@ const OrderItem = ({ date, orderNum, title, status, price }) => {
                 <button className="detail-btn">상세 보기</button>
             </div>
             <div className="order-info-main">
-                <div className="thumb"></div>
+                <div className="thumb">
+                    <img src="/images/streaming/hm.jpg" alt="hus" />
+                </div>
                 <div className="order-desc">
                     <p className="title">{title}</p>
                     <p className="status">

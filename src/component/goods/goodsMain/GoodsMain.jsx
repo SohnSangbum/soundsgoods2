@@ -1,7 +1,9 @@
 import './style.scss';
 import goodsData from '../../../assets/api/goods';
+import { useNavigate } from 'react-router-dom';
 const GoodsMain = () => {
     const bannerData = goodsData.filter((item) => item.artist === 'IVE').slice(0, 2);
+    const nav = useNavigate();
     return (
         <section className="goods_main">
             <h2 className="goods_page_main_title">굿즈</h2>

@@ -19,20 +19,20 @@ const MainAlbumItem = ({ al }) => {
         }
     };
 
-    useEffect(() => {
-        if (isPlaying && imgRef.current) {
-            gsap.killTweensOf(imgRef.current);
-            gsap.to(imgRef.current, {
-                rotation: 360,
-                duration: 3,
-                repeat: -1,
-                ease: 'linear',
-            });
-        } else if (imgRef.current) {
-            gsap.killTweensOf(imgRef.current);
-            gsap.set(imgRef.current, { rotation: 0 });
-        }
-    }, [isPlaying]);
+    // useEffect(() => {
+    //     if (isPlaying && imgRef.current) {
+    //         gsap.killTweensOf(imgRef.current);
+    //         gsap.to(imgRef.current, {
+    //             rotation: 360,
+    //             duration: 3,
+    //             repeat: -1,
+    //             ease: 'linear',
+    //         });
+    //     } else if (imgRef.current) {
+    //         gsap.killTweensOf(imgRef.current);
+    //         gsap.set(imgRef.current, { rotation: 0 });
+    //     }
+    // }, [isPlaying]);
 
     // 음악 모달이 닫힐 때 회전 초기화
     useEffect(() => {
@@ -42,9 +42,11 @@ const MainAlbumItem = ({ al }) => {
     }, [musicModal]);
 
     return (
-        <li onClick={handleClick} className={isPlaying ? 'active' : ''}>
+        <div onClick={handleClick} className={`div_con ${isPlaying ? 'activee' : ''}`}>
             <div className="album_pic">
-                <img ref={imgRef} src={album_img} alt={album} />
+                <div className="pic_pp">
+                    <img ref={imgRef} src={album_img} alt={album} />
+                </div>
             </div>
             <div className="artist_pic">
                 <div className="pic2">
@@ -55,7 +57,7 @@ const MainAlbumItem = ({ al }) => {
                 <strong>{title}</strong>
                 <span>{artist}</span>
             </p>
-        </li>
+        </div>
     );
 };
 

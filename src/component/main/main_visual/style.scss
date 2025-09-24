@@ -1,331 +1,391 @@
 @use '../../../styled/utils' as *;
+$primary-color: rgb(8, 42, 123);
+$text-color: #848696;
+$shadow-color: rgba(0, 0, 0, 0.15);
+$transition-timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-body.scroll-locked {
-    overflow: hidden;
-    position: fixed;
-    width: 100%;
-    height: 100%;
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#main-visual {
-    width: 100vw;
-    height: vw(944);
-    background-color: $fff;
+.main_visual {
+    width: vw(1920);
+    height: vw(764);
+    box-sizing: border-box;
+    padding-top: vw(40);
     position: relative;
-    perspective: 1200px;
-    overflow: hidden;
-    touch-action: pan-y;
 
-    .swiper-visual {
-        width: 100%;
-        height: 100%;
-        margin: vw(40) 0;
-        padding: vw(45) 0;
-
-        .swiper-slide {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transform-style: preserve-3d;
-            opacity: 0.4;
-            overflow: hidden;
-            transition: transform 0.7s ease, opacity 0.7s ease;
-            transform: scale(1);
-
-            // 활성 슬라이드 스타일
-            &.swiper-slide-active {
-                opacity: 1;
-                z-index: 1;
-                transform: scale(1.5);
-            }
-
-            .visual {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: vw(40);
-                will-change: transform, opacity;
-                transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-                cursor: pointer;
-                transform-style: preserve-3d;
-
-                &.expanded {
-                    z-index: 100 !important;
-
-                    .video-container {
-                        z-index: 1000;
-                        position: fixed;
-                    }
-                }
-
-                .video-container {
-                    width: vw(699);
-                    height: vw(393);
-                    overflow: hidden;
-                    position: relative;
-                    z-index: 2;
-                    border-radius: 8px;
-                    transform-style: preserve-3d;
-                    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-
-                    video {
-                        width: 100%;
-                        height: 100%;
-                        object-fit: cover;
-                        will-change: transform;
-                        transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-                        border-radius: 8px;
-                        background: #000;
-                    }
-                }
-
-                strong {
-                    @include font-200px-700();
-                    position: relative;
-                    z-index: 1;
-                    will-change: transform, opacity;
-                    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-                    color: $m_color1;
-                    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.7);
-
-                    &.right-text {
-                        text-align: right;
-                        margin-right: vw(60);
-                    }
-
-                    &.left-text {
-                        text-align: left;
-                        margin-left: vw(60);
-                    }
-                }
-            }
-        }
-
-        // 네비게이션 버튼 스타일
-        .swiper-button-next,
-        .swiper-button-prev {
-            color: $m_color1;
-            width: vw(60);
-            height: vw(60);
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            &::after {
-                font-size: vw(24);
-                font-weight: bold;
-            }
-
-            &:hover {
-                background: rgba(255, 255, 255, 1);
-            }
-        }
+    .team-carousel-wrapper-visual {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
     }
 
-    .video_fullscreen {
-        position: fixed;
-        z-index: 999999;
-        top: vw(-136);
-        left: 0;
-        width: vw(1920);
-        height: vw(1080);
-        background: #000;
+    .carousel-container {
+        width: 100%;
+        max-width: 1200px;
+        height: 450px;
+        position: relative;
+        perspective: 1000px;
+        margin-top: 80px;
+    }
+
+    .carousel-track {
+        width: 100%;
+        height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
-        cursor: pointer;
-
-        .title_1 {
-            @include p_center_center();
-            @include font-120px-700();
-            z-index: 10;
-            opacity: 0;
-        }
-        .title_2 {
-            @include p_center_top();
-            left: vw(789);
-            @include font-120px-700();
-            z-index: 10;
-            opacity: 0;
-            white-space: nowrap;
-        }
-        .title_3 {
-            position: absolute;
-            top: vw(600);
-            left: vw(789);
-            @include font-200px-700();
-            color: #fff;
-            z-index: 10;
-            opacity: 0;
-        }
-        .title_4 {
-            position: absolute;
-            top: vw(350);
-            left: vw(835);
-            @include font-120px-700();
-            z-index: 10;
-            opacity: 0;
-        }
-        .title_5 {
-            position: absolute;
-            top: vw(470);
-            left: vw(835);
-            @include font-120px-700();
-            z-index: 10;
-            opacity: 0;
-        }
-        .title_6 {
-            position: absolute;
-            top: vw(590);
-            left: vw(835);
-            @include font-120px-700();
-            z-index: 10;
-            opacity: 0;
-        }
-        .title_7 {
-            @include p_center_top();
-            left: vw(240);
-            @include font-120px-700();
-            z-index: 10;
-            opacity: 0;
-        }
-
-        video {
-            width: vw(1920);
-            height: vw(1080);
-            position: absolute;
-            left: 0;
-            top: vw(-136);
-            z-index: 1;
-        }
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.8s $transition-timing;
     }
-
-    // Swipe 안내 표시기
-    .swipe-indicator {
+    .tl {
+        display: block;
+        color: #fff !important;
+        opacity: 0;
+        z-index: 10000;
         position: absolute;
-        bottom: vw(50);
-        left: 50%;
-        transform: translateX(-50%);
+    }
+    .tl_1 {
+        @include font-120px-700();
+        @include p_center_center();
+    }
+    .tl_2 {
+        @include font-120px-700();
+        @include p_center_top();
+        right: vw(102);
+    }
+    .card {
+        position: absolute;
+        width: vw(899);
+        height: vw(506);
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 20px 40px $shadow-color;
+        transition: all 0.8s $transition-timing;
+        cursor: pointer;
+        @include display_center();
+        transform-origin: center center; // 중심점 명시적 설정
+
+        .member-info {
+            .member-name {
+                left: vw(40);
+                bottom: vw(24);
+                position: absolute;
+                @include font-60px-400();
+                font-weight: 600;
+                z-index: 10;
+                color: #fff;
+            }
+        }
+
+        .video-content {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.8s $transition-timing;
+            background: #000;
+        }
+
+        &.center {
+            z-index: 10;
+            transform: scale(1) translateZ(0);
+            transform-origin: center center;
+
+            .video-content {
+                filter: none;
+            }
+
+            .member-info {
+                .member-name {
+                    color: #fff;
+                }
+            }
+
+            &:hover {
+                &::after {
+                    content: '';
+                    width: vw(124);
+                    height: vw(124);
+                    background-color: #6680ffcc;
+                    position: absolute;
+                    right: vw(48);
+                    bottom: vw(48);
+                    border-radius: 100%;
+                }
+
+                &::before {
+                    content: '';
+                    width: vw(95);
+                    height: vw(30);
+                    @include bg();
+                    background-image: url('/images/icons/click.png');
+                    position: absolute;
+                    right: vw(62);
+                    bottom: vw(95);
+                    z-index: 2;
+                }
+            }
+        }
+
+        &.left-1 {
+            z-index: 5;
+            transform: translateX(-550px) scale(0.7) translateZ(-70px);
+            opacity: 0.9;
+            transform-origin: center center;
+
+            .member-info {
+                .member-name {
+                    color: #fff;
+                    opacity: 0.4;
+                }
+            }
+        }
+
+        &.right-1 {
+            z-index: 5;
+            transform: translateX(550px) scale(0.7) translateZ(-70px);
+            opacity: 0.9;
+            transform-origin: center center;
+
+            .member-info {
+                .member-name {
+                    color: #fff;
+                    opacity: 0.4;
+                }
+            }
+        }
+
+        &.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform-origin: center center;
+        }
+    }
+
+    .nav-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        @include flex-center;
+        cursor: pointer;
         z-index: 20;
-        color: rgba(255, 255, 255, 0.7);
-        font-size: vw(16);
-        background: rgba(0, 0, 0, 0.5);
-        padding: vw(10) vw(20);
-        border-radius: vw(20);
-        animation: fadeInOut 2s infinite;
+        transition: all 0.3s ease;
+        font-size: 1.5rem;
+        border: none;
+        outline: none;
+        padding-bottom: 4px;
+        background: rgba(0, 0, 0, 0.3);
 
-        @keyframes fadeInOut {
-            0%,
-            100% {
-                opacity: 0.5;
-            }
-            50% {
-                opacity: 1;
-            }
+        &:hover:not(:disabled) {
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+            opacity: 0.3;
+        }
+
+        &.left {
+            left: vw(-300);
+            padding-right: 3px;
+        }
+
+        &.right {
+            right: vw(-300);
+            padding-left: 3px;
+        }
+
+        img {
+            width: 24px;
+            height: 24px;
+            filter: brightness(0) invert(1);
+        }
+    }
+
+    .big_text_bg {
+        @include font-200px-700();
+        position: absolute;
+        left: vw(39);
+        bottom: vw(22);
+        z-index: -1;
+        color: #6680ff1a;
+    }
+}
+
+// 전체 화면 오버레이 스타일
+.fullscreen-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 999;
+    cursor: pointer;
+
+    .close-fullscreen {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        font-size: 3rem;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 1001;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s ease;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        span {
+            display: block;
+            margin-bottom: 5px;
         }
     }
 }
 
-@include tablet {
-    #main-visual {
-        .swiper-visual {
-            margin: vw(30, 393) 0;
-            padding: vw(35, 393) 0;
+// 전체 화면 클론 스타일
+.fullscreen-clone {
+    cursor: default;
+    transform-origin: center center !important;
 
-            .swiper-slide .visual {
-                gap: vw(20, 393);
+    video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 
-                .video-container {
-                    width: vw(500, 393);
-                    height: vw(280, 393);
-                }
+    .member-info {
+        position: absolute;
+        bottom: 40px;
+        left: 40px;
+        z-index: 10;
 
-                strong {
-                    font-size: vw(120, 393);
-
-                    &.right-text {
-                        margin-right: vw(15, 393);
-                    }
-
-                    &.left-text {
-                        margin-left: vw(15, 393);
-                    }
-                }
-            }
-
-            .swiper-button-next,
-            .swiper-button-prev {
-                width: vw(40, 393);
-                height: vw(40, 393);
-
-                &::after {
-                    font-size: vw(18, 393);
-                }
-            }
+        .member-name {
+            display: none;
         }
+    }
 
-        .swipe-indicator {
-            bottom: vw(30, 393);
-            font-size: vw(14, 393);
-            padding: vw(8, 393) vw(16, 393);
+    // 전체 화면 모드에서는 호버 효과 제거
+    &:hover {
+        &::after,
+        &::before {
+            display: none !important;
         }
     }
 }
 
-@include mobile {
-    #main-visual {
-        .swiper-visual {
-            margin: 20px 0;
-            padding: 25px 0;
+// 반응형 디자인
+@media (max-width: 768px) {
+    .main_visual {
+        width: 100%;
+        height: auto;
+        padding-top: 20px;
 
-            .swiper-slide .visual {
-                gap: 15px;
+        .carousel-container {
+            height: 300px;
+            margin-top: 40px;
+        }
 
-                .video-container {
-                    width: 280px;
-                    height: 160px;
-                }
+        .card {
+            width: 90vw;
+            height: 50vw;
+            transform-origin: center center;
 
-                strong {
-                    font-size: 60px;
-
-                    &.right-text {
-                        margin-right: 10px;
-                    }
-
-                    &.left-text {
-                        margin-left: 10px;
+            &.center {
+                &:hover {
+                    &::after,
+                    &::before {
+                        display: none;
                     }
                 }
             }
 
-            .swiper-button-next,
-            .swiper-button-prev {
-                width: 35px;
-                height: 35px;
+            &.left-1 {
+                transform: translateX(-70%) scale(0.7) translateZ(-70px);
+                transform-origin: center center;
+            }
 
-                &::after {
-                    font-size: 16px;
-                }
+            &.right-1 {
+                transform: translateX(70%) scale(0.7) translateZ(-70px);
+                transform-origin: center center;
             }
         }
 
-        .video_fullscreen {
-            .close_btn {
-                top: 10px;
+        .nav-arrow {
+            &.left {
+                left: 10px;
+            }
+
+            &.right {
                 right: 10px;
-                width: 35px;
-                height: 35px;
-                font-size: 20px;
             }
         }
 
-        .swipe-indicator {
-            bottom: 20px;
-            font-size: 12px;
-            padding: 6px 12px;
+        .big_text_bg {
+            font-size: 100px;
+            left: 20px;
+            bottom: 10px;
         }
     }
+
+    .fullscreen-clone {
+        .member-info {
+            bottom: 20px;
+            left: 20px;
+
+            .member-name {
+                font-size: 1.5rem !important;
+            }
+        }
+    }
+}
+
+// 전체 화면 모드에서의 추가 스타일
+body.fullscreen-mode {
+    overflow: hidden;
+
+    .main_visual {
+        .card.center {
+            &:hover {
+                &::after,
+                &::before {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+// 애니메이션 최적화
+.card,
+.fullscreen-clone {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: subpixel-antialiased;
+}
+
+// 스크롤바 숨기기 (전체 화면 모드에서)
+body:has(.fullscreen-overlay[style*='display: block']) {
+    overflow: hidden;
 }
