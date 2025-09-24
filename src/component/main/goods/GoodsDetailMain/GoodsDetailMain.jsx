@@ -28,7 +28,7 @@ const GoodsDetailMain = () => {
                             <img src="/images/icons/white_next.png" alt="" />
                         </button>
                         <span className="more_goods" onClick={onGo}>
-                            더 굿즈 찾아보기
+                            굿즈 더 찾아보기
                         </span>
                     </div>
                 )}

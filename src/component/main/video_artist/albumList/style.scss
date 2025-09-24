@@ -52,7 +52,7 @@
                 .pic_pp {
                     &::after {
                         content: '';
-                        background-image: url('/images/streaming/mv-play-icon.png');
+                        background-image: url('/images/streaming/mv-pause-icon.png');
                         @include bg();
                         width: vw(50);
                         height: vw(50);
