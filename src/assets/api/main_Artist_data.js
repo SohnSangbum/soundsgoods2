@@ -1,7 +1,7 @@
 // data.js (데이터 파일)
 export default [
     {
-        id: 1,
+        id: 2000,
         artist: '방탄소년단 (BTS)',
         ganre: '랩/힙합/댄스/POP',
         title: 'Butter',
@@ -13,7 +13,7 @@ export default [
         type: 'topData', // type 필드 추가
     },
     {
-        id: 2,
+        id: 2001,
         artist: 'SEVENTEEN',
         ganre: '댄스/발라드/랩/힙합',
         title: 'HAPPY BURSTDAY',
@@ -26,7 +26,7 @@ export default [
         type: 'topData', // type 필드 추가
     },
     {
-        id: 3,
+        id: 2003,
         artist: '제로베이스원',
         ganre: '댄스/R&B/Soul/국내드라마',
         title: 'NOW OR NEVER',
@@ -34,12 +34,12 @@ export default [
             'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/images/artist/zerobaseone.png',
         album_img: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/images/dance/556.jpg',
         isLike: false,
-        track: 'Hz4LcZijyw8',
+        track: 'Un-tRWZ2x4U',
         actv: false,
         type: 'topData', // type 필드 추가
     },
     {
-        id: 4,
+        id: 2004,
         artist: 'THE BOYZ',
         ganre: '댄스/국내드라마/발라드',
         title: 'THRILL-ING',
@@ -52,7 +52,7 @@ export default [
         type: 'topData', // type 필드 추가
     },
     {
-        id: 5,
+        id: 2005,
         artist: 'DAY6',
         ganre: '록/메탈/댄스/발라드',
         title: 'Fourever',
@@ -65,7 +65,7 @@ export default [
         type: 'topData', // type 필드 추가
     },
     {
-        id: 6,
+        id: 2006,
         artist: 'LE SSERAFIM',
         ganre: '댄스/랩/힙합/R&B/Soul',
         title: 'HOT',
@@ -78,7 +78,7 @@ export default [
         type: 'topData', // type 필드 추가
     },
     {
-        id: 7,
+        id: 2007,
         artist: '프로미스나인',
         ganre: '댄스/발라드/국내드라마',
         title: 'Supersonic',
@@ -91,7 +91,7 @@ export default [
         type: 'topData', // type 필드 추가
     },
     {
-        id: 8,
+        id: 2008,
         artist: 'Red Velvet',
         ganre: '댄스/R&B/Soul/발라드',
         title: 'Russian Roulette',
@@ -99,12 +99,12 @@ export default [
             'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/images/artist/redvelvet.png',
         album_img: 'https://github.com/SongTam-tam/SoundsGoods_image/raw/main/images/dance/575.jpg',
         isLike: false,
-        track: '',
+        track: 'QslJYDX3o8s',
         actv: false,
         type: 'topData', // type 필드 추가
     },
     {
-        id: 9,
+        id: 2009,
         artist: 'ITZY',
         ganre: '댄스/팝',
         title: 'Different',
@@ -117,7 +117,7 @@ export default [
         type: 'topData', // type 필드 추가
     },
     {
-        id: 10,
+        id: 2010,
         artist: '잔나비',
         ganre: '록/메탈/인디음악',
         title: 'MWDLTdB5aps',
@@ -130,7 +130,7 @@ export default [
         type: 'topData', // type 필드 추가
     },
     {
-        id: 11,
+        id: 2011,
         artist: 'IU',
         ganre: '댄스/팝',
         title: '꽃갈피 셋',

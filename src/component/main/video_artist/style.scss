@@ -19,7 +19,8 @@
             }
             h2 {
                 @include font-60px-600();
-
+                font-family: 'Bricolage Grotesque';
+                letter-spacing: vw(-0.5px);
                 margin-bottom: vw(60px);
             }
         }

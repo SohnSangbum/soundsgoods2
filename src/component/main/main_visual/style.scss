@@ -80,6 +80,7 @@ $transition-timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
                 position: absolute;
                 @include font-60px-400();
                 font-weight: 600;
+                font-family: 'Bricolage Grotesque';
                 z-index: 10;
                 color: #fff;
             }
@@ -215,6 +216,8 @@ $transition-timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
     .big_text_bg {
         @include font-200px-700();
+        font-family: 'Bricolage Grotesque';
+        letter-spacing: vw(-6px);
         position: absolute;
         left: vw(39);
         bottom: vw(22);
